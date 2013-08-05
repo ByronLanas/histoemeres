@@ -8,6 +8,9 @@
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
+                <link href="css/estilos.css" type="text/css" rel="stylesheet" />
+                <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon.ico"/>
+                <link rel="icon" type="image/x-icon" href="#{request.contextPath}/imagenes/favicon.ico" />
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>PrimeFaces</title>
             </f:facet>
@@ -17,9 +20,11 @@
 
             <p:layout fullPage="true">
 
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header
-                </p:layoutUnit>
+            <p:layoutUnit position="north" size="100" styleClass=" header"  > 
+                <p:commandLink action="index">
+                    <p:graphicImage value="imagenes/Logo.jpg" width="15%"  style="margin-right: 4px; padding: 0px;float: right;"/>  
+                </p:commandLink>
+            </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
                     Footer
