@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+    
     <h:head>
         <link href="css/estilos.css" type="text/css" rel="stylesheet" />
         <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon.ico"/>
@@ -10,24 +12,32 @@
         <title>HistoEmeres - Login</title>
     </h:head>
     <h:body>
-        <p:layout fullPage="true">
+        <p:layout fullPage="true" >
             <p:layoutUnit position="north" size="100" styleClass=" header"  > 
                 <p:commandLink action="index">
-                    <p:graphicImage value="imagenes/Logo.jpg" width="15%"  style="margin-right: 4px; padding: 0px;float: right;"/>  
+                    <p:graphicImage value="imagenes/Logo.jpg" width="15%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
                 </p:commandLink>
             </p:layoutUnit>
-            <p:layoutUnit position="center" size="600" styleClass="header center" >  
-                <h:form>
-                    <h:panelGrid columns="2" style="float:right;margin-top: 40px;margin-right:30px">
-                        <h:outputLabel value="Nombre"></h:outputLabel>
-                        <p:inputText value="#{managedBeanUsuario.nombre}"/>
-                        <h:outputLabel value="Contraseña"></h:outputLabel>
-                        <p:inputText value="#{managedBeanUsuario.contraseña}"/>
-                        <p:commandButton value="Ingresar" action="welcomePrimefaces" />
-                        <!--<p:commandButton value="Ingresar" action="#//{managedBeanUsuario.nuevoUsuario()}"/> -->
-                    </h:panelGrid>
+            <p:layoutUnit position="center" size="600" styleClass="center"> 
+                <p:fieldset styleClass="legend"  style="background-color: transparent; width: 600px; float:left;margin-left:20px" legend="HistoHemeres">
+                    
+                </p:fieldset>                
+                <p:fieldset styleClass="legend" style="background-color: transparent; width: 300px; float:right;margin-right:30px" legend="Login">
+                    <h:form>
+                        <h:panelGrid columns="2" >
+                            <h:outputLabel value="Nombre:"></h:outputLabel>
+                            <p:inputText value="#{managedBeanUsuario.nombre}"/>
+                            <h:outputLabel value="Contraseña:"></h:outputLabel>
+                            <p:inputText value="#{managedBeanUsuario.contraseña}"/>
+                            <f:facet name="footer">  
+                                <p:commandButton value="Ingresar" action="welcomePrimefaces" style="margin-top: 15px; float:right" />
+                            </f:facet>
+                            
+                            <!--<p:commandButton value="Ingresar" action="#//{managedBeanUsuario.nuevoUsuario()}"/> -->
+                        </h:panelGrid>
 
-                </h:form>        
+                    </h:form>        
+                </p:fieldset>
             </p:layoutUnit>
             
         </p:layout>  
