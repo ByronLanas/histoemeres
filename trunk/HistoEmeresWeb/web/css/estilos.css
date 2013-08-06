@@ -11,53 +11,47 @@ root {
 }
 
 .header{
-    border: 0px !important;    
+    
+    border: 0px !important;
+    border-bottom: 1px solid #a8a8a8 !important;
     padding: 0px !important;
     margin:0px !important;
+    display: inline-block !important;
 }
-.ui-layout-resizer{
-   /* IE10 Consumer Preview */ 
-background-image: -ms-linear-gradient(right, #FFFFFF 0%, #ADFF2F 100%);
-
-/* Mozilla Firefox */ 
-background-image: -moz-linear-gradient(right, #FFFFFF 0%, #ADFF2F 100%);
-
-/* Opera */ 
-background-image: -o-linear-gradient(right, #FFFFFF 0%, #ADFF2F 100%);
-
-/* Webkit (Safari/Chrome 10) */ 
-background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #FFFFFF), color-stop(1, #ADFF2F));
-
-/* Webkit (Chrome 11+) */ 
-background-image: -webkit-linear-gradient(right, #FFFFFF 0%, #ADFF2F 100%);
-
-/* W3C Markup, IE10 Release Preview */ 
-background-image: linear-gradient(to left, #FFFFFF 0%, #ADFF2F 100%);
+.ui-widget-content,  .ui-layout-resizer{
+    background-color: transparent !important;
+    background: transparent !important;
 }
-.header .ui-layout-unit-content{
+
+
+.legend .ui-fieldset-legend {
+    
+  background: transparent !important;  
+}
+
+body{
 	
-
 /* IE10 Consumer Preview */ 
-background-image: -ms-linear-gradient(right, #FFFFFF 0%, #ADFF2F 100%);
+background-image: -ms-linear-gradient(left, #FFFFFF 0%, #ADFF2F 100%);
 
 /* Mozilla Firefox */ 
-background-image: -moz-linear-gradient(right, #FFFFFF 0%, #ADFF2F 100%);
+background-image: -moz-linear-gradient(left, #FFFFFF 0%, #ADFF2F 100%);
 
 /* Opera */ 
-background-image: -o-linear-gradient(right, #FFFFFF 0%, #ADFF2F 100%);
+background-image: -o-linear-gradient(left, #FFFFFF 0%, #ADFF2F 100%);
 
 /* Webkit (Safari/Chrome 10) */ 
-background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #FFFFFF), color-stop(1, #ADFF2F));
+background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #FFFFFF), color-stop(1, #ADFF2F));
 
 /* Webkit (Chrome 11+) */ 
-background-image: -webkit-linear-gradient(right, #FFFFFF 0%, #ADFF2F 100%);
+background-image: -webkit-linear-gradient(left, #FFFFFF 0%, #ADFF2F 100%);
 
 /* W3C Markup, IE10 Release Preview */ 
-background-image: linear-gradient(to left, #FFFFFF 0%, #ADFF2F 100%);
+background-image: linear-gradient(to right, #FFFFFF 0%, #ADFF2F 100%);
 }
 .center {
-
-    border: 0px !important;    
+    border: 0px !important;
     padding: 0px !important;
-    margin:0px !important;
+    margin:40px 0px 0px 0px !important;
+    display: inline-block !important;
 }
