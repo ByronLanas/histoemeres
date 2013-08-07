@@ -6,7 +6,9 @@
       xmlns:p="http://primefaces.org/ui">
     
     <h:head>
-        <link href="css/estilos.css" type="text/css" rel="stylesheet" />
+        <h:outputStylesheet library="css" name="default.css"  />
+        <h:outputStylesheet library="css" name="layout.css"  />
+        <h:outputStylesheet library="css" name="estilos.css"  />
         <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon.ico"/>
         <link rel="icon" type="image/x-icon" href="imagenes/favicon.ico" />
         <title>HistoEmeres - Login</title>
@@ -19,9 +21,10 @@
                 </p:commandLink>
             </p:layoutUnit>
             <p:layoutUnit position="center" size="600" styleClass="center"> 
-                <p:fieldset styleClass="legend"  style="background-color: transparent; width: 600px; float:left;margin-left:20px" legend="HistoHemeres">
+                <p:fieldset styleClass="legend"  style="background-color: transparent; width: 600px; float:left;margin-left:20px" legend="HistoEmeres">
                     
                 </p:fieldset>                
+                
                 <p:fieldset styleClass="legend" style="background-color: transparent; width: 300px; float:right;margin-right:30px" legend="Login">
                     <h:form>
                         <h:panelGrid columns="2" >
