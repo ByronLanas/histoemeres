@@ -10,6 +10,7 @@ root {
     display: block;
 }
 
+
 .header{
     
     border: 0px !important;
@@ -28,7 +29,9 @@ root {
     
   background: transparent !important;  
 }
-
+#reloj{
+    background: transparent !important;
+}
 body{
 	
 /* IE10 Consumer Preview */ 
@@ -54,4 +57,24 @@ background-image: linear-gradient(to right, #FFFFFF 0%, #ADFF2F 100%);
     padding: 0px !important;
     margin:40px 0px 0px 0px !important;
     display: inline-block !important;
+}
+
+
+
+.layout {
+    border: 0px !important;
+}
+ .east{
+    border-left: 1px solid #a8a8a8 !important;
+}
+
+.south{
+    border-top: 1px solid #a8a8a8 !important;
+}
+.ui-menuitem-text{
+    font-size: 23px !important;
+    
+}
+.menu{
+    background: yellowgreen !important;
 }
