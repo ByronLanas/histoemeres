@@ -8,43 +8,127 @@
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
-                <link href="css/estilos.css" type="text/css" rel="stylesheet" />
+                <h:outputStylesheet library="css" name="default.css"  />
+                <h:outputStylesheet library="css" name="layout.css"  />
+                <h:outputStylesheet library="css" name="estilos.css"  />
                 <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon.ico"/>
                 <link rel="icon" type="image/x-icon" href="#{request.contextPath}/imagenes/favicon.ico" />
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>Histoemeres</title>
             </f:facet>
         </h:head>
-
+<script type="text/javascript">  
+PrimeFaces.locales['es'] = {
+    closeText: 'Cerrar',
+    prevText: 'Anterior',
+    nextText: 'Siguiente',
+    monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+    dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+    dayNamesMin: ['D','L','M','X','J','V','S'],
+    weekHeader: 'Semana',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: '',
+    timeOnlyTitle: 'Sólo hora',
+    timeText: 'Tiempo',
+    hourText: 'Hora',
+    minuteText: 'Minuto',
+    secondText: 'Segundo',
+    currentText: 'Fecha actual',
+    ampm: false,
+    month: 'Mes',
+    week: 'Semana',
+    day: 'Día',
+    allDayText : 'Todo el día'
+};
+</script> 
         <h:body>
 
-            <p:layout fullPage="true">
+            <p:layout style="min-width:1100px;min-height:720px;" id="layout">
 
             <p:layoutUnit position="north" size="100" styleClass=" header"  > 
-                <p:commandLink action="index">
-                    <p:graphicImage value="imagenes/Logo.jpg" width="15%"  style="margin-right: 4px; padding: 0px;float: right;"/>  
+                <p:commandLink action="index?faces-redirect=true">
+                    <p:graphicImage value="imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
                 </p:commandLink>
             </p:layoutUnit>
 
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    Footer
+                <p:layoutUnit styleClass="layout south" position="south" size="50" >
+                    <div style="text-align: center;font-size: 10px">
+                        <h:outputText value="EMERES: Bombero Encalada #14 La Cisterna, Teléfono (56-2) 558 8960, Santiago."/><br/>
+                        <h:outputText value="HistoEmeres fue desarrollado por: "/><a href="https://www.facebook.com/groups/HistoEmeres/">https://www.facebook.com/groups/HistoEmeres </a> <br/>
+                        <h:outputText value="contacto: "/><a href="mailto:HistoEmeres@groups.facebook.com" >HistoEmeres@groups.facebook.com</a>
+                        
+                    </div>
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                    <p:menu>
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
-
-                        </p:submenu>
-
-                    </p:menu>
+                <p:layoutUnit id="east" styleClass="layout east" position="east" size="245" >
+                    <h:panelGrid id="banner" columns="1"  style="margin: 80px 0px; padding: 0px">
+                        <p:clock id="reloj"  pattern="HH:mm:ss"/> 
+                        <p:calendar  mode="Inline" title="Calendario"  size="150" pattern="" timeZone="Santiago/Chile" locale="es" ></p:calendar>
+                        
+                    </h:panelGrid>
+                    
                 </p:layoutUnit>
+                
+                <p:layoutUnit id="center" styleClass="layout " position="center" size="500" >
+                    <h:form> 
+                        <p:menubar styleClass="menu" autoDisplay="false">  
+                            <p:menuitem value="Historiales" url="login.xhtml" icon="" />
 
-                <p:layoutUnit position="center">
-                    Welcome to PrimeFaces
+                            <p:submenu label="Aportes" icon="ui-icon-gear">  
+
+                                <p:menuitem value="Ver aportes"  icon="ui-icon-disk" />  
+                                <p:menuitem value="Ingresar aportes"  icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Modificar aportes" icon="ui-icon-arrowrefresh-1-w" />  
+                            </p:submenu> 
+                            <p:submenu label="Clientes" icon="ui-icon-gear">  
+
+                                <p:menuitem value="Ver clientes"  icon="ui-icon-disk" />  
+                                <p:menuitem value="Ingresar clientes"  icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Modificar clientes" icon="ui-icon-arrowrefresh-1-w" />  
+                            </p:submenu> 
+                            <p:submenu label="Ventas" icon="ui-icon-gear">  
+
+                                <p:menuitem value="Ver ventas"  icon="ui-icon-disk" />  
+                                <p:menuitem value="Ingresar ventas"  icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Modificar ventas" icon="ui-icon-arrowrefresh-1-w" />  
+                            </p:submenu>
+                            <p:submenu label="Productos" icon="ui-icon-gear">  
+
+                                <p:menuitem value="Ver productos"  icon="ui-icon-disk" />  
+                                <p:menuitem value="Ingresar productos"  icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Modificar productos" icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Eliminar productos" icon="ui-icon-arrowrefresh-1-w" />  
+                            </p:submenu>
+                            <p:submenu label="Egresos" icon="ui-icon-gear">  
+
+                                <p:menuitem value="Ver egresos"  icon="ui-icon-disk" />  
+                                <p:menuitem value="Ingresar egresos"  icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Modificar egresos" icon="ui-icon-arrowrefresh-1-w" />  
+                            </p:submenu>
+                            <p:submenu label="Usuarios" icon="ui-icon-gear">  
+
+                                <p:menuitem value="Ver usuarios"  icon="ui-icon-disk" />  
+                                <p:menuitem value="Ingresar usuarios"  icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Modificar usuarios" icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Eliminar usuarios" icon="ui-icon-arrowrefresh-1-w" />  
+                            </p:submenu>
+
+                        </p:menubar> 
+                    </h:form>
+                        
+                        <!-- ......aqui va el contenido de cada pagina...... -->
+                        
+                        <div id="contenido"  >
+      
+                        </div>
+
+
+
+                     
                 </p:layoutUnit>
 
             </p:layout>
