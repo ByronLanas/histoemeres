@@ -15,7 +15,7 @@ import javax.ejb.LocalBean;
 @LocalBean
 public class SessionBeanFinanaciero {
 
-    SessionBeanIngreso ingreso;
-    EgresoFacade egreso;
+    public static SessionBeanIngreso ingreso;
+    public EgresoFacade egreso;
 
 }
