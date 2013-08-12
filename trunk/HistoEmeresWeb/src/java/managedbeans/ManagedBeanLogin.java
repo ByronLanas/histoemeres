@@ -26,4 +26,5 @@ public class ManagedBeanLogin {
     public void irLogin() throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
     }
+
 }

@@ -32,8 +32,9 @@
                             <p:inputText value="#{managedBeanUsuario.nombre}"/>
                             <h:outputLabel value="Contraseña:"></h:outputLabel>
                             <p:inputText value="#{managedBeanUsuario.contraseña}"/>
-                            <f:facet name="footer">  
-                                <p:commandButton value="Ingresar" action="menu?faces-redirect=true" style="margin-top: 15px; float:right" />
+                            <f:facet name="footer"> 
+                               
+                                <p:commandButton value="Ingresar" action="#{managedBeanMenu.irMenu('historiales')}" style="margin-top: 15px; float:right" />
                             </f:facet>
                             
                             <!--<p:commandButton value="Ingresar" action="#//{managedBeanUsuario.nuevoUsuario()}"/> -->
