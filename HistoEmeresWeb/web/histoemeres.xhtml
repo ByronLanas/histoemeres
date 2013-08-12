@@ -55,7 +55,7 @@ PrimeFaces.locales['es'] = {
                 </p:commandLink>
             </p:layoutUnit>
 
-                <p:layoutUnit styleClass="layout south" position="south" size="50" >
+                <p:layoutUnit styleClass="layout south" position="south" size="60" >
                     <div style="text-align: center;font-size: 10px">
                         <h:outputText value="EMERES: Bombero Encalada #14 La Cisterna, Teléfono (56-2) 558 8960, Santiago."/><br/>
                         <h:outputText value="HistoEmeres fue desarrollado por: "/><a href="https://www.facebook.com/groups/HistoEmeres/">https://www.facebook.com/groups/HistoEmeres </a> <br/>
@@ -76,13 +76,13 @@ PrimeFaces.locales['es'] = {
                 <p:layoutUnit id="center" styleClass="layout " position="center" size="500" >
                     <h:form> 
                         <p:menubar styleClass="menu" autoDisplay="false">  
-                            <p:menuitem value="Historiales" url="login.xhtml" icon="" />
+                            <p:menuitem value="Historiales" action="#{managedBeanMenu.irMenu('historiales')}" icon="" />
 
                             <p:submenu label="Aportes" icon="ui-icon-gear">  
 
-                                <p:menuitem value="Ver aportes"  icon="ui-icon-disk" />  
-                                <p:menuitem value="Ingresar aportes"  icon="ui-icon-arrowrefresh-1-w" />  
-                                <p:menuitem value="Modificar aportes" icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Ver aportes"  icon="ui-icon-disk" action="#{managedBeanMenu.irMenu('mostrarAportes')}" />  
+                                <p:menuitem value="Ingresar aportes"  icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('ingresarAportes')}"/>  
+                                <p:menuitem value="Modificar aportes" icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('modificarAportes')}"/>  
                             </p:submenu> 
                             <p:submenu label="Clientes" icon="ui-icon-gear">  
 
@@ -93,7 +93,7 @@ PrimeFaces.locales['es'] = {
                             <p:submenu label="Ventas" icon="ui-icon-gear">  
 
                                 <p:menuitem value="Ver ventas"  icon="ui-icon-disk" />  
-                                <p:menuitem value="Ingresar ventas"  icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Ingresar ventas"  icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('ingresarVentas')}"/>  
                                 <p:menuitem value="Modificar ventas" icon="ui-icon-arrowrefresh-1-w" />  
                             </p:submenu>
                             <p:submenu label="Productos" icon="ui-icon-gear">  
@@ -111,10 +111,10 @@ PrimeFaces.locales['es'] = {
                             </p:submenu>
                             <p:submenu label="Usuarios" icon="ui-icon-gear">  
 
-                                <p:menuitem value="Ver usuarios"  icon="ui-icon-disk" />  
-                                <p:menuitem value="Ingresar usuarios"  icon="ui-icon-arrowrefresh-1-w" />  
-                                <p:menuitem value="Modificar usuarios" icon="ui-icon-arrowrefresh-1-w" />  
-                                <p:menuitem value="Eliminar usuarios" icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Ver usuarios"  icon="ui-icon-disk" action="#{managedBeanMenu.irMenu('verUsuario')}"/>  
+                                <p:menuitem value="Ingresar usuarios"  icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('ingresarUsuario')}"/>  
+                                <p:menuitem value="Modificar usuarios" icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('modificarUsuario')}"/>  
+                                <p:menuitem value="Eliminar usuarios" icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('eliminarUsuario')}"/>  
                             </p:submenu>
 
                         </p:menubar> 
@@ -122,8 +122,8 @@ PrimeFaces.locales['es'] = {
                         
                         <!-- ......aqui va el contenido de cada pagina...... -->
                         
-                        <div id="contenido"  >
-      
+                        <div id="contenido"  style="margin-top: 15px">
+                            <ui:include src = "#{managedBeanMenu.getPagina()}.xhtml" />
                         </div>
 
 
