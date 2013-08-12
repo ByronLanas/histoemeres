@@ -33,4 +33,5 @@ public class ManagedBeanHistorial implements Serializable{
         pieModel.set("Brand 4", 421);  
      
     }
+    
 }
