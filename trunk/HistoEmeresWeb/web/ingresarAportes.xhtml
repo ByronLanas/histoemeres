@@ -5,6 +5,23 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     
-aqui ingresan aportes
+    <p:panelGrid columns="2">
+        <f:facet name="header">
+                 Ingresar nuevo aporte
+        </f:facet>
+        <h:outputText value="Municipalidad: "/>
+        <p:selectOneMenu value="#{managedBeanAporte.municipio}">
+            <f:selectItem itemLabel="La Florida" itemValue="La Florida"/>
+            <f:selectItem itemLabel="Estacion Central" itemValue="Estacion Central"/>
+        </p:selectOneMenu>
+        <h:outputText value="Aporte: "/>
+        <p:inputText value ="#{managedBeanAporte.valor}"/>
+        <h:outputText value="Fecha"/>
+        <p:calendar navigator="true" locale="es" value="#{managedBeanAporte.fecha}"/>
+        <f:facet name="footer">
+            <p:commandButton style="float: right" value="Ingresar" action="#{managedBeanAporte.insertarAporte()}" />
+        </f:facet>
+    </p:panelGrid>
+            
 </html>
 
