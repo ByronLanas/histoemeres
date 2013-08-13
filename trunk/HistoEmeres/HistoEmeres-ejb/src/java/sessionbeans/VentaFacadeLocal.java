@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.Venta;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,5 +29,7 @@ public interface VentaFacadeLocal {
     List<Venta> findRange(int[] range);
 
     int count();
+
+    List<Venta> buscarPorPeriodo(Date inicio, Date fin);
     
 }

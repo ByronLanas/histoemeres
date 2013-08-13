@@ -4,7 +4,7 @@
  */
 package sessionbeans;
 
-import Objetos.Aporte;
+
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 
@@ -22,8 +22,5 @@ public class SessionBeanIngreso {
     public SessionBeanIngreso(){
         
     }
-    public boolean verificarAporte(Aporte aporte){
-        //AporteFacade.
-        return false;
-    }
+
 }
