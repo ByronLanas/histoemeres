@@ -5,9 +5,11 @@
 package sessionbeans;
 
 import entities.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,5 +28,16 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    ;
+    
+
+
+    @Override
+    public List<Usuario> buscarPorNombreUsuario(String nombre) {
+        Query query;
+        query = em.createNamedQuery("Usuario.findByNombreUsuario").setParameter("nombreUsuario", nombre);
+        return query.getResultList();
+    }
+
+
+        
 }
