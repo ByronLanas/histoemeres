@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <h:head>
         <h:outputStylesheet library="css" name="default.css"  />
         <h:outputStylesheet library="css" name="estilos.css"  />
@@ -21,30 +21,35 @@
             </p:layoutUnit>
             <p:layoutUnit position="center" size="600" styleClass="center"> 
                 <p:fieldset styleClass="legend"  style="background-color: transparent; width: 600px; float:left;margin-left:20px" legend="HistoEmeres">
-                    
+
                 </p:fieldset>                
-                
-                <p:fieldset styleClass="legend" style="background-color: transparent; width: 300px; float:right;margin-right:30px" legend="Login">
-                    <h:form>
-                        <h:panelGrid columns="2" >
-                            <h:outputLabel value="Nombre:"></h:outputLabel>
-                            <p:inputText value="#{managedBeanUsuario.nombre}"/>
-                            <h:outputLabel value="Contraseña:"></h:outputLabel>
-                            <p:inputText value="#{managedBeanUsuario.contraseña}"/>
-                            <f:facet name="footer"> 
-                               
-                                <p:commandButton value="Ingresar" action="#{managedBeanMenu.irMenu('historiales')}" style="margin-top: 15px; float:right" />
+
+
+                <h:form>
+                    <p:panel id="mensaje">
+                        <p:messages id="msj" autoUpdate="true" closable=""/>
+                        <h:panelGrid style="float: right; margin-right: 30px; border: 1px solid #AFAFAF" columns="2" >
+                            <f:facet name="header">
+                                Login
                             </f:facet>
-                            
+                            <h:outputLabel value="Nombre:"></h:outputLabel>
+                            <p:inputText value="#{managedBeanLogin.nombre}" required="true"/>
+                            <h:outputLabel value="Contraseña:"></h:outputLabel>
+                            <p:inputText value="#{managedBeanLogin.contraseña}"/>
+                            <f:facet name="footer"> 
+
+                                <p:commandButton value="Ingresar" update="mensaje" actionListener="#{managedBeanLogin.logear()}" style="margin-top: 15px; float:right" />
+                            </f:facet>
+
                             <!--<p:commandButton value="Ingresar" action="#//{managedBeanUsuario.nuevoUsuario()}"/> -->
                         </h:panelGrid>
+                    </p:panel>
+                </h:form>        
 
-                    </h:form>        
-                </p:fieldset>
             </p:layoutUnit>
-            
+
         </p:layout>  
-            
+
     </h:body>
 </html>
 
