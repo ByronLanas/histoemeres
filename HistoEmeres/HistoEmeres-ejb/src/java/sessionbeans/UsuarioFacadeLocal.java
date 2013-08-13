@@ -28,5 +28,9 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
+
+    List<Usuario> buscarPorNombreUsuario(String nombre);
+
+
     
 }
