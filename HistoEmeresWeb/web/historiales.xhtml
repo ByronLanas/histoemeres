@@ -1,13 +1,58 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     
+    <h:form>
+        <p:growl id="growl" showDetail="true" sticky="true" />
+        <p:panelGrid styleClass="grid" columns="8">
+            <p:selectOneMenu label="tipo de grafico" required="true" value="#{managedBeanHistorial.tipoGrafico}">  
+                <f:selectItem itemLabel="Tipo de gráfico" itemValue="" />  
+                <!--<f:selectItem itemLabel="Torta" itemValue="1" /> --> 
+                <f:selectItem itemLabel="Barras" itemValue="2" />  
+                <!--<f:selectItem itemLabel="Histograma" itemValue="3" />  -->
+            </p:selectOneMenu> 
+            <p:selectOneMenu label="tipo de historial" required="true" value="#{managedBeanHistorial.tipoHistorial}">  
+                <f:selectItem itemLabel="Tipo de historial" itemValue="" />  
+                <f:selectItem itemLabel="Aportes v/s Ventas" itemValue="1" />  
+            </p:selectOneMenu>
+            <p:selectOneMenu label="tipo de periodo" required="true" value="#{managedBeanHistorial.tipoPeriodo}">  
+                <f:selectItem itemLabel="Tipo de periodo" itemValue="" />  
+                <f:selectItem itemLabel="Mensual" itemValue="1" />  
+
+            </p:selectOneMenu> 
+           <p:fieldset styleClass="periodo"  legend="periodo">
+               <p:panelGrid styleClass="periodo" columns="4">
+                    <h:outputLabel value="Inicio:"/>
+                    <p:calendar label="inicio" required="true" value="#{managedBeanHistorial.inicio}" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
+                    <h:outputLabel  value="Fin:"/>
+                    <p:calendar label="fin" required="true" value="#{managedBeanHistorial.fin}" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
+                </p:panelGrid>
+            </p:fieldset>
+            <f:facet name="footer" >
+                <p:commandButton onclick="lazyload();" update="growl"  value="Generar gráfico" actionListener="#{managedBeanHistorial.generarGrafico}" style="margin-left: 45% "/>
+            </f:facet>
+
+        </p:panelGrid>
+ 
+        
+        <p:outputPanel style="margin-top: 20px;" id="lazychart" layout="block">  
+            <p:barChart id="grafico" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
+                        title="Aportes V/S Ventas" min="0" max="200" style="height:300px; width: 500px; margin-left: 25%" 
+                        xaxisLabel="Mes" yaxisLabel="Valor ($)" rendered="#{requestScope.shouldRender}"/>
+        </p:outputPanel>  
+              
+        <p:remoteCommand name="lazyload" update="lazychart">  
+            <f:setPropertyActionListener value="#{true}"   
+                target="#{requestScope.shouldRender}" />  
+        </p:remoteCommand> 
+    </h:form>
     
-    <p:pieChart id="sample" value="#{managedBeanHistorial.pieModel}" legendPosition="w"  
-                title="Sample Pie Chart" style="width:400px;height:300px" />
+ 
+ 
     
 </html>
 
