@@ -122,7 +122,7 @@ public class ManagedBeanAporte {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aporte ingresado con éxito", "El aporte de la municipalidad de: "+municipio+ " fue ingresado con éxito"));
         }
         else
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"El aporte no fue ingresado", "El aporte de la municipalidad de: "+municipio+ " ya había sido ingresado"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"El aporte no fue ingresado", "El aporte de la municipalidad de: "+municipio+ " ya había sido ingresado"));
         
     }
 }
