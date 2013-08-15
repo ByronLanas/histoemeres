@@ -5,7 +5,22 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    
-    aqui listan los aportes
+
+    <h:form>  
+        <p:dataTable var="aporte" value="#{managedBeanAporte.aportes}">  
+            <p:column headerText="Muncipio">  
+                <h:outputText value="#{aporte.getAportePK().getMunicipioAporte()}" />  
+            </p:column>       
+
+            <p:column headerText="Valor">  
+                <h:outputText value="#{aporte.getValorAporte()}" />  
+            </p:column> 
+
+            <p:column headerText="Fecha">  
+                <h:outputText value="#{Herramientas.fechaConDia()}" />  
+            </p:column>  
+  
+        </p:dataTable>  
+    </h:form>  
 </html>
 

@@ -8,18 +8,27 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  *
  * @author Battousai
  */
-@Named(value = "encriptarMD5")
+@Named(value = "Herramientas")
 @RequestScoped
-public class EncriptarMD5 {
+public class Herramientas {
 
-    /**
-     * Creates a new instance of EncriptarMD5
-     */
-    public EncriptarMD5() {
+    SimpleDateFormat format;
+    public Herramientas() {
+    }
+    public String fechaConDia(){
+        Date fecha=new Date();
+        format=new SimpleDateFormat("yyyy-MM-dd") ;
+        return format.format(fecha);
+    }
+    public String fechaSinDia(Date fecha){
+        format=new SimpleDateFormat("yyyy-MM") ;
+        return format.format(fecha);
     }
     
     private static final char[] CONSTS_HEX = { '0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f' };

@@ -26,7 +26,7 @@
 
 
                 <h:form>
-                    <p:growl id="growl"  sticky="true" />                     
+                    <p:growl id="growl"   life="5000" />                     
                     <p:panelGrid style="float: right; margin-right: 30px; border: 1px solid #AFAFAF" columns="2" >
                         <f:facet name="header">
                             Login
@@ -36,7 +36,7 @@
                         <p:outputLabel value="Contraseña:"></p:outputLabel>
                         <p:inputText label="Contraseña" value="#{managedBeanLogin.contraseña}" requiredMessage="La contraseña ingresada no corresponde" required="true"/>
                         <f:facet name="footer"> 
-                            <p:commandButton value="Ingresar" update="growl"  actionListener="#{managedBeanLogin.logear(actionEvent)}"  style="margin-top: 15px; float:right" />
+                            <p:commandButton value="Ingresar" update="growl"  action="#{managedBeanMenu.irMenu('historiales')}"  style="margin-top: 15px; float:right" />
                         </f:facet>
                     </p:panelGrid>
 

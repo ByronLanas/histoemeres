@@ -62,8 +62,8 @@ public class ManagedBeanUsuario {
     
     public void nuevoUsuario(){
         Usuario usuario;
-        EncriptarMD5 encripta;
-        encripta=new EncriptarMD5();
+        Herramientas encripta;
+        encripta=new Herramientas();
         usuario = new Usuario(null, nombre, "admin", encripta.encriptaEnMD5( contraseña));
         usuarioFacade.create(usuario);
         
