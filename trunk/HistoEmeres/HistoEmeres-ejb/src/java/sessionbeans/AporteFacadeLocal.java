@@ -28,5 +28,7 @@ public interface AporteFacadeLocal {
     List<Aporte> findRange(int[] range);
 
     int count();
+
+    boolean buscarAporte(Aporte aporte);
     
 }

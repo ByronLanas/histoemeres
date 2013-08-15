@@ -4,6 +4,8 @@
  */
 package sessionbeans;
 
+import entities.Aporte;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 
@@ -14,8 +16,17 @@ import javax.ejb.LocalBean;
 @Stateless
 @LocalBean
 public class SessionBeanFinanaciero {
+    @EJB
+    private EgresoFacadeLocal egresoFacade;
+    @EJB
+    private SessionBeanIngreso sessionBeanIngreso;
 
-    public static SessionBeanIngreso ingreso;
-    public EgresoFacade egreso;
 
+    
+    public boolean insertarAporte(Aporte aporte) {
+        if( sessionBeanIngreso.verificarAporte(aporte))
+            return true;
+        else
+            return false;
+    }
 }

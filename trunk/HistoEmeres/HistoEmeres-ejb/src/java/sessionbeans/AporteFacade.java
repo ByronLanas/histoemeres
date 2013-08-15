@@ -8,6 +8,7 @@ import entities.Aporte;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,5 +27,16 @@ public class AporteFacade extends AbstractFacade<Aporte> implements AporteFacade
     public AporteFacade() {
         super(Aporte.class);
     }
+
+    @Override
+    public boolean buscarAporte(Aporte aporte) {
+        Query query;
+        query= em.createNamedQuery("Aporte.findByMunicipioFechaMunicipalidad").setParameter("municipioAporte", aporte.getAportePK().getMunicipioAporte()).setParameter("fechaMunicipalidad", aporte.getAportePK().getFechaMunicipalidad());
+        if(query.getResultList().isEmpty())
+            return true;
+        else            
+            return false;
+    }
+
     
 }
