@@ -68,13 +68,13 @@ public class ManagedBeanLogin {
         List<Usuario> usuarios;
         usuarios = usuarioFacade.buscarPorNombreUsuario(nombre);
         Iterator<Usuario> it = usuarios.iterator();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El usario ingresado fue: " + it.next().getNombreUsuario())); //usuario no existe
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El usuario ingresado fue: " + it.next().getNombreUsuario())); //usuario no existe
         if (usuarios.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El usario ingresado no existe")); //usuario no existe
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El usuario ingresado no existe")); //usuario no existe
         } else if (it.next().getContrasenaUsuario() == contraseña) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El usario ingresado no existe")); //usuario no existe
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El usuario ingresado no existe")); //usuario no existe
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El usario ingresado no existe")); //usuario no existe
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El usuario ingresado no existe")); //usuario no existe
         }
     }
 }

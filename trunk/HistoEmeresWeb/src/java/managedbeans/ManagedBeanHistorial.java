@@ -166,7 +166,7 @@ public class ManagedBeanHistorial implements Serializable{
             aporte=it.next();
             contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
         }
-                 
+                
         ChartSeries sales = new ChartSeries();  
         sales.setLabel("Ventas");  
   
