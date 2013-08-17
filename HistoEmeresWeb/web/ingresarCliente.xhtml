@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:form>
+        <p:growl life="3000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:panelGrid columns="2">
+
+            <f:facet name="header">
+                Ingresar nuevo cliente
+            </f:facet>
+            <h:outputText value="Rut cliente "/>
+            <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanCliente.rut_cliente}" />
+            <h:outputText value="Nombre de Cliente "/>
+            <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanCliente.nombre_cliente}"/>
+            <f:facet name="footer">
+                <p:commandButton  style="float: right" value="Ingresar" action="#{managedBeanCliente.insertarCliente}" />
+            </f:facet>
+        </p:panelGrid>        
+        <p:watermark for="rut" value="Rut sin puntos ni guión" />
+        <p:watermark for="nombre" value="Ingrese nombre del cliente" />
+
+    </h:form>
+</html>
+

@@ -65,7 +65,7 @@ PrimeFaces.locales['es'] = {
 
                 <p:layoutUnit id="east" styleClass="layout east" position="east" size="245" >
                     <h:panelGrid id="banner" columns="1"  style="margin: 80px 0px; padding: 0px">
-                        <p:clock id="reloj"  pattern="HH:mm:ss"/>
+                        <!--<p:clock id="reloj"  pattern="HH:mm:ss"/>-->
                         <p:calendar  mode="Inline" title="Calendario"  size="150" pattern="" timeZone="Santiago/Chile" locale="es" ></p:calendar>
                         
                     </h:panelGrid>
@@ -86,8 +86,8 @@ PrimeFaces.locales['es'] = {
                             </p:submenu> 
                             <p:submenu label="Clientes" icon="ui-icon-gear">  
 
-                                <p:menuitem value="Ver clientes"  icon="ui-icon-disk" />  
-                                <p:menuitem value="Ingresar clientes"  icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Ver clientes"  icon="ui-icon-disk" action="#{managedBeanMenu.irMenu('mostrarClientes')}" />  
+                                <p:menuitem value="Ingresar clientes"  icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('ingresarCliente')}"/>  
                                 <p:menuitem value="Modificar clientes" icon="ui-icon-arrowrefresh-1-w" />  
                             </p:submenu> 
                             <p:submenu label="Ventas" icon="ui-icon-gear">  
