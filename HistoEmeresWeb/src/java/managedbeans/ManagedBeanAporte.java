@@ -103,7 +103,7 @@ public class ManagedBeanAporte {
     @PostConstruct
     public void init(){
         aportes=aporteFacade.findAll();
-        
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         
     }
 
