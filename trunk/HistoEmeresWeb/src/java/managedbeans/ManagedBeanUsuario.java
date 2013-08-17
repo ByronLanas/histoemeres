@@ -5,7 +5,9 @@
 package managedbeans;
 
 import entities.Usuario;
+import java.util.List;
 import java.util.Properties;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -34,7 +36,25 @@ public class ManagedBeanUsuario {
     private String tipo;
     private String contraseña;
     private int codigo;
+    private Usuario usuario;
+    private List<Usuario> usuarios;
     private String correo;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
             
     public ManagedBeanUsuario() {
     }
@@ -77,6 +97,11 @@ public class ManagedBeanUsuario {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+    
+    @PostConstruct
+    public void init(){
+        usuarios = usuarioFacade.findAll();
     }
     
     public void nuevoUsuario(){

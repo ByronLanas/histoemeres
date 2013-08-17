@@ -4,21 +4,16 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
+    
     <h:form>  
-        <p:dataTable var="aporte" value="#{managedBeanAporte.aportes}">  
-            <p:column headerText="Muncipio">  
-                <h:outputText value="#{aporte.getAportePK().getMunicipioAporte()}" />  
+        <p:dataTable var="usuario" value="#{managedBeanUsuario.usuarios}">  
+            <p:column headerText="Nombre">  
+                <h:outputText value="#{usuario.getNombreUsuario()}" />  
             </p:column>       
 
-            <p:column headerText="Valor">  
-                <h:outputText value="#{aporte.getValorAporte()}" />  
+            <p:column headerText="Tipo">  
+                <h:outputText value="#{usuario.getTipoUsuario()}" />  
             </p:column> 
-
-            <p:column headerText="Fecha">  
-                <h:outputText value="#{Herramientas.fechaConDia()}" />  
-            </p:column>  
-
         </p:dataTable>  
     </h:form>
 </html>
