@@ -7,6 +7,7 @@ package managedbeans;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 /**
@@ -22,10 +23,8 @@ public class ManagedBeanMenu {
     public ManagedBeanMenu() {
     }
     public void irMenu(String pagina) throws IOException{
-        if(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath().indexOf("faces")>0){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("histoemeres.xhtml");
-        }else
-            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/histoemeres.xhtml");
+        
+        FacesContext.getCurrentInstance().getExternalContext().redirect("histoemeres.xhtml");
         
         setPagina(pagina);
     }
