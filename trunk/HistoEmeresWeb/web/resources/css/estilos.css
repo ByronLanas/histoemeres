@@ -9,7 +9,58 @@
 root { 
     display: block;
 }
+.historiales-icon{
+    background-image: url('imagenes/diagram_16.png') !important;
+}
+.usuarios-icon{
+    background-image: url('imagenes/user_16.png') !important;
+}
+.ingresar-icon{
+    background-image: url('imagenes/plus_16.png') !important;
+}
+.modificar-icon{
+    background-image: url('imagenes/edit.png') !important;
+}
+.eliminar-icon{
+    background-image: url('imagenes/delete_16.png') !important;
+}
+.aportes-icon{
+    background-image: url('imagenes/dollar_currency_sign.png') !important;
+}
+.ingresar-user-icon{
+    background-image: url('imagenes/add_user.png') !important;
+}
+.modificar-user-icon{
+    background-image: url('imagenes/edit_profile.png') !important;
+}
+.ver-user-icon{
+    background-image: url('imagenes/search_user.png') !important;
+}
+.ventas-icon{
+    background-image: url('imagenes/shopping_cart.png') !important;
+}
+.eliminar-user-icon{
+    background-image: url('imagenes/delete_user.png') !important;
+}
 
+.ver-icon{
+    background-image: url('imagenes/search_16.png') !important;
+}
+.egresos-icon{
+    background-image: url('imagenes/down_arrow.png') !important;
+}
+.aportes-icon{
+    background-image: url('imagenes/Coins_Icon_16.png') !important;
+}
+.clientes-icon{
+    background-image: url('imagenes/Folder_customer_Icon_16.png') !important;
+}
+.productos-icon{
+    background-image: url('imagenes/Box_Icon_16.png') !important;
+}
+.ui-menu .ui-menu-parent .ui-menu-child{
+    width: 17.9em !important
+}
 
 .header{
     
