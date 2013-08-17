@@ -22,7 +22,11 @@ public class ManagedBeanMenu {
     public ManagedBeanMenu() {
     }
     public void irMenu(String pagina) throws IOException{
-        FacesContext.getCurrentInstance().getExternalContext().redirect("histoemeres.xhtml");
+        if(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath().indexOf("faces")>0){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("histoemeres.xhtml");
+        }else
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/histoemeres.xhtml");
+        
         setPagina(pagina);
     }
     public String getPagina() {
