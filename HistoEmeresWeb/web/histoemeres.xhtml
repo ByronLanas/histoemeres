@@ -74,6 +74,7 @@ PrimeFaces.locales['es'] = {
                 
                 <p:layoutUnit id="center" styleClass="layout " position="center" size="500" >
                     <h:form> 
+                        <p:growl life="2000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
                         <p:menubar styleClass="menu" autoDisplay="false">  
                             <p:menuitem value="Historiales" action="#{managedBeanMenu.irMenu('historiales')}" icon="" />
 
