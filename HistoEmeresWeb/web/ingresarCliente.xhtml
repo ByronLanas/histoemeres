@@ -5,24 +5,24 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:form>
-        <p:growl life="3000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
-        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
-        <p:panelGrid columns="2">
+            <p:growl life="3000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+            <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+            <p:panelGrid id="panelCliente" columns="2">
 
-            <f:facet name="header">
-                Ingresar nuevo cliente
-            </f:facet>
-            <h:outputText value="Rut cliente "/>
-            <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanCliente.rut_cliente}" />
-            <h:outputText value="Nombre de Cliente "/>
-            <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanCliente.nombre_cliente}"/>
-            <f:facet name="footer">
-                <p:commandButton  style="float: right" value="Ingresar" action="#{managedBeanCliente.insertarCliente}" />
-            </f:facet>
-        </p:panelGrid>        
+                <f:facet name="header">
+                    Ingresar nuevo cliente
+                </f:facet>
+                <h:outputText value="Rut cliente "/>
+                <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanCliente.rut_cliente}" />
+                <h:outputText value="Nombre de Cliente "/>
+                <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanCliente.nombre_cliente}"/>
+                <f:facet name="footer">
+                    <p:commandButton update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanCliente.insertarCliente}" icon="ui-icon-check" />
+                </f:facet>
+            </p:panelGrid>    
         <p:watermark for="rut" value="Rut sin puntos ni guión" />
         <p:watermark for="nombre" value="Ingrese nombre del cliente" />
-
+        <p:blockUI block="panelCliente" trigger="botonIngresar" />
     </h:form>
 </html>
 
