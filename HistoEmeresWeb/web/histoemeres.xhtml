@@ -76,44 +76,45 @@ PrimeFaces.locales['es'] = {
                     <h:form> 
                         <p:growl life="2000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
                         <p:menubar styleClass="menu" autoDisplay="false">  
-                            <p:menuitem value="Historiales" action="#{managedBeanMenu.irMenu('historiales')}" icon="" />
+                            <p:menuitem value="Historiales" action="#{managedBeanMenu.irMenu('historiales')}"  icon="historiales-icon" />
 
-                            <p:submenu label="Aportes" icon="ui-icon-gear">  
+                            <p:submenu label="Aportes" icon="aportes-icon">  
 
-                                <p:menuitem value="Ver aportes"  icon="ui-icon-disk" action="#{managedBeanMenu.irMenu('mostrarAportes')}" />  
-                                <p:menuitem value="Ingresar aportes"  icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('ingresarAportes')}"/>  
-                                <p:menuitem value="Modificar aportes" icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('modificarAportes')}"/>  
+                                <p:menuitem value="Ver aportes"  icon="ver-icon" action="#{managedBeanMenu.irMenu('mostrarAportes')}" />  
+                                <p:menuitem value="Ingresar aportes"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarAportes')}"/>  
+                                <p:menuitem value="Modificar aportes" icon="modificar-icon" action="#{managedBeanMenu.irMenu('modificarAportes')}"/>  
                             </p:submenu> 
-                            <p:submenu label="Clientes" icon="ui-icon-gear">  
+                            <p:submenu label="Clientes" icon="clientes-icon">  
 
-                                <p:menuitem value="Ver clientes"  icon="ui-icon-disk" action="#{managedBeanMenu.irMenu('mostrarClientes')}" />  
-                                <p:menuitem value="Ingresar clientes"  icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('ingresarCliente')}"/>  
+
+                                <p:menuitem value="Ver clientes"  icon="ver-icon" action="#{managedBeanMenu.irMenu('mostrarClientes')}" />  
+                                <p:menuitem value="Ingresar clientes"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarCliente')}"/>  
                             </p:submenu> 
-                            <p:submenu label="Ventas" icon="ui-icon-gear">  
+                            <p:submenu label="Ventas" icon="ventas-icon">  
 
-                                <p:menuitem value="Ver ventas"  icon="ui-icon-disk" />  
-                                <p:menuitem value="Ingresar ventas"  icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('ingresarVentas')}"/>  
-                                <p:menuitem value="Modificar ventas" icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Ver ventas"  icon="ver-icon" />  
+                                <p:menuitem value="Ingresar ventas"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarVentas')}"/>  
+                                <p:menuitem value="Modificar ventas" icon="modificar-icon" />  
                             </p:submenu>
-                            <p:submenu label="Productos" icon="ui-icon-gear">  
+                            <p:submenu label="Productos" icon="productos-icon">  
 
-                                <p:menuitem value="Ver productos"  icon="ui-icon-disk" />  
-                                <p:menuitem value="Ingresar productos"  icon="ui-icon-arrowrefresh-1-w" />  
-                                <p:menuitem value="Modificar productos" icon="ui-icon-arrowrefresh-1-w" />  
-                                <p:menuitem value="Eliminar productos" icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Ver productos"  icon="ver-icon" />  
+                                <p:menuitem value="Ingresar productos"  icon="ingresar-icon" />  
+                                <p:menuitem value="Modificar productos" icon="modificar-icon" />  
+                                <p:menuitem value="Eliminar productos" icon="eliminar-icon" />  
                             </p:submenu>
-                            <p:submenu label="Egresos" icon="ui-icon-gear">  
+                            <p:submenu label="Egresos" icon="egresos-icon">  
 
-                                <p:menuitem value="Ver egresos"  icon="ui-icon-disk" />  
-                                <p:menuitem value="Ingresar egresos"  icon="ui-icon-arrowrefresh-1-w" />  
-                                <p:menuitem value="Modificar egresos" icon="ui-icon-arrowrefresh-1-w" />  
+                                <p:menuitem value="Ver egresos"  icon="ver-icon" />  
+                                <p:menuitem value="Ingresar egresos"  icon="ingresar-icon" />  
+                                <p:menuitem value="Modificar egresos" icon="modificar-icon" />  
                             </p:submenu>
-                            <p:submenu label="Usuarios" icon="ui-icon-gear">  
+                            <p:submenu label="Usuarios" icon="usuarios-icon">  
 
-                                <p:menuitem value="Ver usuarios"  icon="ui-icon-disk" action="#{managedBeanMenu.irMenu('mostrarUsuario')}"/>  
-                                <p:menuitem value="Ingresar usuarios"  icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('ingresarUsuario')}"/>  
-                                <p:menuitem value="Modificar usuarios" icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('modificarUsuario')}"/>  
-                                <p:menuitem value="Eliminar usuarios" icon="ui-icon-arrowrefresh-1-w" action="#{managedBeanMenu.irMenu('eliminarUsuario')}"/>  
+                                <p:menuitem value="Ver usuarios"  icon="ver-user-icon" action="#{managedBeanMenu.irMenu('mostrarUsuario')}"/>  
+                                <p:menuitem value="Ingresar usuarios"  icon="ingresar-user-icon" action="#{managedBeanMenu.irMenu('ingresarUsuario')}"/>  
+                                <p:menuitem value="Modificar usuarios" icon="modificar-user-icon" action="#{managedBeanMenu.irMenu('modificarUsuario')}"/>  
+                                <p:menuitem value="Eliminar usuarios" icon="eliminar-user-icon" action="#{managedBeanMenu.irMenu('eliminarUsuario')}"/>  
                             </p:submenu>
 
                         </p:menubar> 

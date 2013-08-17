@@ -13,17 +13,17 @@
                 Ingresar nuevo aporte
             </f:facet>
             <h:outputText value="Municipalidad: "/>
-            <p:selectOneMenu value="#{managedBeanAporte.municipio}">
+            <p:selectOneMenu required="true" value="#{managedBeanAporte.municipio}">
                 <f:selectItem itemLabel="Municipios" itemValue=""/>
                 <f:selectItem itemLabel="La Florida" itemValue="La Florida"/>
                 <f:selectItem itemLabel="Estacion Central" itemValue="Estacion Central"/>
             </p:selectOneMenu>
             <h:outputText value="Aporte: "/>
-            <p:inputText required="true"  value ="#{managedBeanAporte.valor}"/>
+            <p:inputText required="true" value ="#{managedBeanAporte.valor}"/>
             <h:outputText value="Fecha"/>
             <p:calendar navigator="true" locale="es" value="#{managedBeanAporte.fecha}"/>
             <f:facet name="footer">
-                <p:commandButton  style="float: right" value="Ingresar" action="#{managedBeanAporte.insertarAporte}" />
+                <p:commandButton icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanAporte.insertarAporte}" />
             </f:facet>
         </p:panelGrid>
     </h:form>
