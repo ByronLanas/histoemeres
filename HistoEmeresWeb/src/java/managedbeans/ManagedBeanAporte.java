@@ -104,6 +104,7 @@ public class ManagedBeanAporte {
     public void init(){
         aportes=aporteFacade.findAll();
         
+        
     }
 
     public AportePK getPk() {
