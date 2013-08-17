@@ -4,7 +4,27 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
-aqui ingresan nuevo usuario
+    <h:form>
+        <p:growl life="2000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:panelGrid columns="2">
+
+            <f:facet name="header">
+                Ingresar nuevo usuario
+            </f:facet>
+            <h:outputText value="Nombre: " />
+            <p:inputText required="true" value="#{managedBeanUsuario.nombre}"/>
+            <h:outputText value="Tipo: "/>
+            <p:selectOneMenu value="#{managedBeanUsuario.tipo}">
+                <f:selectItem itemLabel="Empleado" itemValue="empleado"/>
+                <f:selectItem itemLabel="Administrador" itemValue="admin"/>
+            </p:selectOneMenu>
+            <h:outputText value="Email: "/>
+            <p:inputText required="true" value="#{managedBeanUsuario.correo}"/>
+            <f:facet name="footer">
+                <p:commandButton  style="float: right" value="Ingresar" action="#{managedBeanUsuario.nuevoUsuario()}" />
+            </f:facet>
+        </p:panelGrid>
+    </h:form>
 </html>
 
