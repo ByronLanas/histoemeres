@@ -34,9 +34,28 @@ public class ManagedBeanCliente {
     private String nombre_cliente;
     private List<Cliente> clientes;
     private Cliente cliente;
+    private Cliente selectedCliente;
+    private List<Cliente> clientesFiltrados;
 
     public Cliente getCliente() {
         return cliente;
+    }
+
+    public List<Cliente> getClientesFiltrados() {
+        return clientesFiltrados;
+    }
+
+    public void setClientesFiltrados(List<Cliente> clientesFiltrados) {
+        this.clientesFiltrados = clientesFiltrados;
+    }
+
+    public Cliente getSelectedCliente() {
+        return selectedCliente;
+        
+    }
+
+    public void setSelectedCliente(Cliente selectedCliente) {
+        this.selectedCliente = selectedCliente;
     }
 
     public void setCliente(Cliente cliente) {
@@ -76,7 +95,7 @@ public class ManagedBeanCliente {
         FacesContext context = FacesContext.getCurrentInstance();
         cliente = new Cliente(rut_cliente, nombre_cliente);
         if (sessionBeanComercial.insertarCliente(cliente)) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente ingresado con éxito", "El cliente : " + cliente.getNombreCliente() + ": "+ cliente.getRutCliente() + " fue ingresado con éxito"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente ingresado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue ingresado con éxito"));
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue ingresado", "El cliente: " + cliente + " ya había sido ingresado"));
         }
