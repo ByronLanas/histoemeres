@@ -31,9 +31,9 @@
                         <f:facet name="header">
                             Login
                         </f:facet>
-                        <p:outputLabel  value="Nombre:"></p:outputLabel>
+                        <h:outputLabel  value="Nombre:"></h:outputLabel>
                         <p:inputText label="Nombre" value="#{managedBeanLogin.nombre}" requiredMessage="El usuario no se encuentra registrado en el sistema" required="true"/>
-                        <p:outputLabel value="Contraseña:"></p:outputLabel>
+                        <h:outputLabel value="Contraseña:"></h:outputLabel>
                         <p:inputText label="Contraseña" value="#{managedBeanLogin.contraseña}" requiredMessage="La contraseña ingresada no corresponde" required="true"/>
                         <f:facet name="footer"> 
                             <p:commandButton value="Ingresar" update="growl"  actionListener="#{managedBeanLogin.logear(actionEvent)}"  style="margin-top: 15px; float:right" />
