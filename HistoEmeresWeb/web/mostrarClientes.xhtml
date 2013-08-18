@@ -12,10 +12,13 @@
                      rows="20" rowsPerPageTemplate="10,20,50,100" style="width: 70%" var="cliente" value="#{managedBeanCliente.clientes}"
                      selection="#{managedBeanCliente.selectedCliente}" selectionMode="single" emptyMessage="No se encontraron resultados."
                      filteredValue="#{managedBeanCliente.clientesFiltrados}">  
+            
+            <p:ajax event="rowSelect" update=":form:display"/>
+            
             <p:column  headerText="Rut" sortBy="#{cliente.rutCliente()}" filterBy="#{cliente.rutCliente}">
-                #{cliente.rutCliente}
+                #{ cliente.rutCliente.toString().substring(0,cliente.rutCliente.toString().length()-1)}-#{ cliente.rutCliente.toString().substring(cliente.rutCliente.toString().length()-1)}
             </p:column>       
-
+            
             <p:column headerText="Nombre" sortBy="#{cliente.nombreCliente.toLowerCase()}" filterBy="#{cliente.nombreCliente}">  
                 #{cliente.nombreCliente} 
             </p:column>  
@@ -27,7 +30,7 @@
                   width="300" showEffect="clip" hideEffect="fold">
             <h:panelGrid id="display" columns="2">
                 <h:outputText value="Rut cliente: "/>
-                <h:outputText value="#{managedBeanCliente.selectedCliente.nombreCliente}" />
+                <h:outputText value="#{ managedBeanCliente.selectedCliente.rutCliente.toString().substring(0,managedBeanCliente.selectedCliente.rutCliente.toString().length()-1)}-#{ managedBeanCliente.selectedCliente.rutCliente.toString().substring(managedBeanCliente.selectedCliente.rutCliente.toString().length()-1)}" />
                 <h:outputText value="Nombre cliente: " />
                 <p:inputText value="#{managedBeanCliente.selectedCliente.nombreCliente}" />
                 <f:facet name="footer" >
