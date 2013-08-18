@@ -13,13 +13,16 @@
             <p:selectOneMenu label="tipo de historial" required="true" value="#{managedBeanHistorial.tipoHistorial}">  
                 <f:selectItem itemLabel="Tipo de historial" itemValue="" />  
                 <f:selectItem itemLabel="Aportes v/s Ventas" itemValue="1" />
-                <f:selectItem itemLabel="Aportes por municipio" itemValue="2" />
+                <f:selectItem itemLabel="Aportes totales" itemValue="2" />
+                <f:selectItem itemLabel="Aportes por municipio" itemValue="3" />
             </p:selectOneMenu>
-            <p:selectOneMenu label="tipo de grafico" required="true" value="#{managedBeanHistorial.tipoGrafico}">  
+            <p:selectOneMenu  label="tipo de grafico" required="true" value="#{managedBeanHistorial.tipoGrafico}">  
                 <f:selectItem itemLabel="Tipo de gráfico" itemValue="" />  
-                <!--<f:selectItem itemLabel="Torta" itemValue="1" /> --> 
-                <f:selectItem itemLabel="Barras" itemValue="2" />  
-                <!--<f:selectItem itemLabel="Histograma" itemValue="3" />  -->
+                <f:selectItem itemLabel="Barras" itemValue="1" />  
+                <f:selectItem itemLabel="Histograma" itemValue="2" />
+                <p:ajax update="boton"/>
+                
+                
             </p:selectOneMenu>
             <p:selectOneMenu label="tipo de periodo" required="true" value="#{managedBeanHistorial.tipoPeriodo}">  
                 <f:selectItem itemLabel="Tipo de periodo" itemValue="" />  
@@ -33,20 +36,30 @@
                     <p:calendar label="fin" required="true" value="#{managedBeanHistorial.fin}" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
                 </p:panelGrid>
             </p:fieldset>
+
             <f:facet name="footer" >
-                <p:commandButton onclick="lazyload();" update="growl"  value="Generar gráfico" actionListener="#{managedBeanHistorial.generarGrafico}" style="margin-left: 45% "/>
+                <p:commandButton id='boton' oncomplete="lazyload#{managedBeanHistorial.tipoGrafico}();" update="growl,grafico2,grafico1"  value="Generar gráfico" actionListener="#{managedBeanHistorial.generarGrafico}" style="margin-left: 45% "/>
             </f:facet>
 
         </p:panelGrid>
 
 
-        <p:outputPanel style="margin-top: 20px;" id="lazychart" layout="block">  
-            <p:barChart id="grafico" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
-                        title="Aportes V/S Ventas" min="0" max="200" style="height:300px; width: 500px; margin-left: 25%" 
-                        xaxisLabel="Mes"  yaxisLabel="Valor ($)" rendered="#{requestScope.shouldRender}"/>
+        <p:outputPanel style="margin-top: 20px;" id="grafico1" layout="block">  
+            <p:barChart   id="graficoBarra" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
+                        title="#{managedBeanHistorial.titulo}" min="0"  style="height:300px; width: 500px; margin-left: 25%" 
+                        xaxisLabel="#{managedBeanHistorial.xLabel}"  yaxisLabel="#{managedBeanHistorial.yLabel}" rendered="#{requestScope.shouldRender}"/>
+        </p:outputPanel> 
+        <p:outputPanel style="margin-top: 20px;" id="grafico2" layout="block">  
+            <p:lineChart widgetVar="graficoLinea" id="graficoLinea" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
+                         title="#{managedBeanHistorial.titulo}"   style="height:300px; width: 500px; margin-left: 25%" 
+                         xaxisLabel="#{managedBeanHistorial.xLabel}"  yaxisLabel="#{managedBeanHistorial.yLabel}" rendered="#{requestScope.shouldRender}"/>
         </p:outputPanel>  
 
-        <p:remoteCommand name="lazyload" update="lazychart">  
+        <p:remoteCommand  name="lazyload2" update="grafico2">  
+            <f:setPropertyActionListener value="#{true}"   
+                                         target="#{requestScope.shouldRender}" />  
+        </p:remoteCommand>
+        <p:remoteCommand name="lazyload1" update="grafico1">  
             <f:setPropertyActionListener value="#{true}"   
                                          target="#{requestScope.shouldRender}" />  
         </p:remoteCommand> 

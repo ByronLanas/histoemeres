@@ -96,6 +96,7 @@ public class ManagedBeanLogin implements Serializable {
         context = FacesContext.getCurrentInstance();
         if (validarNombre() && validarContraseña()) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido "+nombre+":","Inicio de sesión satisfactorio"));
+            context.getExternalContext().getFlash().setKeepMessages(true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", nombre);
             ManagedBeanMenu mngbn = new ManagedBeanMenu();
             mngbn.irMenu("historiales");
