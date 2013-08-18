@@ -5,11 +5,13 @@
 package managedbeans;
 
 import entities.Cliente;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import sessionbeans.ClienteFacadeLocal;
@@ -20,8 +22,8 @@ import sessionbeans.SessionBeanComercial;
  * @author Battousai
  */
 @Named(value = "managedBeanCliente")
-@RequestScoped
-public class ManagedBeanCliente {
+@SessionScoped
+public class ManagedBeanCliente implements Serializable{
 
     @EJB
     private SessionBeanComercial sessionBeanComercial;
@@ -36,6 +38,7 @@ public class ManagedBeanCliente {
     private Cliente cliente;
     private Cliente selectedCliente;
     private List<Cliente> clientesFiltrados;
+    
 
     public Cliente getCliente() {
         return cliente;
