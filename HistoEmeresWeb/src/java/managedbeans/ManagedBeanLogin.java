@@ -31,6 +31,7 @@ public class ManagedBeanLogin implements Serializable {
     private Usuario usuario;
     private String contraseña;
     private String nombre;
+    FacesContext context;
 
     public ManagedBeanLogin() {
     }
@@ -63,28 +64,43 @@ public class ManagedBeanLogin implements Serializable {
         this.nombre = nombre;
     }
 
-    public void logear(ActionEvent actionEvent) throws IOException {
-        usuario = new Usuario();
-        usuario.setContrasenaUsuario(contraseña);
-        usuario.setNombreUsuario(nombre);
-        List<Usuario> usuarios;
-        usuarios = usuarioFacade.buscarPorNombreUsuario(nombre);
-        Iterator<Usuario> it = usuarios.iterator();
+    public boolean validarNombre(){
+        context = FacesContext.getCurrentInstance();
+        if (nombre.isEmpty()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falta información:", "Nombre no ingresado"));
+            return false;
+        }
+        if (usuarioFacade.buscarPorNombreUsuario(nombre).isEmpty()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nombre incorrecto:", "Verificar nombre si fue ingresado correctamente"));
+            return false;
+        }
 
-        if (usuarios.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("")); //usuario no existe
-        } else if (it.next().getContrasenaUsuario() == contraseña) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("")); //login exitoso
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("")); //contraseña incorrecta
-            
-            //lo q sigue debe ir en la condicion anterior de login exitoso
-            
+        return true;
+    }
+    
+    public boolean validarContraseña(){
+        context = FacesContext.getCurrentInstance();
+        Herramientas encripta = new Herramientas();
+        if (contraseña.isEmpty()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falta información:", "Contraseña no ingresada"));
+            return false;
+        }
+        if(usuarioFacade.buscarPorNombreUsuario(nombre).get(0).getContrasenaUsuario().compareTo(encripta.encriptaEnMD5(contraseña))!=0){
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Contraseña incorrecta:", "Verificar contraseña si fue ingresada correctamente"));
+            return false;
+        }
+        return true;
+    }
+
+    public void logear() throws IOException {
+        context = FacesContext.getCurrentInstance();
+        if (validarNombre() && validarContraseña()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido "+nombre+":","Inicio de sesión satisfactorio"));
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", nombre);
             ManagedBeanMenu mngbn = new ManagedBeanMenu();
-
             mngbn.irMenu("historiales");
-
         }
+
+
     }
 }
