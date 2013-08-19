@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.Cliente;
+import entities.Producto;
 import java.sql.SQLException;
 import javax.ejb.DuplicateKeyException;
 import javax.ejb.EJB;
@@ -18,9 +19,12 @@ import javax.ejb.LocalBean;
 @Stateless
 @LocalBean
 public class SessionBeanComercial {
+    @EJB
+    private ProductoFacadeLocal productoFacade;
 
     @EJB
     private ClienteFacadeLocal clienteFacade;
+    
     ClienteFacade cliente;
     VentaFacade venta;
     ProductoFacade producto;
@@ -30,6 +34,14 @@ public class SessionBeanComercial {
             clienteFacade.create(cliente);
             return true;
         } catch (Exception e) {
+            return false;
+        }
+    }
+    public boolean insertarProducto(Producto producto){
+        try{
+            productoFacade.create(producto);
+            return true;
+        } catch(Exception e){
             return false;
         }
     }
