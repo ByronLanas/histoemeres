@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:form>
+        <p:growl life="5000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:panelGrid columns="2">
+            <f:facet name="header">
+                Ingresar nuevo Producto
+            </f:facet>
+            <h:outputText value="Nombre: "/>
+            <p:inputText required="true" requiredMessage="Campo 'Nombre' no completado"  value="#{managedBeanProducto.nombre_producto}"/>
+            <h:outputText value="Valor: " />
+            <p:inputText required="true" requiredMessage="Campo 'Valor' no completado" value="#{managedBeanProducto.valor_producto}"/>
+            <f:facet name="footer">
+                <p:commandButton icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanProducto.insertarProducto()}" />
+            </f:facet>
+        </p:panelGrid>
+    </h:form>
+</html>
