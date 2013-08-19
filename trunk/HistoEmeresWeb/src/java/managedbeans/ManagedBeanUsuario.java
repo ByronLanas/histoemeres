@@ -39,6 +39,9 @@ public class ManagedBeanUsuario {
     private Usuario usuario;
     private List<Usuario> usuarios;
     private String correo;
+    
+    public ManagedBeanUsuario() {
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -54,9 +57,6 @@ public class ManagedBeanUsuario {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
-    }
-            
-    public ManagedBeanUsuario() {
     }
 
     public String getNombre() {
