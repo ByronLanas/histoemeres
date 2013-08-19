@@ -54,4 +54,16 @@ public class SessionBeanComercial {
             return null;
         }
     }
+
+    public boolean modificarCliente(Cliente cliente) {
+        try{
+            clienteFacade.edit(cliente);
+            return true;
+        }catch (Exception e){
+        return false;    
+        }
+    }
+
+
+    
 }
