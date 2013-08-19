@@ -20,6 +20,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.naming.InitialContext;
 import sessionbeans.UsuarioFacadeLocal;
 
 /**
@@ -29,9 +30,9 @@ import sessionbeans.UsuarioFacadeLocal;
 @Named(value = "managedBeanUsuario")
 @RequestScoped
 public class ManagedBeanUsuario {
+
     @EJB
     private UsuarioFacadeLocal usuarioFacade;
-
     private String nombre;
     private String tipo;
     private String contraseña;
@@ -39,7 +40,7 @@ public class ManagedBeanUsuario {
     private Usuario usuario;
     private List<Usuario> usuarios;
     private String correo;
-    
+
     public ManagedBeanUsuario() {
     }
 
@@ -98,54 +99,68 @@ public class ManagedBeanUsuario {
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         usuarios = usuarioFacade.findAll();
     }
-    
-    public void nuevoUsuario(){
+
+    public void nuevoUsuario() throws Exception {
         FacesContext context = FacesContext.getCurrentInstance();
         Usuario usuario;
         Herramientas encripta;
-        encripta=new Herramientas();
-        if(usuarioFacade.buscarPorNombreUsuario(nombre).isEmpty()){
+        encripta = new Herramientas();
+        if (usuarioFacade.buscarPorNombreUsuario(nombre).isEmpty()) {
             enviaMail();
-            usuario = new Usuario(null, nombre, tipo, encripta.encriptaEnMD5( contraseña));
+            usuario = new Usuario(null, nombre, tipo, encripta.encriptaEnMD5(contraseña));
             usuarioFacade.create(usuario);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario ingresado con éxito", "El usuario: "+nombre+ " fue ingresado con éxito"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario ingresado con éxito", "El usuario: " + nombre + " fue ingresado con éxito"));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue ingresado", "El usuario: " + nombre + " ya había sido ingresado"));
         }
-        else{
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Usuario no fue ingresado", "El usuario: "+nombre+ " ya había sido ingresado"));
-        }                      
     }
-    
-    public void enviaMail(){
+
+    public void enviaMail() throws Exception {
         FacesContext context = FacesContext.getCurrentInstance();
-        Properties props = System.getProperties();
-        props.setProperty("mail.smtp.host", "localhost");
-        Session session = Session.getDefaultInstance(props);
+        
+        // Preparamos la sesion
+        InitialContext ctx = new InitialContext();  
+        Session session =  (Session) ctx.lookup("mail/sesion");
+
         String msgBody;
         Herramientas encripta;
         encripta = new Herramientas();
-        
+
         contraseña = encripta.encriptaEnMD5(nombre);
-        msgBody = "Bienvenido a HistoEmeres."
-                + "Su contraseña es: "+contraseña;
-        
-        try{
-            MimeMessage msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("noreply@histoemeres.com"));
-            msg.addRecipient(Message.RecipientType.TO,
-                             new InternetAddress(correo));
-            msg.setSubject("Tu cuenta de HistoEmeres a sido activada");
-            msg.setText(msgBody);
-            Transport.send(msg);
-        }
-        catch (AddressException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Usuario no fue ingresado", "El usuario: "+nombre+ " no se envio el mail por error de dirección"));
-        } catch (MessagingException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Usuario no fue ingresado", "El usuario: "+correo+ " no se envio el mail por error de mensaje"));
-        }
+        msgBody = "Bienvenido a HistoEmeres Sr(a) " + nombre + " :"
+                + "\n Su contraseña es: " + contraseña
+                + "\n Se recomienda cambiar su contraseña.";
+
+        //Construir mensaje
+        MimeMessage msg = new MimeMessage(session);
+        msg.setSubject("Tu cuenta de HistoEmeres a sido activada");
+        msg.setFrom(new InternetAddress("noreply@histoemeres.com"));
+        msg.addRecipient(Message.RecipientType.TO,
+                new InternetAddress(correo));
+        msg.setText(msgBody);
+
+
+        // Lo enviamos.
+        Transport.send(msg);
+
+        /*catch (AddressException e
+
+    
+         ) {
+         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue ingresado", "El usuario: " + nombre + " no se envio el mail por error de dirección"));
+         }
+         catch (MessagingException e
+
+    
+         ) {
+         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue ingresado", "El usuario: " + correo + " no se envio el mail por error de mensaje"));
+         }
+
+         */
     }
 }
