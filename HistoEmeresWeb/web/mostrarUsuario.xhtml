@@ -6,12 +6,16 @@
       xmlns:p="http://primefaces.org/ui">
     
     <h:form>  
-        <p:dataTable var="usuario" value="#{managedBeanUsuario.usuarios}">  
-            <p:column headerText="Nombre">  
+        <p:dataTable var="usuario" 
+                     value="#{managedBeanUsuario.usuarios}"
+                     paginator="true"  
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rows="20" rowsPerPageTemplate="10,20,50,100">  
+            <p:column sortBy="#{usuario.nombreUsuario}" filterBy="#{usuario.nombreUsuario}" headerText="Nombre" >  
                 <h:outputText value="#{usuario.getNombreUsuario()}" />  
             </p:column>       
 
-            <p:column headerText="Tipo">  
+            <p:column sortBy="#{usuario.tipoUsuario}" filterBy="#{usuario.tipoUsuario}" headerText="Tipo">  
                 <h:outputText value="#{usuario.getTipoUsuario()}" />  
             </p:column> 
         </p:dataTable>  
