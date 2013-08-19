@@ -13,7 +13,9 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import sessionbeans.ClienteFacadeLocal;
 import sessionbeans.SessionBeanComercial;
 
@@ -23,7 +25,7 @@ import sessionbeans.SessionBeanComercial;
  */
 @Named(value = "managedBeanCliente")
 @SessionScoped
-public class ManagedBeanCliente implements Serializable{
+public class ManagedBeanCliente implements Serializable {
 
     @EJB
     private SessionBeanComercial sessionBeanComercial;
@@ -38,7 +40,6 @@ public class ManagedBeanCliente implements Serializable{
     private Cliente cliente;
     private Cliente selectedCliente;
     private List<Cliente> clientesFiltrados;
-    
 
     public Cliente getCliente() {
         return cliente;
@@ -54,7 +55,7 @@ public class ManagedBeanCliente implements Serializable{
 
     public Cliente getSelectedCliente() {
         return selectedCliente;
-        
+
     }
 
     public void setSelectedCliente(Cliente selectedCliente) {
@@ -101,6 +102,26 @@ public class ManagedBeanCliente implements Serializable{
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente ingresado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue ingresado con éxito"));
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue ingresado", "El cliente: " + cliente + " ya había sido ingresado"));
+        }
+    }
+
+    public void modificarCliente() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        cliente = new Cliente(selectedCliente.getRutCliente(), selectedCliente.getNombreCliente());
+        if (sessionBeanComercial.modificarCliente(cliente)) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente modificado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue modificado con éxito"));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue modificado", "El cliente: " + cliente.getRutCliente() + "no pudo ser modificado."));
+        }
+    }
+
+    public boolean validarRut(FacesContext ct, UIComponent component, Object value) throws ValidatorException {
+        Integer nuevoRut;
+        nuevoRut = (Integer) value;
+        if (nuevoRut != 0) {
+            return false;
+        } else {
+            return true;
         }
     }
 

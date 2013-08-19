@@ -13,7 +13,9 @@
                     Ingresar nuevo cliente
                 </f:facet>
                 <h:outputText value="Rut cliente "/>
-                <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanCliente.rut_cliente}" />
+                <p:inputText label="Rut cliente" validatorMessage="Mayor a 3" id="rut" required="true" value="#{managedBeanCliente.rut_cliente}">
+                    <f:validateLength minimum="3" />
+                </p:inputText>
                 <h:outputText value="Nombre de Cliente "/>
                 <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanCliente.nombre_cliente}"/>
                 <f:facet name="footer">
