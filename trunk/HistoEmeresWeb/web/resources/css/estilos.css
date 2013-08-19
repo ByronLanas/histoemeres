@@ -74,6 +74,19 @@ root {
     background-color: transparent !important;
     background: transparent !important;
 }
+
+.panel tr, .panel td{
+    border: 0px !important;
+    border-style: none !important;
+    font-size: 1.1em !important;
+}
+.panel  td,.panel .ui-panelgrid-header,.panel .ui-panelgrid-footer{
+    padding: 6px 8px !important;
+}
+.panel{
+    margin-left: 340px !important;
+}
+
 .periodo  td,.periodo tr{
     border:0px !important;
     border-style: none !important;
