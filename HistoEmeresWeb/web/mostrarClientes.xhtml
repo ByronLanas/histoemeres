@@ -20,7 +20,7 @@
             </p:column>       
             
             <p:column headerText="Nombre" sortBy="#{cliente.nombreCliente.toLowerCase()}" filterBy="#{cliente.nombreCliente}">  
-                #{cliente.nombreCliente} 
+                <h:outputText value="#{cliente.nombreCliente}"/>
             </p:column>  
             <f:facet name="footer">
                 <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" update=":form:display"  oncomplete="dialogoModificar.show();" />
