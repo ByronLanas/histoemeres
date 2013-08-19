@@ -13,13 +13,14 @@
         <title>HistoEmeres - Login</title>
     </h:head>
     <h:body>
-        <p:layout fullPage="true" >
+        <p:layout style="min-width:1220px;min-height:720px;">
             <p:layoutUnit position="north" size="100" styleClass=" header"  > 
                 <p:commandLink action="index?faces-redirect=true">
                     <p:graphicImage value="resources/imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
                 </p:commandLink>
             </p:layoutUnit>
             <p:layoutUnit position="center" size="600" styleClass="center"> 
+                <p:messages  showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
                 <p:fieldset styleClass="legend"  style="background-color: transparent; width: 600px; float:left;margin-left:20px" legend="HistoEmeres">
 
                 </p:fieldset>                
@@ -27,43 +28,33 @@
 
                 <h:form>
                     <p:growl life="3000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />                    
-                    <p:panelGrid style="float: right; margin-right: 30px; border: 1px solid #AFAFAF ; width: 600px" >
+                    <p:panelGrid columns="1" styleClass="panel" style=" float: right; margin-left: 0px!important; margin-right: 30px; border: 1px solid #AFAFAF ; width: 350px" >
 
                         <f:facet name="header">
                             <p:row>  
-                                <p:column colspan="2">Login</p:column>  
-                            </p:row>
-                            <p:row>  
-                                <p:column colspan="2">
-                                    <p:messages  showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+                                <p:column colspan="2" >
+                                    <h:outputText style="font-size: 1.2em ;font-weight:bold;" value="Login"/>
                                 </p:column>  
                             </p:row>
                         </f:facet>
                         
-                        <p:row>
                             <p:column>
-                                <h:outputLabel  value="Nombre:"></h:outputLabel>
+                                <h:outputLabel  style="font-weight:bold"  value="Nombre:"></h:outputLabel>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{managedBeanLogin.nombre}" label="Nombre"/>
-                            </p:column>
-                        </p:row>                     
-                        <p:row>
-                            <p:column>
-                                <h:outputLabel value="Contraseña:"></h:outputLabel>
+                                <p:inputText style="width: 250px " value="#{managedBeanLogin.nombre}" label="Nombre"/>
                             </p:column>
                             <p:column>
-                                <p:inputText label="Contraseña" value="#{managedBeanLogin.contraseña}" />
+                                <h:outputLabel style="font-weight:bold" value="Contraseña:"></h:outputLabel>
                             </p:column>
-                        </p:row>
+                            <p:column>
+                                <p:password style="width: 250px" label="Contraseña" value="#{managedBeanLogin.contraseña}" />
+                            </p:column>
                         
                    
                         <f:facet name="footer"> 
-                            <p:row>
-                                <p:column colspan="2">
-                                    <p:commandButton value="Ingresar" update="growl"  actionListener="#{managedBeanLogin.logear()}"  style="margin-top: 15px; float:right" />
-                                </p:column>
-                            </p:row>                           
+                                    <p:commandButton value="Ingresar" update="growl"  actionListener="#{managedBeanLogin.logear()}"  style=" float:right" />
+                       
                         </f:facet>
                     </p:panelGrid>
 
