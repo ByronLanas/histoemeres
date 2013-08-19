@@ -14,7 +14,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import sessionbeans.AporteFacadeLocal;
@@ -26,7 +25,7 @@ import sessionbeans.SessionBeanFinanaciero;
  * @author Battousai
  */
 @Named(value = "managedBeanAporte")
-@SessionScoped
+@RequestScoped
 public class ManagedBeanAporte implements Serializable{
     @EJB
     private SessionBeanFinanaciero sessionBeanFinanaciero;
@@ -106,7 +105,7 @@ public class ManagedBeanAporte implements Serializable{
     public void init(){
         aportes=aporteFacade.findAll();
         
-        
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
 
     public AportePK getPk() {
