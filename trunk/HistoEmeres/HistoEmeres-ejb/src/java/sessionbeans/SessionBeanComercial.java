@@ -7,6 +7,7 @@ package sessionbeans;
 import entities.Cliente;
 import entities.Producto;
 import java.sql.SQLException;
+import java.util.List;
 import javax.ejb.DuplicateKeyException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -43,6 +44,14 @@ public class SessionBeanComercial {
             return true;
         } catch(Exception e){
             return false;
+        }
+    }
+    public List<Producto> mostrarProductos(){
+        try{
+            List<Producto> productos = productoFacade.findAll();
+            return productos;
+        }catch(Exception e){
+            return null;
         }
     }
 }
