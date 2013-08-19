@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:form>  
+        <p:dataTable var="producto" 
+                     value="#{managedBeanProducto.productos}"
+                     paginator="true"  
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rows="20" rowsPerPageTemplate="10,20,50,100">
+            <p:column sortBy="#{producto.codigoProducto}" filterBy="#{producto.codigoProducto}" headerText="Código">
+                <h:outputText value="#{producto.getCodigoProducto()}" />
+            </p:column>
+            
+            <p:column sortBy="#{producto.nombreProducto}" filterBy="#{producto.nombreProducto}" headerText="Nombre" >  
+                <h:outputText value="#{producto.getNombreProducto()}" />  
+            </p:column>       
+
+            <p:column sortBy="#{producto.valorProducto}" filterBy="#{producto.valorProducto}" headerText="Valor">  
+                <h:outputText value="#{producto.getValorProducto()}" />  
+            </p:column> 
+        </p:dataTable>  
+    </h:form>
+</html>

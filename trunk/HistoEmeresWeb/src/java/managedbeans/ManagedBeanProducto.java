@@ -6,6 +6,7 @@ package managedbeans;
 
 import entities.Producto;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -35,7 +36,7 @@ public class ManagedBeanProducto {
     
     public ManagedBeanProducto() {
     }
-
+    
     public Integer getCodigo_producto() {
         return codigo_producto;
     }
@@ -76,6 +77,10 @@ public class ManagedBeanProducto {
         this.productos = productos;
     }
     
+    @PostConstruct
+    public void init(){
+        productos = sessionBeanComercial.mostrarProductos();
+    }
     public void insertarProducto(){
         FacesContext context = FacesContext.getCurrentInstance();
         producto = new Producto(null, nombre_producto, valor_producto);
