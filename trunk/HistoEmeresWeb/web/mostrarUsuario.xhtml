@@ -10,7 +10,8 @@
                      value="#{managedBeanUsuario.usuarios}"
                      paginator="true"  
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rows="20" rowsPerPageTemplate="10,20,50,100">  
+                     rows="20" rowsPerPageTemplate="10,20,50,100"
+                     style="width: 70%">  
             <p:column sortBy="#{usuario.nombreUsuario}" filterBy="#{usuario.nombreUsuario}" headerText="Nombre" >  
                 <h:outputText value="#{usuario.getNombreUsuario()}" />  
             </p:column>       

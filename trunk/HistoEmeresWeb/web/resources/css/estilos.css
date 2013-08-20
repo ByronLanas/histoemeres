@@ -9,6 +9,9 @@
 root { 
     display: block;
 }
+.ui-datatable{
+    margin-left: 130px !important;
+}
 .historiales-icon{
     background-image: url('imagenes/diagram_16.png') !important;
 }
