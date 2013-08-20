@@ -13,8 +13,8 @@
                 <link rel="shortcut icon" type="image/x-icon" href="resources/imagenes/favicon.ico"/>
 
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>Histoemeres</title>
-            </f:facet>
+                <title>#{managedBeanMenu.pagina.split("(?=\\p{Upper})")[0].substring(0,1).toUpperCase()}#{managedBeanMenu.pagina.split("(?=\\p{Upper})")[0].substring(1)} #{managedBeanMenu.pagina.split("(?=\\p{Upper})")[1]}</title>
+            </f:facet> 
         </h:head>
 <script type="text/javascript">  
 PrimeFaces.locales['es'] = {
@@ -74,7 +74,7 @@ PrimeFaces.locales['es'] = {
                 
                 <p:layoutUnit id="center" styleClass="layout " position="center" size="500" >
                     <h:form style="width:976px"> 
-                        <p:growl life="2000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+                        <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
                         <p:menubar styleClass="menu" autoDisplay="false" style="width: 975px">  
                             <p:menuitem value="Historiales" action="#{managedBeanMenu.irMenu('historiales')}"  icon="historiales-icon" />
 
