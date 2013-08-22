@@ -5,26 +5,34 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:form>  
-        <p:dataTable emptyMessage="No se encuentran resultados"
+    <h:form id="form">  
+        <p:dataTable id="tablaProducto"
+                     emptyMessage="No se encuentran resultados"
                      var="producto"
+                     rowKey="#{producto.nombreProducto}"
                      value="#{managedBeanProducto.productos}"
-                     paginator="true"  
+                     paginator="true"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rows="20" rowsPerPageTemplate="10,20,50,100"
-                     style="width: 70%">
-            
+                     style="width: 70%"
+                     selection="#{managedBeanProducto.selectedProducto}"
+                     selectionMode="single">
+
+
             <p:column sortBy="#{producto.codigoProducto}" filterBy="#{producto.codigoProducto}" headerText="Código">
-                <h:outputText value="#{producto.getCodigoProducto()}" />
+                <h:outputText value="#{producto.codigoProducto}" />
             </p:column>
 
             <p:column sortBy="#{producto.nombreProducto}" filterBy="#{producto.nombreProducto}" headerText="Nombre" >  
-                <h:outputText value="#{producto.getNombreProducto()}" />  
+                <h:outputText value="#{producto.nombreProducto}" />  
             </p:column>       
 
             <p:column sortBy="#{producto.valorProducto}" filterBy="#{producto.valorProducto}" headerText="Valor">  
-                <h:outputText value="#{producto.getValorProducto()}" />  
+                <h:outputText value="#{producto.valorProducto}" />  
             </p:column> 
+            <f:facet name="footer">
+                <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" />
+            </f:facet>
         </p:dataTable>  
     </h:form>
 </html>
