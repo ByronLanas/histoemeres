@@ -125,7 +125,7 @@ public class ManagedBeanUsuario {
         
         // Preparamos la sesion
         InitialContext ctx = new InitialContext();  
-        Session session =  (Session) ctx.lookup("mail/sesion");
+        Session session =  (Session) ctx.lookup("mail/prueba");
 
         String msgBody;
         Herramientas encripta;
