@@ -46,21 +46,13 @@ public class SessionBeanComercial {
             return false;
         }
     }
-    public List<Producto> mostrarProductos(){
-        try{
-            List<Producto> productos = productoFacade.findAll();
-            return productos;
-        }catch(Exception e){
-            return null;
-        }
-    }
 
     public boolean modificarCliente(Cliente cliente) {
         try{
             clienteFacade.edit(cliente);
             return true;
         }catch (Exception e){
-        return false;    
+            return false;    
         }
     }
 
