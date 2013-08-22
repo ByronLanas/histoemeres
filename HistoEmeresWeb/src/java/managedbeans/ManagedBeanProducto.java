@@ -5,6 +5,7 @@
 package managedbeans;
 
 import entities.Producto;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -32,7 +33,7 @@ public class ManagedBeanProducto {
     private String nombre_producto;
     private Float valor_producto;
     private Producto producto;
-    private Producto producto_seleccionado;
+    private Producto selectedProducto;
     private List<Producto> productos;
 
     public ManagedBeanProducto() {
@@ -70,12 +71,12 @@ public class ManagedBeanProducto {
         this.producto = producto;
     }
 
-    public Producto getProducto_seleccionado() {
-        return producto_seleccionado;
+    public Producto getSelectedProducto() {
+        return selectedProducto;
     }
 
-    public void setProducto_seleccionado(Producto producto_seleccionado) {
-        this.producto_seleccionado = producto_seleccionado;
+    public void setSelectedProducto(Producto selectedProducto) {
+        this.selectedProducto = selectedProducto;
     }
 
     public List<Producto> getProductos() {
