@@ -6,16 +6,18 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:form>  
-        <p:dataTable var="producto" 
+        <p:dataTable emptyMessage="No se encuentran resultados"
+                     var="producto"
                      value="#{managedBeanProducto.productos}"
                      paginator="true"  
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rows="20" rowsPerPageTemplate="10,20,50,100"
                      style="width: 70%">
+            
             <p:column sortBy="#{producto.codigoProducto}" filterBy="#{producto.codigoProducto}" headerText="Código">
                 <h:outputText value="#{producto.getCodigoProducto()}" />
             </p:column>
-            
+
             <p:column sortBy="#{producto.nombreProducto}" filterBy="#{producto.nombreProducto}" headerText="Nombre" >  
                 <h:outputText value="#{producto.getNombreProducto()}" />  
             </p:column>       

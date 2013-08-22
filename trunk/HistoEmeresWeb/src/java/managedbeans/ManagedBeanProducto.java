@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import sessionbeans.ProductoFacadeLocal;
 import sessionbeans.SessionBeanComercial;
 import javax.faces.context.FacesContext;
+import org.jboss.weld.bean.builtin.FacadeInjectionPoint;
 
 /**
  *
@@ -22,21 +23,21 @@ import javax.faces.context.FacesContext;
 @Named(value = "managedBeanProducto")
 @RequestScoped
 public class ManagedBeanProducto {
-    
+
     @EJB
     private SessionBeanComercial sessionBeanComercial;
     @EJB
     private ProductoFacadeLocal productoFacade;
-    
     private Integer codigo_producto;
     private String nombre_producto;
     private Float valor_producto;
     private Producto producto;
+    private Producto producto_seleccionado;
     private List<Producto> productos;
-    
+
     public ManagedBeanProducto() {
     }
-    
+
     public Integer getCodigo_producto() {
         return codigo_producto;
     }
@@ -69,6 +70,14 @@ public class ManagedBeanProducto {
         this.producto = producto;
     }
 
+    public Producto getProducto_seleccionado() {
+        return producto_seleccionado;
+    }
+
+    public void setProducto_seleccionado(Producto producto_seleccionado) {
+        this.producto_seleccionado = producto_seleccionado;
+    }
+
     public List<Producto> getProductos() {
         return productos;
     }
@@ -76,18 +85,23 @@ public class ManagedBeanProducto {
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
-    
+
     @PostConstruct
-    public void init(){
-        productos = sessionBeanComercial.mostrarProductos();
+    public void init() {
+        productos = productoFacade.findAll();
     }
-    public void insertarProducto(){
+
+    public void insertarProducto() {
         FacesContext context = FacesContext.getCurrentInstance();
         producto = new Producto(null, nombre_producto, valor_producto);
-        if(sessionBeanComercial.insertarProducto(producto)){
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto ingresado con éxito", "El Producto: " + producto.getNombreProducto() + " cuyo Valor es: $" + producto.getValorProducto() + " fue ingresado con éxito"));
-        }else{
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "El producto no fue ingresado", "El producto no pudo ser ingresado correctamente, intentelo nuevamente"));
+        if (!productoFacade.buscarPorNombreProducto(nombre_producto).isEmpty()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El producto no fue ingresado", "El producto '" + nombre_producto + "' ya existe"));
+        } else {
+            if (!sessionBeanComercial.insertarProducto(producto)) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El producto no fue ingresado", "El producto no pudo ser ingresado correctamente, intentelo nuevamente"));
+            } else {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto ingresado con éxito", "El Producto: " + producto.getNombreProducto() + " cuyo Valor es: $" + producto.getValorProducto() + " fue ingresado con éxito"));
+            }
         }
     }
 }
