@@ -63,7 +63,7 @@ PrimeFaces.locales['es'] = {
                     </div>
                 </p:layoutUnit>
 
-                <p:layoutUnit id="east" styleClass="layout east" position="east" size="245" >
+                <p:layoutUnit id="east" styleClass="layout east" position="east" resizable="true" minSize="245" >
                     <h:panelGrid id="banner" columns="1"  style="margin: 80px 0px; padding: 0px">
                         <!--<p:clock id="reloj"  pattern="HH:mm:ss"/>-->
                         <p:calendar  mode="Inline" title="Calendario"  size="150" pattern="" timeZone="Santiago/Chile" locale="es" ></p:calendar>
@@ -72,7 +72,7 @@ PrimeFaces.locales['es'] = {
                     
                 </p:layoutUnit>
                 
-                <p:layoutUnit id="center" styleClass="layout " position="center" size="500" >
+                <p:layoutUnit id="center" styleClass="layout " position="center" resizable="true" style=" min-height: 450px;"  >
                     <h:form style="width:976px"> 
                         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
                         <p:menubar styleClass="menu" autoDisplay="false" style="width: 975px">  
