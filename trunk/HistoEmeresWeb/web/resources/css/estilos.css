@@ -62,7 +62,7 @@ root {
     background-image: url('imagenes/Box_Icon_16.png') !important;
 }
 .ui-menu .ui-menu-parent .ui-menu-child{
-    width: 17.9em !important
+    width: 20em !important
 }
 
 .header{
@@ -111,8 +111,9 @@ root {
 #reloj{
     background: transparent !important;
 }
-body{
+.body{
 	
+        
 /* IE10 Consumer Preview */ 
 background-image: -ms-linear-gradient(left, #FFFFFF 0%, #ADFF2F 100%);
 

@@ -24,8 +24,8 @@ import sessionbeans.SessionBeanComercial;
  * @author Battousai
  */
 @Named(value = "managedBeanCliente")
-@SessionScoped
-public class ManagedBeanCliente implements Serializable {
+@RequestScoped
+public class ManagedBeanCliente {
 
     @EJB
     private SessionBeanComercial sessionBeanComercial;
@@ -38,7 +38,7 @@ public class ManagedBeanCliente implements Serializable {
     private String nombre_cliente;
     private List<Cliente> clientes;
     private Cliente cliente;
-    private Cliente selectedCliente;
+    private static Cliente selectedCliente;
     private List<Cliente> clientesFiltrados;
 
     public Cliente getCliente() {
