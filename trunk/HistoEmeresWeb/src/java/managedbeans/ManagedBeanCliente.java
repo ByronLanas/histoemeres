@@ -117,15 +117,6 @@ public class ManagedBeanCliente {
         }
     }
 
-    public boolean validarRut(FacesContext ct, UIComponent component, Object value) throws ValidatorException {
-        Integer nuevoRut;
-        nuevoRut = (Integer) value;
-        if (nuevoRut != 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     public ManagedBeanCliente() {
         rut_cliente = null;
