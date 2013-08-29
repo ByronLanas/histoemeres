@@ -5,6 +5,27 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     
-gfdgfdgg
+<h:form>
+            <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+            <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+            <p:panelGrid styleClass="panel" id="panelCliente" columns="2">
+
+                <f:facet name="header">
+                    Ingresar nueva venta
+                </f:facet>
+                <h:outputText value="Rut cliente "/>
+                <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanVenta.rutCliente}"/>
+                <h:outputText value="Código de producto "/>
+                <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanVenta.codigoProducto}"/>
+                <h:outputText value="Cantidad de fardos "/>
+                <p:inputText label="Cantidad fardos" id="rut" required="true" value="#{managedBeanVenta.cantidadVenta}"/>
+                <f:facet name="footer">
+                    <p:commandButton update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanVenta.ingresarVenta}" icon="ingresar-icon" />
+                </f:facet>
+            </p:panelGrid>    
+        <p:watermark for="rut" value="Rut sin puntos ni guión" />
+        <p:watermark for="nombre" value="Ingrese nombre del cliente" />
+        <p:blockUI block="panelCliente" trigger="botonIngresar" />
+    </h:form>
 </html>
 
