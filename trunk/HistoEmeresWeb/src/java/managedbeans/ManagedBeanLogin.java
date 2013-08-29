@@ -96,7 +96,7 @@ public class ManagedBeanLogin implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falta información:", "Contraseña no ingresada"));
             return false;
         }
-        if(usuarioFacade.buscarPorNombreUsuario(nombre).get(0).getContrasenaUsuario().compareTo(encripta.encriptaEnMD5(contraseña))!=0){
+        if(usuarioFacade.buscarPorNombreUsuario(nombre).get(0).getContrasenaUsuario().compareTo(contraseña)!=0){
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Contraseña incorrecta:", "Verificar contraseña si fue ingresada correctamente"));
             return false;
         }
@@ -116,5 +116,11 @@ public class ManagedBeanLogin implements Serializable {
         }
 
 
+    }
+    
+    public void deslogear() throws IOException{
+        context = FacesContext.getCurrentInstance();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
     }
 }
