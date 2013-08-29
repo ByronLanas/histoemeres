@@ -4,27 +4,31 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
-<h:form>
-            <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
-            <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
-            <p:panelGrid styleClass="panel" id="panelCliente" columns="2">
 
-                <f:facet name="header">
-                    Ingresar nueva venta
-                </f:facet>
-                <h:outputText value="Rut cliente "/>
-                <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanVenta.rutCliente}"/>
-                <h:outputText value="Código de producto "/>
-                <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanVenta.codigoProducto}"/>
-                <h:outputText value="Cantidad de fardos "/>
-                <p:inputText label="Cantidad fardos" id="rut" required="true" value="#{managedBeanVenta.cantidadVenta}"/>
-                <f:facet name="footer">
-                    <p:commandButton update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanVenta.ingresarVenta}" icon="ingresar-icon" />
-                </f:facet>
-            </p:panelGrid>    
+    <h:form>
+        <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:panelGrid styleClass="panel" id="panelCliente" columns="2">
+
+            <f:facet name="header">
+                Ingresar nueva venta
+            </f:facet>
+            <h:outputText value="Rut cliente "/>
+            <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanVenta.rutCliente}"/>
+            <h:outputText value="Código de producto "/>
+            <p:selectOneMenu id="codigoProducto" label="Código producto" required="true" value="#{managedBeanProducto.nombre_producto}">  
+                <f:selectItem itemLabel="codigo producto" itemValue="" />  
+                <f:selectItems value="#{managedBeanProducto.productos}" var="nombres" 
+                               itemValue="#{nombres.nombreProducto}" itemLabel="#{nombres.nombreProducto}"/>
+            </p:selectOneMenu>
+            <h:outputText value="Cantidad de fardos "/>
+            <p:inputText label="Cantidad fardos" id="cantidad" required="true" value="#{managedBeanVenta.cantidadVenta}"/>
+            <f:facet name="footer">
+                <p:commandButton update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanVenta.ingresarVenta}" icon="ingresar-icon" />
+            </f:facet>
+        </p:panelGrid>    
         <p:watermark for="rut" value="Rut sin puntos ni guión" />
-        <p:watermark for="nombre" value="Ingrese nombre del cliente" />
+        <p:watermark for="cantidad" value="Ingrese la cantidad de fardos" />
         <p:blockUI block="panelCliente" trigger="botonIngresar" />
     </h:form>
 </html>

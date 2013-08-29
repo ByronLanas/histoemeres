@@ -4,23 +4,25 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <h:form>
-            <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
-            <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
-            <p:panelGrid styleClass="panel" id="panelCliente" columns="2">
+    <h:form id="form">
+        <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:panelGrid styleClass="panel" id="panelCliente" columns="2">
 
-                <f:facet name="header">
-                    Ingresar nuevo cliente
-                </f:facet>
-                <h:outputText value="Rut cliente "/>
-                <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanCliente.rut_cliente}">
-                </p:inputText>
-                <h:outputText value="Nombre de Cliente "/>
-                <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanCliente.nombre_cliente}"/>
-                <f:facet name="footer">
-                    <p:commandButton update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanCliente.insertarCliente}" icon="ingresar-icon" />
-                </f:facet>
-            </p:panelGrid>    
+            <f:facet name="header">
+                Ingresar nuevo cliente
+            </f:facet>
+            <h:outputText value="Rut cliente "/>
+            <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanCliente.rut_cliente}">
+            </p:inputText>
+            <h:outputText value="Nombre de Cliente "/>
+            <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanCliente.nombre_cliente}"/>
+            <f:facet name="footer">
+                <p:commandButton  update="panelCliente" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar" action="#{managedBeanCliente.insertarCliente}" icon="ingresar-icon" >
+                    
+                </p:commandButton>
+            </f:facet>
+        </p:panelGrid>    
         <p:watermark for="rut" value="Rut sin puntos ni guión" />
         <p:watermark for="nombre" value="Ingrese nombre del cliente" />
         <p:blockUI block="panelCliente" trigger="botonIngresar" />
