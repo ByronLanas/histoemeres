@@ -121,6 +121,6 @@ public class ManagedBeanLogin implements Serializable {
     public void deslogear() throws IOException{
         context = FacesContext.getCurrentInstance();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/HistoEmeresWeb");
     }
 }
