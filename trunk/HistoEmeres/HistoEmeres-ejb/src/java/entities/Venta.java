@@ -71,6 +71,14 @@ public class Venta implements Serializable {
         this.fechaVenta = fechaVenta;
     }
 
+    public Venta(Integer codigoVenta, int cantidadVenta, Date fechaVenta, Cliente rutCliente, Producto codigoProducto) {
+        this.codigoVenta = codigoVenta;
+        this.cantidadVenta = cantidadVenta;
+        this.fechaVenta = fechaVenta;
+        this.rutCliente = rutCliente;
+        this.codigoProducto = codigoProducto;
+    }
+
     public Integer getCodigoVenta() {
         return codigoVenta;
     }
