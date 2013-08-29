@@ -104,8 +104,6 @@ public class ManagedBeanAporte implements Serializable{
     @PostConstruct
     public void init(){
         aportes=aporteFacade.findAll();
-        
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
 
     public AportePK getPk() {

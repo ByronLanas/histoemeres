@@ -28,7 +28,12 @@ public class ManagedBeanMenu {
     public void irMenu(String pagina) {
         try {
             setPagina(pagina);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("histoemeres.xhtml");
+            boolean tieneFaces =FacesContext.getCurrentInstance().getViewRoot().getViewId().lastIndexOf("histoemeres")>-1;
+            if(tieneFaces)
+                FacesContext.getCurrentInstance().getExternalContext().redirect("histoemeres.xhtml");
+            else
+                FacesContext.getCurrentInstance().getExternalContext().redirect("faces/histoemeres.xhtml");
+            
             if (pagina.compareTo("mostrarUsuario") == 0) {
                 ManagedBeanUsuario mngbn = new ManagedBeanUsuario();
                 mngbn.init();
