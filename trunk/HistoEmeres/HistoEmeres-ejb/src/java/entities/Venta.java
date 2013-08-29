@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Venta.findByCodigoVenta", query = "SELECT v FROM Venta v WHERE v.codigoVenta = :codigoVenta"),
     @NamedQuery(name = "Venta.findByCantidadVenta", query = "SELECT v FROM Venta v WHERE v.cantidadVenta = :cantidadVenta"),
     @NamedQuery(name = "Venta.findByFechaVenta", query = "SELECT v FROM Venta v WHERE v.fechaVenta = :fechaVenta"),
-    @NamedQuery(name = "Venta.findByPeriodoVenta", query = "SELECT v FROM Venta v WHERE v.fechaVenta >= :fechaVenta ")})
+    @NamedQuery(name = "Venta.findByPeriodoVenta", query = "SELECT v FROM Venta v WHERE v.fechaVenta >= :fechaInicio AND v.fechaVenta <= :fechaFin ")})
 public class Venta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

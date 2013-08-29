@@ -34,9 +34,8 @@ public class VentaFacade extends AbstractFacade<Venta> implements VentaFacadeLoc
 
     @Override
     public List<Venta> buscarPorPeriodo(Date inicio, Date fin) {
-        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
         Query query;
-        query= em.createNamedQuery(null).setParameter("fechaVenta", "2013-05-02");
+        query= em.createNamedQuery("Venta.findByPeriodoVenta").setParameter("fechaInicio", inicio).setParameter("fechaFin", fin);
         return query.getResultList();
         
     }

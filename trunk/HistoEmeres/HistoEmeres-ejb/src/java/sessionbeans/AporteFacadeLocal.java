@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.Aporte;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +31,7 @@ public interface AporteFacadeLocal {
     int count();
 
     boolean buscarAporte(Aporte aporte);
+
+    List<Aporte> BuscarPorPeriodo(Date inicio, Date fin);
     
 }

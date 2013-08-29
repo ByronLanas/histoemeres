@@ -5,6 +5,8 @@
 package sessionbeans;
 
 import entities.Aporte;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -36,6 +38,13 @@ public class AporteFacade extends AbstractFacade<Aporte> implements AporteFacade
             return true;
         else            
             return false;
+    }
+
+    @Override
+    public List<Aporte> BuscarPorPeriodo(Date inicio, Date fin) {
+        Query query;
+        query = em.createNamedQuery("Aporte.findByPeriodo").setParameter("fechaInicio", inicio).setParameter("fechaFin", fin); 
+        return query.getResultList();
     }
 
     
