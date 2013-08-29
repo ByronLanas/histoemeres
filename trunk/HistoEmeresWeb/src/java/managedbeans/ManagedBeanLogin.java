@@ -31,6 +31,7 @@ public class ManagedBeanLogin implements Serializable {
     private Usuario usuario;
     private String contraseña;
     private String nombre;
+    private boolean tipo;
     FacesContext context;
 
     public ManagedBeanLogin() {
@@ -63,6 +64,16 @@ public class ManagedBeanLogin implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public boolean isTipo() {
+        return tipo;
+    }
+
+    public void setTipo(boolean tipo) {
+        this.tipo = tipo;
+    }
+
+ 
 
     public boolean validarNombre(){
         context = FacesContext.getCurrentInstance();
@@ -97,7 +108,9 @@ public class ManagedBeanLogin implements Serializable {
         if (validarNombre() && validarContraseña()) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido "+nombre+":","Inicio de sesión satisfactorio"));
             context.getExternalContext().getFlash().setKeepMessages(true);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", nombre);
+            context.getExternalContext().getSessionMap().put("username", nombre);
+            tipo=usuarioFacade.buscarPorNombreUsuario(nombre).get(0).getTipoUsuario().compareTo("admin")==0;
+            context.getExternalContext().getSessionMap().put("tipo", tipo);
             ManagedBeanMenu mngbn = new ManagedBeanMenu();
             mngbn.irMenu("historiales");
         }

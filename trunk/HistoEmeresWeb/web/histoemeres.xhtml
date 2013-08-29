@@ -49,7 +49,7 @@ PrimeFaces.locales['es'] = {
             <p:layout style="min-width:1220px;min-height:720px;" id="layout">
 
             <p:layoutUnit position="north" size="100" styleClass=" header"  > 
-                <p:commandLink action="index?faces-redirect=true">
+                <p:commandLink action="#{managedBeanMenu.irMenu('historiales')}">
                     <p:graphicImage value="resources/imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
                 </p:commandLink>
             </p:layoutUnit>
@@ -78,38 +78,37 @@ PrimeFaces.locales['es'] = {
                         <p:menubar styleClass="menu" autoDisplay="false" style="width: 975px">  
                             <p:menuitem value="Historiales" action="#{managedBeanMenu.irMenu('historiales')}"  icon="historiales-icon" />
 
-                            <p:submenu label="Aportes" icon="aportes-icon">  
+                            <p:submenu label="Aportes" icon="aportes-icon" rendered="#{managedBeanLogin.tipo}">  
 
                                 <p:menuitem value="Ver aportes"  icon="ver-icon" action="#{managedBeanMenu.irMenu('mostrarAportes')}" />  
-                                <p:menuitem value="Ingresar aportes"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarAportes')}"/>  
-                                <p:menuitem value="Modificar aportes" icon="modificar-icon" action="#{managedBeanMenu.irMenu('modificarAportes')}"/>  
+                                <p:menuitem value="Ingresar aportes"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarAportes')}"/>   
                             </p:submenu> 
-                            <p:submenu label="Clientes" icon="clientes-icon">  
+                            <p:submenu label="Clientes" icon="clientes-icon" rendered="#{managedBeanLogin.tipo}">  
 
 
                                 <p:menuitem value="Ver clientes"  icon="ver-icon" action="#{managedBeanMenu.irMenu('mostrarClientes')}" />  
                                 <p:menuitem value="Ingresar clientes"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarCliente')}"/>  
                             </p:submenu> 
-                            <p:submenu label="Ventas" icon="ventas-icon">  
+                            <p:submenu label="Ventas" icon="ventas-icon" rendered="#{managedBeanLogin.tipo}">  
 
                                 <p:menuitem value="Ver ventas"  icon="ver-icon" />  
                                 <p:menuitem value="Ingresar ventas"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarVentas')}"/>  
                                 <p:menuitem value="Modificar ventas" icon="modificar-icon" />  
                             </p:submenu>
-                            <p:submenu label="Productos" icon="productos-icon">  
+                            <p:submenu label="Productos" icon="productos-icon" rendered="#{managedBeanLogin.tipo}">  
 
                                 <p:menuitem value="Ver productos"  icon="ver-icon" action="#{managedBeanMenu.irMenu('mostrarProductos')}"/>  
                                 <p:menuitem value="Ingresar productos"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarProductos')}"/>  
                                 <p:menuitem value="Modificar productos" icon="modificar-icon" />  
                                 <p:menuitem value="Eliminar productos" icon="eliminar-icon" />  
                             </p:submenu>
-                            <p:submenu label="Egresos" icon="egresos-icon">  
+                            <p:submenu label="Egresos" icon="egresos-icon" rendered="#{managedBeanLogin.tipo}">  
 
                                 <p:menuitem value="Ver egresos"  icon="ver-icon" />  
                                 <p:menuitem value="Ingresar egresos"  icon="ingresar-icon" />  
                                 <p:menuitem value="Modificar egresos" icon="modificar-icon" />  
                             </p:submenu>
-                            <p:submenu label="Usuarios" icon="usuarios-icon">  
+                            <p:submenu label="Usuarios" icon="usuarios-icon" rendered="#{managedBeanLogin.tipo}">  
 
                                 <p:menuitem value="Ver usuarios"  icon="ver-user-icon" action="#{managedBeanMenu.irMenu('mostrarUsuario')}"/>  
                                 <p:menuitem value="Ingresar usuarios"  icon="ingresar-user-icon" action="#{managedBeanMenu.irMenu('ingresarUsuario')}"/>  
