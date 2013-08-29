@@ -11,6 +11,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import sessionbeans.SessionBeanComercial;
 import sessionbeans.VentaFacade;
 import sessionbeans.VentaFacadeLocal;
@@ -117,5 +120,17 @@ public class ManagedBeanVenta {
     @PostConstruct
     public void  init(){
         ventas = ventaFacade.findAll();
+    }
+    
+    public boolean ingresarVenta(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        venta = new Venta(null, cantidadVenta, fechaVenta, rutCliente, codigoProducto);
+        if (sessionBeanComercial.ingresarVenta(venta)) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente ingresado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue ingresado con éxito"));
+            RequestContext.getCurrentInstance().reset("form:panelCliente");  
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue ingresado", "El cliente: " + cliente.getNombreCliente() +": " + cliente.getRutCliente()+ " ya había sido ingresado"));
+        }
+        
     }
 }
