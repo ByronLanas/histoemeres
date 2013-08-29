@@ -201,8 +201,8 @@ public class ManagedBeanHistorial implements Serializable {
         }
         switch (tipoHistorial) {
             case 1:
-                ventas = ventaFacade.findAll();
-                aportes = aporteFacade.findAll();
+                obtenerVentas(inicio, fin);
+                obtenerAportes(inicio,fin);
                 productos = productoFacade.findAll();
                 //obtenerAportes(inicio,fin);
                 setTitulo("Aportes V/S Ventas");
@@ -212,8 +212,8 @@ public class ManagedBeanHistorial implements Serializable {
 
                 break;
             case 2:
-                aportes = aporteFacade.findAll();
-                //obtenerAportes(inicio,fin);
+                
+                obtenerAportes(inicio,fin);
 
                 setTitulo("Aportes Totales");
                 setxLabel("Mes");
@@ -221,8 +221,8 @@ public class ManagedBeanHistorial implements Serializable {
                 createCategoryModelAT();
                 break;
             case 3:
-                aportes = aporteFacade.findAll();
-                //obtenerAportes(inicio,fin);
+                
+                obtenerAportes(inicio,fin);
                 setTitulo("Aportes por Municipio");
                 setxLabel("Municipio");
                 setyLabel("Valor ($)");
@@ -398,8 +398,7 @@ public class ManagedBeanHistorial implements Serializable {
         });
         Iterator<Aporte> it = aportes.iterator();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
-        aporte = it.next();
-        contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
+
 
         while (it.hasNext()) {
             aporte = it.next();
@@ -443,6 +442,6 @@ public class ManagedBeanHistorial implements Serializable {
     }
 
     public void obtenerAportes(Date start, Date end) {
-        //aporteFacade
+        aportes=aporteFacade.BuscarPorPeriodo(inicio, fin);
     }
 }

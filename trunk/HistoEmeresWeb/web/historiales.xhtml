@@ -35,9 +35,9 @@
             <p:fieldset styleClass="periodo"  legend="periodo">
                 <p:panelGrid styleClass="periodo" columns="4">
                     <h:outputLabel value="Inicio:"/>
-                    <p:calendar disabled="true" label="inicio" required="true" value="#{managedBeanHistorial.inicio}" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
+                    <p:calendar  label="inicio" required="true" value="#{managedBeanHistorial.inicio}" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
                     <h:outputLabel  value="Fin:"/>
-                    <p:calendar disabled="true" label="fin" required="true" value="#{managedBeanHistorial.fin}" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
+                    <p:calendar  label="fin" required="true" value="#{managedBeanHistorial.fin}" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
                 </p:panelGrid>
             </p:fieldset>
 
