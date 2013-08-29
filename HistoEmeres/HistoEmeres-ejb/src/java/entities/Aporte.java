@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Aporte.findByMunicipioAporte", query = "SELECT a FROM Aporte a WHERE a.aportePK.municipioAporte = :municipioAporte"),
     @NamedQuery(name = "Aporte.findByFechaMunicipalidad", query = "SELECT a FROM Aporte a WHERE a.aportePK.fechaMunicipalidad = :fechaMunicipalidad"),
     @NamedQuery(name = "Aporte.findByValorAporte", query = "SELECT a FROM Aporte a WHERE a.valorAporte = :valorAporte"),
-    @NamedQuery(name = "Aporte.findByMunicipioFechaMunicipalidad", query = "SELECT a FROM Aporte a WHERE a.aportePK.fechaMunicipalidad=:fechaMunicipalidad AND a.aportePK.municipioAporte =:municipioAporte")})
+    @NamedQuery(name = "Aporte.findByMunicipioFechaMunicipalidad", query = "SELECT a FROM Aporte a WHERE a.aportePK.fechaMunicipalidad=:fechaMunicipalidad AND a.aportePK.municipioAporte =:municipioAporte"),
+    @NamedQuery(name = "Aporte.findByPeriodo", query = "SELECT a FROM Aporte a WHERE a.aportePK.fechaMunicipalidad >= :fechaInicio AND a.aportePK.fechaMunicipalidad <= :fechaFin")})
     
 public class Aporte implements Serializable {
     private static final long serialVersionUID = 1L;
