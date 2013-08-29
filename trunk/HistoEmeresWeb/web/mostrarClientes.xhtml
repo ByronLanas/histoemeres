@@ -7,18 +7,27 @@
 
 
     <h:form id="form">  
-        <p:dataTable id="tablaCliente" rowKey="#{cliente.rutCliente}" paginator="true"  paginatorTemplate="{CurrentPageReport} 
+        <p:dataTable id="tablaCliente"
+                     rowKey="#{cliente.rutCliente}"
+                     paginator="true"  
+                     paginatorTemplate="{CurrentPageReport} 
                      {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rows="20" rowsPerPageTemplate="10,20,50,100" style="width: 70%" var="cliente" value="#{managedBeanCliente.clientes}"
-                     selection="#{managedBeanCliente.selectedCliente}" selectionMode="single" emptyMessage="No se encontraron resultados."
+                     rows="20" 
+                     rowsPerPageTemplate="10,20,50,100"
+                     style="width: 70%"
+                     var="cliente" 
+                     value="#{managedBeanCliente.clientes}"
+                     selection="#{managedBeanCliente.selectedCliente}" 
+                     selectionMode="single" 
+                     emptyMessage="No se encontraron resultados."
                      filteredValue="#{managedBeanCliente.clientesFiltrados}">  
-            
+
             <p:ajax event="rowSelect" update=":form:display"/>
-            
-            <p:column  headerText="Rut" sortBy="#{cliente.rutCliente()}" filterBy="#{cliente.rutCliente}">
+
+            <p:column  headerText="Rut" sortBy="#{cliente.rutCliente}" filterBy="#{cliente.rutCliente}">
                 #{ cliente.rutCliente.toString().substring(0,cliente.rutCliente.toString().length()-1)}-#{ cliente.rutCliente.toString().substring(cliente.rutCliente.toString().length()-1)}
             </p:column>       
-            
+
             <p:column headerText="Nombre" sortBy="#{cliente.nombreCliente.toLowerCase()}" filterBy="#{cliente.nombreCliente}">  
                 <h:outputText value="#{cliente.nombreCliente}"/>
             </p:column>  
@@ -30,11 +39,17 @@
                   width="300" showEffect="clip" hideEffect="fold">
             <h:panelGrid id="display" columns="2">
                 <h:outputText value="Rut cliente: "/>
-                <h:outputText value="#{ managedBeanCliente.selectedCliente.rutCliente.toString().substring(0,managedBeanCliente.selectedCliente.rutCliente.toString().length()-1)}-#{ managedBeanCliente.selectedCliente.rutCliente.toString().substring(managedBeanCliente.selectedCliente.rutCliente.toString().length()-1)}" />
+                <p:inputText value="#{managedBeanCliente.selectedCliente.rutCliente}" />
                 <h:outputText value="Nombre cliente: " />
                 <p:inputText value="#{managedBeanCliente.selectedCliente.nombreCliente}" />
                 <f:facet name="footer" >
-                    <p:commandButton value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanCliente.modificarCliente}" oncomplete="dialogoModificar.hide()" update="tablaCliente"/>
+                    <p:commandButton value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanCliente.modificarCliente}" oncomplete="dialogoModificar.hide()" update="tablaCliente">
+                        <p:confirm header="Confirmacion" message="Esta seguro" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                    </p:confirmDialog>  
                 </f:facet>
             </h:panelGrid>
         </p:dialog>

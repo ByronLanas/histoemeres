@@ -6,21 +6,46 @@
       xmlns:p="http://primefaces.org/ui">
 
 
-    <h:form>  
-        <p:dataTable var="aporte" value="#{managedBeanAporte.aportes}">  
-            <p:column headerText="Muncipio">  
-                <h:outputText value="#{aporte.getAportePK().getMunicipioAporte()}" />  
-            </p:column>       
+    <h:form id="form">  
+        <p:dataTable id="tablaAporte" rowKey="#{aporte.valorAporte}" paginator="true"  paginatorTemplate="{CurrentPageReport} 
+                     {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rows="20" rowsPerPageTemplate="10,20,50,100" style="width: 70%" var="aporte" value="#{managedBeanAporte.aportes}"
+                     selection="#{managedBeanAporte.selectedAporte}" selectionMode="single" emptyMessage="No se encontraron resultados."
+                     filteredValue="#{managedBeanAporte.aportesFiltrados}">  
 
-            <p:column headerText="Valor">  
-                <h:outputText value="#{aporte.getValorAporte()}" />  
+            <p:ajax event="rowSelect" update=":form:display"/>
+
+            <p:column  headerText="Municipalidad" sortBy="#{aporte.aportePK.municipioAporte}" filterBy="#{aporte.aportePK.municipioAporte}">
+                <h:outputText value="#{aporte.aportePK.municipioAporte}"/>
             </p:column> 
-
-            <p:column headerText="Fecha">  
-                <h:outputText value="#{Herramientas.fechaConDia()}" />  
+            <p:column headerText="Valor" sortBy="#{aporte.valorAporte}" filterBy="#{aporte.valorAporte}">  
+                <h:outputText value="#{aporte.valorAporte}"/>
             </p:column>  
-  
+            <p:column headerText="Fecha" sortBy="#{aporte.aportePK.fechaMunicipalidad}" filterBy="#{aporte.aportePK.fechaMunicipalidad}">  
+                <h:outputText value="#{aporte.aportePK.fechaMunicipalidad}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+            </p:column>  
+            <f:facet name="footer">
+                <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" update=":form:display"  oncomplete="dialogoModificar.show();" />
+            </f:facet>
         </p:dataTable>  
+        <p:dialog id="dialogoModal"  header="Modificar aporte" widgetVar="dialogoModificar" resizable="false"
+                  width="300" showEffect="clip" hideEffect="fold">
+            <h:panelGrid id="display" columns="2">
+                <h:outputText value="Municipalidad: "/>
+                <h:outputText value="#{managedBeanAporte.selectedAporte.aportePK.municipioAporte}" />
+                <h:outputText value="Valor: "/>
+                <h:inputText value="#{managedBeanAporte.selectedAporte.valorAporte}"/>
+                <h:outputText value="Fecha: "/>
+                <p:calendar navigator="true" locale="es" value="#{managedBeanAporte.selectedAporte.aportePK.fechaMunicipalidad}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </p:calendar>
+                <f:facet name="footer" >
+                    <p:commandButton value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanAporte.modificarAporte}" oncomplete="dialogoModificar.hide()" update="tablaAporte"/>
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
     </h:form>
 </html>
 

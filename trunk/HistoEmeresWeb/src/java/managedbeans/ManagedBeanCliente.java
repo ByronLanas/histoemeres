@@ -16,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import org.primefaces.context.RequestContext;
 import sessionbeans.ClienteFacadeLocal;
 import sessionbeans.SessionBeanComercial;
 
@@ -100,8 +101,9 @@ public class ManagedBeanCliente {
         cliente = new Cliente(rut_cliente, nombre_cliente);
         if (sessionBeanComercial.insertarCliente(cliente)) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente ingresado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue ingresado con éxito"));
+            RequestContext.getCurrentInstance().reset("form:panelCliente");  
         } else {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue ingresado", "El cliente: " + cliente + " ya había sido ingresado"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue ingresado", "El cliente: " + cliente.getNombreCliente() +": " + cliente.getRutCliente()+ " ya había sido ingresado"));
         }
     }
 
