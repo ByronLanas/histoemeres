@@ -14,15 +14,20 @@
                 Ingresar nueva venta
             </f:facet>
             <h:outputText value="Rut cliente "/>
-            <p:inputText label="Rut cliente" id="rut" required="true" value="#{managedBeanVenta.rutCliente}"/>
+            <p:selectOneMenu filterMatchMode="startsWith" filter="true" id="rut" required="true" value="#{managedBeanCliente}">
+                <f:selectItem itemLabel="select one" itemValue=""/>
+                <f:selectItems value="#{managedBeanCliente.clientes}" var="cliente" itemLabel="#{cliente.rutCliente}" itemValue="cliente"/>
+            </p:selectOneMenu>
             <h:outputText value="Código de producto "/>
-            <p:selectOneMenu id="codigoProducto" label="Código producto" required="true" value="#{managedBeanProducto.nombre_producto}">  
+            <p:selectOneMenu id="codigoProducto" label="Código producto" required="true" value="#{managedBeanVenta.codigoProducto}">  
                 <f:selectItem itemLabel="codigo producto" itemValue="" />  
                 <f:selectItems value="#{managedBeanProducto.productos}" var="nombres" 
-                               itemValue="#{nombres.nombreProducto}" itemLabel="#{nombres.nombreProducto}"/>
+                               itemValue="#{nombres.codigoProducto}" itemLabel="#{nombres.nombreProducto}"/>
             </p:selectOneMenu>
             <h:outputText value="Cantidad de fardos "/>
             <p:inputText label="Cantidad fardos" id="cantidad" required="true" value="#{managedBeanVenta.cantidadVenta}"/>
+            <h:outputText value="Fecha de Venta"/>
+            <p:calendar value="#{managedBeanVenta.fechaVenta}" required="true" label="Fecha" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
             <f:facet name="footer">
                 <p:commandButton update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanVenta.ingresarVenta}" icon="ingresar-icon" />
             </f:facet>
