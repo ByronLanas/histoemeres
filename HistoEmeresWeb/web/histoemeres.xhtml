@@ -16,42 +16,46 @@
                 <title>#{managedBeanMenu.pagina.split("(?=\\p{Upper})")[0].substring(0,1).toUpperCase()}#{managedBeanMenu.pagina.split("(?=\\p{Upper})")[0].substring(1)} #{managedBeanMenu.pagina.split("(?=\\p{Upper})")[1]}</title>
             </f:facet> 
         </h:head>
-<script type="text/javascript">  
-PrimeFaces.locales['es'] = {
-    closeText: 'Cerrar',
-    prevText: 'Anterior',
-    nextText: 'Siguiente',
-    monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-    dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-    dayNamesMin: ['D','L','M','X','J','V','S'],
-    weekHeader: 'Semana',
-    firstDay: 1,
-    isRTL: false,
-    showMonthAfterYear: false,
-    yearSuffix: '',
-    timeOnlyTitle: 'Sólo hora',
-    timeText: 'Tiempo',
-    hourText: 'Hora',
-    minuteText: 'Minuto',
-    secondText: 'Segundo',
-    currentText: 'Fecha actual',
-    ampm: false,
-    month: 'Mes',
-    week: 'Semana',
-    day: 'Día',
-    allDayText : 'Todo el día'
-};
-</script> 
+        <script type="text/javascript">
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día'
+            };
+        </script> 
         <h:body>
 
             <p:layout style="min-width:1220px;min-height:720px;" id="layout">
 
-            <p:layoutUnit position="north" size="100" styleClass=" header"  > 
+                <p:layoutUnit position="north" size="100" styleClass=" header"  > 
                 <p:commandLink action="#{managedBeanMenu.irMenu('historiales')}">
                     <p:graphicImage value="resources/imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
                 </p:commandLink>
+                    <div style="float:right; padding-top: 50px; padding-right: 10px; border-bottom: #D20005" >
+                        <p:outputLabel value="#{username}" style="padding-right: 10px; font-size: 15px; font-weight: bold" />      
+                        <p:commandButton icon="eliminar-user-icon" action="#{managedBeanLogin.deslogear()}"/>
+                    </div>
             </p:layoutUnit>
 
                 <p:layoutUnit styleClass="layout south" position="south" size="50" >
@@ -59,7 +63,7 @@ PrimeFaces.locales['es'] = {
                         <h:outputText value="EMERES: Bombero Encalada #14 La Cisterna, Teléfono (56-2) 558 8960, Santiago."/><br/>
                         <h:outputText value="HistoEmeres fue desarrollado por: "/><a href="https://www.facebook.com/groups/HistoEmeres/">https://www.facebook.com/groups/HistoEmeres </a> <br/>
                         <h:outputText value="contacto: "/><a href="mailto:HistoEmeres@groups.facebook.com" >HistoEmeres@groups.facebook.com</a>
-                        
+
                     </div>
                 </p:layoutUnit>
 
@@ -67,11 +71,11 @@ PrimeFaces.locales['es'] = {
                     <h:panelGrid id="banner" columns="1"  style="margin: 80px 0px; padding: 0px">
                         <!--<p:clock id="reloj"  pattern="HH:mm:ss"/>-->
                         <p:calendar  mode="Inline" title="Calendario"  size="150" pattern="" timeZone="Santiago/Chile" locale="es" ></p:calendar>
-                        
+
                     </h:panelGrid>
-                    
+
                 </p:layoutUnit>
-                
+
                 <p:layoutUnit id="center" styleClass="layout " position="center" resizable="true" style=" min-height: 450px;"  >
                     <h:form style="width:976px"> 
                         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
@@ -118,16 +122,16 @@ PrimeFaces.locales['es'] = {
 
                         </p:menubar> 
                     </h:form>
-                        
-                        <!-- ......aqui va el contenido de cada pagina...... -->
-                        
-                        <div id="contenido"  style="margin-top: 20px">
-                            <ui:include src = "#{managedBeanMenu.getPagina()}.xhtml" />
-                        </div>
+
+                    <!-- ......aqui va el contenido de cada pagina...... -->
+
+                    <div id="contenido"  style="margin-top: 20px">
+                        <ui:include src = "#{managedBeanMenu.getPagina()}.xhtml" />
+                    </div>
 
 
 
-                     
+
                 </p:layoutUnit>
 
             </p:layout>
