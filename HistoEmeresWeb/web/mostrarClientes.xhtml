@@ -45,6 +45,7 @@
                 </p:inputText>
                 <h:outputText value="Nombre cliente: "/>
                 <p:inputText value="#{managedBeanCliente.selectedCliente.nombreCliente}" />
+                <h:inputHidden id="rutSeleccionado" value="#{managedBeanCliente.selectedCliente.rutCliente}"/>
                 <f:facet name="footer" >
                     <p:commandButton value="Aceptar" type="button" icon="ui-icon-check" style="float: right"  onclick="cd.show()" />
                     <p:confirmDialog message="¿Está seguro que desea modificar el cliente" widgetVar="cd" showEffect="fade" hideEffect="explode">  

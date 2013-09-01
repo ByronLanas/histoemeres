@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:form id="form">
+        <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:panelGrid styleClass="panel" id="panelEgreso" columns="2">
+
+            <f:facet name="header">
+                Ingresar nuevo egreso
+            </f:facet>
+            <h:outputText value="Tipo de egreso "/>
+            <p:inputText label="Tipo egreso" id="tipo" required="true" value="#{managedBeanEgreso.tipoEgreso}"/>
+            <h:outputText value="Valor de egreso"/>
+            <p:inputText label="Valor egreso" id="valor" required="true"  value ="#{managedBeanEgreso.valorEgreso}"/>
+            <h:outputText value="Fecha de egreso"/>
+            <p:calendar pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" label="Fecha egreso" id="fecha" required="true" value="#{managedBeanEgreso.fechaEgreso}"/>
+            <f:facet name="footer">
+                <p:commandButton  update="panelEgreso" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar" action="#{managedBeanEgreso.ingresarEgreso()}" icon="ingresar-icon" />
+            </f:facet>
+        </p:panelGrid>    
+        <p:blockUI block="panelEgreso" trigger="botonIngresar" />
+    </h:form>
+
+</html>
