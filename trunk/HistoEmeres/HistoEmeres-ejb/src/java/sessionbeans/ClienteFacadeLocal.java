@@ -28,5 +28,6 @@ public interface ClienteFacadeLocal {
     List<Cliente> findRange(int[] range);
 
     int count();
-    
+
+    List<Cliente> findBuscarPorRut(Integer rut);
 }

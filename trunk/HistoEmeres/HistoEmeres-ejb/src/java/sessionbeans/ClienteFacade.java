@@ -5,9 +5,11 @@
 package sessionbeans;
 
 import entities.Cliente;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +27,13 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
 
     public ClienteFacade() {
         super(Cliente.class);
+    }
+    
+    @Override
+    public List<Cliente> findBuscarPorRut(Integer rut){
+        Query query;
+        query = em.createNamedQuery("Cliente.findByRutCliente").setParameter("rutCliente", rut);
+        return query.getResultList();
     }
     
 }
