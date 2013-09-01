@@ -67,6 +67,14 @@ public class Egreso implements Serializable {
         this.valorEgreso = valorEgreso;
     }
 
+    public Egreso(Integer codigoEgreso, String tipoEgreso, float valorEgreso, Date fechaEgreso) {
+        this.codigoEgreso = codigoEgreso;
+        this.tipoEgreso = tipoEgreso;
+        this.valorEgreso = valorEgreso;
+        this.fechaEgreso = fechaEgreso;
+    }
+
+    
     public Integer getCodigoEgreso() {
         return codigoEgreso;
     }

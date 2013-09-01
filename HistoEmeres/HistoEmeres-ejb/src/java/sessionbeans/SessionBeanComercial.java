@@ -6,6 +6,7 @@ package sessionbeans;
 
 import entities.Cliente;
 import entities.Producto;
+import entities.Venta;
 import java.sql.SQLException;
 import java.util.List;
 import javax.ejb.DuplicateKeyException;
@@ -63,9 +64,20 @@ public class SessionBeanComercial {
     }
 
     public boolean verificarCliente(Cliente cliente) {
-        Cliente client = clienteFacade.find(cliente.getRutCliente());
         try {
-            if (client.getRutCliente() == null) {
+            if (clienteFacade.findBuscarPorRut(cliente.getRutCliente()).isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean ingresarVenta(Venta venta) {
+        try {
+            if (!verificarCliente(venta.getRutCliente())) {
                 return true;
             } else {
                 return false;
