@@ -15,14 +15,14 @@
             </f:facet>
             <h:outputText value="Rut cliente "/>
             <p:selectOneMenu filterMatchMode="startsWith" filter="true" id="rut" required="true" value="#{managedBeanCliente}">
-                <f:selectItem itemLabel="select one" itemValue=""/>
+                <f:selectItem itemLabel="rut" itemValue=""/>
                 <f:selectItems value="#{managedBeanCliente.clientes}" var="cliente" itemLabel="#{cliente.rutCliente}" itemValue="cliente"/>
             </p:selectOneMenu>
             <h:outputText value="Código de producto "/>
             <p:selectOneMenu id="codigoProducto" label="Código producto" required="true" value="#{managedBeanVenta.codigoProducto}">  
                 <f:selectItem itemLabel="codigo producto" itemValue="" />  
-                <f:selectItems value="#{managedBeanProducto.productos}" var="nombres" 
-                               itemValue="#{nombres.codigoProducto}" itemLabel="#{nombres.nombreProducto}"/>
+                <f:selectItems value="#{managedBeanProducto.productos}" var="producto" 
+                               itemValue="#{producto.codigoProducto}" itemLabel="#{producto.nombreProducto}"/>
             </p:selectOneMenu>
             <h:outputText value="Cantidad de fardos "/>
             <p:inputText label="Cantidad fardos" id="cantidad" required="true" value="#{managedBeanVenta.cantidadVenta}"/>

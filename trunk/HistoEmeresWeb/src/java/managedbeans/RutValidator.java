@@ -30,11 +30,9 @@ public class RutValidator implements Validator {
             String rut = value.toString();
             int rutSinDv = Integer.parseInt(rut.substring(0, rut.length() - 1));
             char dv = rut.charAt(rut.length() - 1);
-            System.out.println(rutSinDv);
             for (; rutSinDv != 0; rutSinDv /= 10) {
                 s = (s + rutSinDv % 10 * (9 - m++ % 6)) % 11;
             }
-            System.out.println(s);
             if (dv != (char) (s != 0 ? s + 47 : 75)) {
                 FacesMessage msg = new FacesMessage("Error de validación", "El rut: " + value + " es inválido");
                 msg.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -43,3 +41,4 @@ public class RutValidator implements Validator {
         }
     }
 }
+

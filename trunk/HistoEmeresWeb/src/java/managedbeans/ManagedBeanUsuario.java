@@ -7,6 +7,7 @@ package managedbeans;
 import entities.Usuario;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -105,62 +106,44 @@ public class ManagedBeanUsuario {
         usuarios = usuarioFacade.findAll();
     }
 
-    public void nuevoUsuario() throws Exception {
+    public void nuevoUsuario() {
         FacesContext context = FacesContext.getCurrentInstance();
         Usuario usuario;
         Herramientas encripta;
         encripta = new Herramientas();
+        contraseña = encripta.encriptaEnMD5(nombre).substring(0, 8);
         if (usuarioFacade.buscarPorNombreUsuario(nombre).isEmpty()) {
-            enviaMail();
             usuario = new Usuario(null, nombre, tipo, encripta.encriptaEnMD5(contraseña));
             usuarioFacade.create(usuario);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario ingresado con éxito", "El usuario: " + nombre + " fue ingresado con éxito"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario ingresado con éxito", "El usuario: " + nombre + " fue ingresado con éxito."));
+            try {
+                enviaMail();
+            } catch (Exception e) {
+            }
         } else {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue ingresado", "El usuario: " + nombre + " ya había sido ingresado"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue ingresado", "El usuario: " + nombre + " ya había sido ingresado al sistema."));
         }
     }
 
     public void enviaMail() throws Exception {
         FacesContext context = FacesContext.getCurrentInstance();
-        
-        // Preparamos la sesion
-        InitialContext ctx = new InitialContext();  
-        Session session =  (Session) ctx.lookup("mail/prueba");
-
-        String msgBody;
-        Herramientas encripta;
-        encripta = new Herramientas();
-
-        contraseña = encripta.encriptaEnMD5(nombre);
-        msgBody = "Bienvenido a HistoEmeres Sr(a) " + nombre + " :"
-                + "\n Su contraseña es: " + contraseña
-                + "\n Se recomienda cambiar su contraseña.";
-
-        //Construir mensaje
-        MimeMessage msg = new MimeMessage(session);
-        msg.setSubject("Tu cuenta de HistoEmeres a sido activada");
-        msg.setFrom(new InternetAddress("noreply@histoemeres.com"));
-        msg.addRecipient(Message.RecipientType.TO,
-                new InternetAddress(correo));
-        msg.setText(msgBody);
-
-
-        // Lo enviamos.
-        Transport.send(msg);
-
-        /*catch (AddressException e
-
-    
-         ) {
-         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue ingresado", "El usuario: " + nombre + " no se envio el mail por error de dirección"));
-         }
-         catch (MessagingException e
-
-    
-         ) {
-         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue ingresado", "El usuario: " + correo + " no se envio el mail por error de mensaje"));
-         }
-
-         */
+        Properties props = new Properties();
+        props.setProperty("mail.smtp.host", "smtp.gmail.com");
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.smtp.port", "587");
+        props.setProperty("mail.smtp", "diegog.asd@gmail.com");
+        props.setProperty("mail.smtp.auth", "true");
+        Session session = Session.getDefaultInstance(props);
+        MimeMessage message = new MimeMessage(session);
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(correo));
+        message.setSubject("Tu cuenta en Histoemeres ha sido creada");
+        message.setText("Sr(a) " + nombre + ": Le informamos que su cuenta en Histoemeres a sido creada."
+                + "\n Para acceder a ella utilice el usuario: " + nombre + " y la contraseña: " 
+                + "\n Recomendamos cambiarla una vez que ingrese por primera vez."
+                + "\n Saludos.");
+        Transport t = session.getTransport("smtp");
+        t.connect("diegog.asd@gmail.com", "all_16940203");
+        t.sendMessage(message, message.getAllRecipients());
+        t.close();
     }
 }

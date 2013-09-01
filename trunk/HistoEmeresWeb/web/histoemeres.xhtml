@@ -49,14 +49,19 @@
             <p:layout style="min-width:1220px;min-height:720px;" id="layout">
 
                 <p:layoutUnit position="north" size="100" styleClass=" header"  > 
-                <p:commandLink action="#{managedBeanMenu.irMenu('historiales')}">
-                    <p:graphicImage value="resources/imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
-                </p:commandLink>
-                    <div style="float:right; padding-top: 50px; padding-right: 10px; border-bottom: #D20005" >
-                        <p:outputLabel value="#{username}" style="padding-right: 10px; font-size: 15px; font-weight: bold" />      
-                        <p:commandButton icon="eliminar-user-icon" action="#{managedBeanLogin.deslogear()}"/>
+                    <p:commandLink action="#{managedBeanMenu.irMenu('historiales')}">
+                        <p:graphicImage value="resources/imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
+                    </p:commandLink>
+                    <div style="float:right; padding-top: 50px; padding-right: 100px; border-bottom: #D20005" >
+                        <h:form id="menuUsuario" style="default">
+                            <p:splitButton value="#{username}"  >
+                                <p:menuitem value="Cambiar contraseña" actionListener="#{managedBeanMenu.irMenu('cambiarContraseña')}"/>
+                                <p:menuitem value="Cerrar sesión" actionListener="#{managedBeanLogin.deslogear()}"/>
+                            </p:splitButton>      
+                            <p:commandButton icon="eliminar-user-icon" action="#{managedBeanLogin.deslogear()}"/>
+                        </h:form>
                     </div>
-            </p:layoutUnit>
+                </p:layoutUnit>
 
                 <p:layoutUnit styleClass="layout south" position="south" size="50" >
                     <div style="text-align: center;font-size: 10px">
@@ -107,8 +112,8 @@
                             </p:submenu>
                             <p:submenu label="Egresos" icon="egresos-icon" rendered="#{managedBeanLogin.tipo}">  
 
-                                <p:menuitem value="Ver egresos"  icon="ver-icon" />  
-                                <p:menuitem value="Ingresar egresos"  icon="ingresar-icon" />  
+                                <p:menuitem value="Ver egresos"  icon="ver-icon"  />  
+                                <p:menuitem value="Ingresar egresos"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarEgreso')}" />  
                                 <p:menuitem value="Modificar egresos" icon="modificar-icon" />  
                             </p:submenu>
                             <p:submenu label="Usuarios" icon="usuarios-icon" rendered="#{managedBeanLogin.tipo}">  

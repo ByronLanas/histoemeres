@@ -4,6 +4,8 @@
  */
 package managedbeans;
 
+import entities.Cliente;
+import entities.Producto;
 import entities.Venta;
 import java.util.Date;
 import java.util.List;
@@ -25,16 +27,16 @@ import sessionbeans.VentaFacadeLocal;
 @Named(value = "managedBeanVenta")
 @RequestScoped
 public class ManagedBeanVenta {
+
     @EJB
     private SessionBeanComercial sessionBeanComercial;
     @EJB
     private VentaFacadeLocal ventaFacade;
-
     /**
      * Creates a new instance of ManagedBeanVenta
      */
-    private Integer rutCliente;
-    private Integer codigoProducto;
+    private Cliente rutCliente;
+    private Producto codigoProducto;
     private Integer cantidadVenta;
     private Date fechaVenta;
     private List<Venta> ventasFiltradas;
@@ -42,23 +44,19 @@ public class ManagedBeanVenta {
     private Venta venta;
     private List<Venta> ventas;
 
-
-
-
-
-    public Integer getRutCliente() {
+    public Cliente getRutCliente() {
         return rutCliente;
     }
 
-    public void setRutCliente(Integer rutCliente) {
+    public void setRutCliente(Cliente rutCliente) {
         this.rutCliente = rutCliente;
     }
 
-    public Integer getCodigoProducto() {
+    public Producto getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(Integer codigoProducto) {
+    public void setCodigoProducto(Producto codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
 
@@ -109,28 +107,26 @@ public class ManagedBeanVenta {
     public void setVentas(List<Venta> ventas) {
         this.ventas = ventas;
     }
-    
-    
+
     public ManagedBeanVenta() {
         rutCliente = null;
         codigoProducto = null;
         cantidadVenta = null;
     }
-    
+
     @PostConstruct
-    public void  init(){
+    public void init() {
         ventas = ventaFacade.findAll();
     }
-    
-    public boolean ingresarVenta(){
+
+    public void ingresarVenta() {
         FacesContext context = FacesContext.getCurrentInstance();
         venta = new Venta(null, cantidadVenta, fechaVenta, rutCliente, codigoProducto);
         if (sessionBeanComercial.ingresarVenta(venta)) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente ingresado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue ingresado con éxito"));
-            RequestContext.getCurrentInstance().reset("form:panelCliente");  
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Venta ingresada con éxito", "La venta : " + venta.getCodigoProducto().getNombreProducto()+ ": " + venta.getCantidadVenta() + " fue ingresada con éxito"));
         } else {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue ingresado", "El cliente: " + cliente.getNombreCliente() +": " + cliente.getRutCliente()+ " ya había sido ingresado"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Venta no ingresada", "El cliente: " + venta.getRutCliente().getRutCliente() + " no existe."));
         }
-        
+
     }
 }

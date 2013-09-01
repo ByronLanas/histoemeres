@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:form id="form">
+        <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:panelGrid styleClass="panel" id="panelContraseña" columns="2">
+
+            <f:facet name="header">
+                Cambiar contraseña
+            </f:facet>
+            <h:outputText value="Ingrese su contraseña antigua: "/>
+            <p:password label="Contraseña antigua" value="#{managedBeanUsuario.contraseña}"/>
+            <h:outputLabel for="pwd1" value="Ingrese su nueva contraseña: " />  
+            <p:password id="pwd1"  match="pwd2" label="Password 1" required="true"/>  
+  
+            <h:outputLabel for="pwd2" value="Vuelva a ingresar su contraseña: " />  
+            <p:password id="pwd2" label="Password 2" required="true"/>  
+            <f:facet name="footer">
+                <p:commandButton  update="panelContraseña" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar"  icon="ingresar-icon" />
+            </f:facet>
+        </p:panelGrid>    
+        <p:blockUI block="panelContraseña" trigger="botonIngresar" />
+    </h:form>
+
+</html>
