@@ -19,10 +19,10 @@
                 <h:outputText value="#{aporte.aportePK.municipioAporte}"/>
             </p:column> 
             <p:column headerText="Valor" sortBy="#{aporte.valorAporte}" filterBy="#{aporte.valorAporte}">  
-                <h:outputText value="#{aporte.valorAporte}"/>
+                <h:outputText value="\$ #{aporte.valorAporte.intValue()}"/>
             </p:column>  
             <p:column headerText="Fecha" sortBy="#{aporte.aportePK.fechaMunicipalidad}" filterBy="#{aporte.aportePK.fechaMunicipalidad}">  
-                <h:outputText value="#{aporte.aportePK.fechaMunicipalidad}">
+                <h:outputText value="#{Herramientas.fechaConPalabras(aporte.aportePK.fechaMunicipalidad)}">
                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                 </h:outputText>
             </p:column>  
@@ -36,10 +36,10 @@
                 <h:outputText value="Municipalidad: "/>
                 <h:outputText value="#{managedBeanAporte.selectedAporte.aportePK.municipioAporte}" />
                 <h:outputText value="Valor: "/>
-                <h:inputText value="#{managedBeanAporte.selectedAporte.valorAporte}"/>
+                <h:inputText value="#{managedBeanAporte.selectedAporte.valorAporte.intValue()}"/>
                 <h:outputText value="Fecha: "/>
-                <p:calendar navigator="true" locale="es" value="#{managedBeanAporte.selectedAporte.aportePK.fechaMunicipalidad}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                <p:calendar pattern="MM-yyyy" navigator="true" locale="es" value="#{managedBeanAporte.selectedAporte.aportePK.fechaMunicipalidad}">
+                
                 </p:calendar>
                 <f:facet name="footer" >
                     <p:commandButton value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanAporte.modificarAporte}" oncomplete="dialogoModificar.hide()" update="tablaAporte"/>

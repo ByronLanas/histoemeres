@@ -138,7 +138,7 @@ public class ManagedBeanUsuario {
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(correo));
         message.setSubject("Tu cuenta en Histoemeres ha sido creada");
         message.setText("Sr(a) " + nombre + ": Le informamos que su cuenta en Histoemeres a sido creada."
-                + "\n Para acceder a ella utilice el usuario: " + nombre + " y la contraseña: " 
+                + "\n Para acceder a ella utilice el usuario: " + nombre + " y la contraseña: " + contraseña
                 + "\n Recomendamos cambiarla una vez que ingrese por primera vez."
                 + "\n Saludos.");
         Transport t = session.getTransport("smtp");
