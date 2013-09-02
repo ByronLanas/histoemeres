@@ -31,6 +31,12 @@ public class Herramientas {
         return format.format(fecha);
     }
     
+    
+    public String fechaConPalabras(Date fecha){
+        format = new SimpleDateFormat("MMMMM 'de' yyyy");
+        return format.format(fecha);
+    }
+    
     private static final char[] CONSTS_HEX = { '0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f' };
     
     public static String encriptaEnMD5(String stringAEncriptar)

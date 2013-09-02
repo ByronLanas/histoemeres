@@ -35,11 +35,28 @@ public class ManagedBeanAporte implements Serializable{
 
     private String municipio;
     private Date fecha;
-    private float valor;
+    private Float valor;
     private Aporte aporte;
     private List<Aporte> aportes;
     private AportePK pk;
+    private static Aporte selectedAporte;
+    private List<Aporte> aportesFiltrados;
 
+    public Aporte getSelectedAporte() {
+        return selectedAporte;
+    }
+
+    public void setSelectedAporte(Aporte selectedAporte) {
+        this.selectedAporte = selectedAporte;
+    }
+
+    public List<Aporte> getAportesFiltrados() {
+        return aportesFiltrados;
+    }
+
+    public void setAportesFiltrados(List<Aporte> aportesFiltrados) {
+        this.aportesFiltrados = aportesFiltrados;
+    }
 
     public Date getFecha() {
         return fecha;
@@ -65,19 +82,12 @@ public class ManagedBeanAporte implements Serializable{
         this.fecha = fecha;
     }
 
-    public float getValor() {
+    public Float getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(Float valor) {
         this.valor = valor;
-    }
-
-
-    /**
-     * Creates a new instance of ManagedBeanAporte
-     */
-    public ManagedBeanAporte() {
     }
 
     public String getMunicipio() {
@@ -97,7 +107,7 @@ public class ManagedBeanAporte implements Serializable{
             return false;
         }
     }
-    
+
     /**
      *
      */
@@ -113,7 +123,7 @@ public class ManagedBeanAporte implements Serializable{
     public void setPk(AportePK pk) {
         this.pk = pk;
     }
-    
+
     public void insertarAporte(){
         FacesContext context = FacesContext.getCurrentInstance();
         pk=new AportePK(municipio, fecha);
@@ -123,6 +133,20 @@ public class ManagedBeanAporte implements Serializable{
         }
         else
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"El aporte no fue ingresado", "El aporte de la municipalidad de: "+municipio+ " ya había sido ingresado"));
-        
+    }
+    
+    public void modificarAporte() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        pk = new AportePK(selectedAporte.getAportePK().getMunicipioAporte(), selectedAporte.getAportePK().getFechaMunicipalidad());
+        aporte = new Aporte(pk, selectedAporte.getValorAporte());
+        if (sessionBeanFinanaciero.insertarAporte(aporte)) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aporte modificado con éxito", "El aporte : " + aporte.getAportePK().getMunicipioAporte() + "; " + aporte.getAportePK().getFechaMunicipalidad() + ": " + aporte.getValorAporte() + " fue modificado con éxito"));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El aporte no fue modificado", "El aporte: " + aporte.getAportePK().getMunicipioAporte() + ": " + aporte.getValorAporte() + "no pudo ser modificado."));
+        }
+    }
+
+    public ManagedBeanAporte() {
+        valor = null;
     }
 }
