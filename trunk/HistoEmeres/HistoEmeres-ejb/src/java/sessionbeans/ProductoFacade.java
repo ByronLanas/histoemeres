@@ -34,5 +34,15 @@ public class ProductoFacade extends AbstractFacade<Producto> implements Producto
         Query query;
         query = em.createNamedQuery("Producto.findByNombreProducto").setParameter("nombreProducto", nombre_producto); 
         return query.getResultList();
-    }    
+    } 
+
+    @Override
+    public List<Producto> buscarPorCodigoProducto(int codigoProducto) {
+        Query query;
+        query = em.createNamedQuery("Producto.findByCodigoProducto").setParameter("codigoProducto", codigoProducto);
+        return query.getResultList();
+    }
+
+
+    
 }

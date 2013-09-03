@@ -23,6 +23,8 @@ import javax.ejb.LocalBean;
 public class SessionBeanComercial {
 
     @EJB
+    private VentaFacadeLocal ventaFacade;
+    @EJB
     private ProductoFacadeLocal productoFacade;
     @EJB
     private ClienteFacadeLocal clienteFacade;
@@ -65,7 +67,7 @@ public class SessionBeanComercial {
 
     public boolean verificarCliente(Cliente cliente) {
         try {
-            if (clienteFacade.findBuscarPorRut(cliente.getRutCliente()).isEmpty()) {
+            if (clienteFacade.buscarPorRut(cliente.getRutCliente()).isEmpty()) {
                 return true;
             } else {
                 return false;
@@ -78,6 +80,7 @@ public class SessionBeanComercial {
     public boolean ingresarVenta(Venta venta) {
         try {
             if (!verificarCliente(venta.getRutCliente())) {
+                ventaFacade.create(venta);
                 return true;
             } else {
                 return false;

@@ -29,5 +29,5 @@ public interface ClienteFacadeLocal {
 
     int count();
 
-    List<Cliente> findBuscarPorRut(Integer rut);
+    List<Cliente> buscarPorRut(Integer rut);
 }
