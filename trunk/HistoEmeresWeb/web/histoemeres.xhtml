@@ -109,7 +109,7 @@
                             </p:submenu>
                             <p:submenu label="Egresos" icon="egresos-icon" rendered="#{managedBeanLogin.tipo}">  
 
-                                <p:menuitem value="Ver egresos"  icon="ver-icon"  />  
+                                <p:menuitem value="Ver egresos"  icon="ver-icon" action="#{managedBeanMenu.irMenu('mostrarEgresos')}" />  
                                 <p:menuitem value="Ingresar egresos"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarEgreso')}" />   
                             </p:submenu>
                             <p:submenu label="Usuarios" icon="usuarios-icon" rendered="#{managedBeanLogin.tipo}">  

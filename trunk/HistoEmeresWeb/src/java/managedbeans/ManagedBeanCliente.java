@@ -39,9 +39,18 @@ public class ManagedBeanCliente {
     private String nombre_cliente;
     private List<Cliente> clientes;
     private Cliente cliente;
+    private static Cliente clienteAnterior;
     private static Cliente selectedCliente;
     private List<Cliente> clientesFiltrados;
     private static Integer rutSeleccionado;
+
+    public static Cliente getClienteAnterior() {
+        return clienteAnterior;
+    }
+
+    public static void setClienteAnterior(Cliente clienteAnterior) {
+        ManagedBeanCliente.clienteAnterior = clienteAnterior;
+    }
 
     public Integer getRutSeleccionado() {
         return rutSeleccionado;
@@ -110,22 +119,25 @@ public class ManagedBeanCliente {
         cliente = new Cliente(rut_cliente, nombre_cliente);
         if (sessionBeanComercial.insertarCliente(cliente)) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente ingresado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue ingresado con éxito."));
-            RequestContext.getCurrentInstance().reset("form:panelCliente");  
+            RequestContext.getCurrentInstance().reset("form:panelCliente");
         } else {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue ingresado", "El cliente: " + cliente.getNombreCliente() +": " + cliente.getRutCliente()+ " ya había sido ingresado al sistema."));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue ingresado", "El cliente: " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " ya había sido ingresado al sistema."));
         }
     }
 
     public void modificarCliente() {
         FacesContext context = FacesContext.getCurrentInstance();
         cliente = new Cliente(selectedCliente.getRutCliente(), selectedCliente.getNombreCliente());
-        if (sessionBeanComercial.modificarCliente(cliente)) {
+        if (sessionBeanComercial.modificarCliente(cliente,clienteAnterior)) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente modificado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue modificado con éxito"));
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El cliente no fue modificado", "El cliente: " + cliente.getRutCliente() + "no pudo ser modificado."));
         }
     }
-
+    
+    public void guardarAnterior(){
+        clienteAnterior = selectedCliente;
+    }
 
     public ManagedBeanCliente() {
         rut_cliente = null;
