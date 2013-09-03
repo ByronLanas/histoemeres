@@ -33,19 +33,6 @@ public class ManagedBeanMenu {
             setPagina(pagina);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("histoemeres.xhtml");
             
-            if (pagina.compareTo("mostrarUsuario") == 0) {
-                ManagedBeanUsuario mngbn = new ManagedBeanUsuario();
-                mngbn.init();
-            } else if (pagina.compareTo("mostrarClientes") == 0) {
-                ManagedBeanCliente mngbn = new ManagedBeanCliente();
-                mngbn.init();
-            } else if (pagina.compareTo("mostrarProductos") == 0) {
-                ManagedBeanProducto mngbn = new ManagedBeanProducto();
-                mngbn.init();
-            } else if (pagina.compareTo("mostrarAportes") == 0) {
-                ManagedBeanAporte mngbn = new ManagedBeanAporte();
-                mngbn.init();
-            }
             
         } catch (IOException ex) {
             Logger.getLogger(ManagedBeanMenu.class.getName()).log(Level.SEVERE, null, ex);

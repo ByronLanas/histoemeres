@@ -42,7 +42,7 @@
                     <f:selectItem itemLabel="Empleado" itemValue="empleado"/>
                 </p:selectOneMenu>
                 <f:facet name="footer" >
-                    <p:commandButton value="Aceptar" type="button" icon="ui-icon-check" style="float: right" action="#{managedBeanUsuario.modificarUsuario}" oncomplete="dialogoModificar.hide()" update="tablaUsuario" />
+                    <p:commandButton value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanUsuario.modificarUsuario}" oncomplete="dialogoModificar.hide()" update="tablaUsuario" />
                 </f:facet>
             </h:panelGrid>
         </p:dialog>
