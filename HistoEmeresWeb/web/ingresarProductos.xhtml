@@ -14,7 +14,7 @@ s
             <h:outputText value="Nombre: "/>
             <p:inputText required="true" requiredMessage="Campo 'Nombre' no completado"  value="#{managedBeanProducto.nombre_producto}"/>
             <h:outputText value="Valor: " />
-            <p:inputText required="true" requiredMessage="Campo 'Valor' no completado" value="#{managedBeanProducto.valor_producto}"/>
+            <p:inputText validatorMessage="malo" required="true" requiredMessage="Campo 'Valor' no completado"  label="Valor producto" value="#{managedBeanProducto.valor_producto}"/>         
             <f:facet name="footer">
                 <p:commandButton icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanProducto.insertarProducto()}" />
             </f:facet>
