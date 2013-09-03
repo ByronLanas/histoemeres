@@ -38,4 +38,14 @@ public class SessionBeanIngreso {
             return false;
     }
 
+    public boolean verificarModificarAporte(Aporte aporte,Aporte aporteAnterior) {
+        if(aporteFacade.buscarAporte(aporte)){
+            aporteFacade.remove(aporteAnterior);
+            aporteFacade.edit(aporte);
+            return true;
+        }
+        else
+            return false;
+    }
+
 }
