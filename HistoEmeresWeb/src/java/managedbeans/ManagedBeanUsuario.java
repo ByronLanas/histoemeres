@@ -126,7 +126,6 @@ public class ManagedBeanUsuario {
 
     public void nuevoUsuario() {
         FacesContext context = FacesContext.getCurrentInstance();
-        Usuario usuario;
         Herramientas encripta;
         encripta = new Herramientas();
         contraseña = encripta.encriptaEnMD5(nombre).substring(0, 8);
@@ -145,10 +144,9 @@ public class ManagedBeanUsuario {
 
     public void modificarUsuario() {
         FacesContext context = FacesContext.getCurrentInstance();
-        Usuario usuario;
-        usuario = new Usuario(selectedUsuario.getCodigoUsuario(), nombre, tipo, selectedUsuario.getContrasenaUsuario());
+        
         try {
-            usuarioFacade.edit(usuario);
+            usuarioFacade.edit(selectedUsuario);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario modificado con éxito", "El usuario: " + nombre + " fue modificado con éxito."));
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue modificado", "El usuario: " + nombre + " no pudo ser modificado."));
