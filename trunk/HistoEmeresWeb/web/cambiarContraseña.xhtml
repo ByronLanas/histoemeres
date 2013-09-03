@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -20,7 +19,7 @@
             <h:outputLabel for="pwd2" value="Vuelva a ingresar su contraseña: " />  
             <p:password id="pwd2" label="Password 2" required="true"/>  
             <f:facet name="footer">
-                <p:commandButton  update="panelContraseña" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar"  icon="ingresar-icon" />
+                <p:commandButton  update="panelContraseña" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar"  icon="modificar-icon" />
             </f:facet>
         </p:panelGrid>    
         <p:blockUI block="panelContraseña" trigger="botonIngresar" />
