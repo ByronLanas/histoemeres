@@ -46,9 +46,9 @@
         </script> 
         <h:body>
 
-            <p:layout style="min-width:1240px;min-height:720px;" id="layout">
+            <p:layout style="min-width:1240px;height:720px;" id="layout">
 
-                <p:layoutUnit position="north" size="100" styleClass=" header"  > 
+                <p:layoutUnit position="north"  styleClass=" header"  > 
                     <p:commandLink action="#{managedBeanMenu.irMenu('historiales')}">
                         <p:graphicImage value="/resources/imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
                     </p:commandLink>
@@ -63,7 +63,7 @@
                     </div>
                 </p:layoutUnit>
 
-                <p:layoutUnit styleClass="layout south" position="south" minSize="52" >
+                <p:layoutUnit styleClass="layout south" position="south" size="52" >
                     <div style="text-align: center;font-size: 10px">
                         <h:outputText value="EMERES: Bombero Encalada #14 La Cisterna, Teléfono (56-2) 558 8960, Santiago."/><br/>
                         <h:outputText value="HistoEmeres fue desarrollado por: "/><a href="https://www.facebook.com/groups/HistoEmeres/">https://www.facebook.com/groups/HistoEmeres </a> <br/>
@@ -81,7 +81,7 @@
 
                 </p:layoutUnit>
 
-                <p:layoutUnit id="center" styleClass="layout " position="center"  style=" min-height: 450px;"  >
+                <p:layoutUnit id="center" styleClass="layout " position="center"  style=" height: 555px!important; "  >
                     <h:form style="width:950px"> 
                         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
                         <p:menubar styleClass="menu" autoDisplay="false" style="width: 100%">  
@@ -101,26 +101,21 @@
 
                                 <p:menuitem value="Ver ventas"  icon="ver-icon" />  
                                 <p:menuitem value="Ingresar ventas"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarVentas')}"/>  
-                                <p:menuitem value="Modificar ventas" icon="modificar-icon" />  
                             </p:submenu>
                             <p:submenu label="Productos" icon="productos-icon" rendered="#{managedBeanLogin.tipo}">  
 
                                 <p:menuitem value="Ver productos"  icon="ver-icon" action="#{managedBeanMenu.irMenu('mostrarProductos')}"/>  
-                                <p:menuitem value="Ingresar productos"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarProductos')}"/>  
-                                <p:menuitem value="Modificar productos" icon="modificar-icon" />  
-                                <p:menuitem value="Eliminar productos" icon="eliminar-icon" />  
+                                <p:menuitem value="Ingresar productos"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarProductos')}"/>   
                             </p:submenu>
                             <p:submenu label="Egresos" icon="egresos-icon" rendered="#{managedBeanLogin.tipo}">  
 
                                 <p:menuitem value="Ver egresos"  icon="ver-icon"  />  
-                                <p:menuitem value="Ingresar egresos"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarEgreso')}" />  
-                                <p:menuitem value="Modificar egresos" icon="modificar-icon" />  
+                                <p:menuitem value="Ingresar egresos"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarEgreso')}" />   
                             </p:submenu>
                             <p:submenu label="Usuarios" icon="usuarios-icon" rendered="#{managedBeanLogin.tipo}">  
 
                                 <p:menuitem value="Ver usuarios"  icon="ver-user-icon" action="#{managedBeanMenu.irMenu('mostrarUsuario')}"/>  
-                                <p:menuitem value="Ingresar usuarios"  icon="ingresar-user-icon" action="#{managedBeanMenu.irMenu('ingresarUsuario')}"/>  
-                                <p:menuitem value="Modificar usuarios" icon="modificar-user-icon" action="#{managedBeanMenu.irMenu('modificarUsuario')}"/>  
+                                <p:menuitem value="Ingresar usuarios"  icon="ingresar-user-icon" action="#{managedBeanMenu.irMenu('ingresarUsuario')}"/>   
                                 <p:menuitem value="Eliminar usuarios" icon="eliminar-user-icon" action="#{managedBeanMenu.irMenu('eliminarUsuario')}"/>  
                             </p:submenu>
 
@@ -129,7 +124,7 @@
 
                     <!-- ......aqui va el contenido de cada pagina...... -->
 
-                    <div id="contenido"  style="margin-top: 20px">
+                    <div id="contenido"  style="margin-top: 20px ;">
                         <ui:include src = "#{managedBeanMenu.getPagina()}.xhtml" />
                     </div>
 
