@@ -11,6 +11,8 @@ root {
 }
 .ui-datatable{
     margin-left: 130px !important;
+    height: 485px !important;
+    overflow: auto !important;
 }
 .historiales-icon{
     background-image: url('imagenes/diagram_16.png') !important;
@@ -75,6 +77,7 @@ root {
     padding: 0px !important;
     margin:0px !important;
     display: inline-block !important;
+    height: 100px !important;
 }
 .ui-layout-unit-content,.ui-layout-unit,.grid .ui-widget-content,  .ui-layout-resizer{
     background-color: transparent !important;
@@ -169,7 +172,7 @@ body{
 }
 .error404{
     background-position: center center !important;
-    background-image:  url('imagenes/error404.jpg') !important;
+    background-image:  url('imagenes/error4042.jpg') !important;
 
     background-repeat: no-repeat !important;
     border: 0px !important;
