@@ -15,8 +15,28 @@
             <h:outputText value="Municipalidad: "/>
             <p:selectOneMenu filterMatchMode="startsWith" filter="true" id="rut" required="true" value="#{managedBeanCliente}">
                 <f:selectItem itemLabel="Municipio" itemValue=""/>
+                <f:selectItem itemValue="Cerrillos" itemLabel="Cerrillos" />
+                <f:selectItem itemValue="El Bosque" itemLabel="El Bosque" />
                 <f:selectItem itemValue="Estación Central" itemLabel="Estación Central" />
+                <f:selectItem itemValue="Independencia" itemLabel="Independencia" />
+                <f:selectItem itemValue="La Cisterna" itemLabel="Estación Central" />
                 <f:selectItem itemValue="La Florida" itemLabel="La Florida" />
+                <f:selectItem itemValue="La Granja" itemLabel="La Granja" />
+                <f:selectItem itemValue="La Pintana" itemLabel="La Pintana" />
+                <f:selectItem itemValue="La Reina" itemLabel="La Reina" />
+                <f:selectItem itemValue="Lo Espejo" itemLabel="Lo Espejo" />
+                <f:selectItem itemValue="Macul" itemLabel="Macul" />
+                <f:selectItem itemValue="Maipú" itemLabel="Maipú" />
+                <f:selectItem itemValue="Ñuñoa" itemLabel="Ñuñoa" />
+                <f:selectItem itemValue="Pedro Aguirre Cerda" itemLabel="Pedro Aguirre Cerda" />
+                <f:selectItem itemValue="Peñalolen" itemLabel="Peñalolen" />
+                <f:selectItem itemValue="Providencia" itemLabel="Providencia" />
+                <f:selectItem itemValue="Recoleta" itemLabel="Recoleta" />
+                <f:selectItem itemValue="Santiago" itemLabel="Santiago" />
+                <f:selectItem itemValue="San Joaquín" itemLabel="San Joaquín" />
+                <f:selectItem itemValue="San Miguel" itemLabel="San Miguel" />
+                <f:selectItem itemValue="San Ramón" itemLabel="San Ramón" />
+                
             </p:selectOneMenu>
             <h:outputText value="Aporte: "/>
             <p:inputText required="true" value ="#{managedBeanAporte.valor}"/>
