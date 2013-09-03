@@ -41,8 +41,26 @@ public class ManagedBeanUsuario {
     private Usuario usuario;
     private List<Usuario> usuarios;
     private String correo;
+    private List<Usuario> usuariosFiltrados;
+    private static Usuario selectedUsuario;
 
     public ManagedBeanUsuario() {
+    }
+
+    public List<Usuario> getUsuariosFiltrados() {
+        return usuariosFiltrados;
+    }
+
+    public void setUsuariosFiltrados(List<Usuario> usuariosFiltrados) {
+        this.usuariosFiltrados = usuariosFiltrados;
+    }
+
+    public Usuario getSelectedUsuario() {
+        return selectedUsuario;
+    }
+
+    public void setSelectedUsuario(Usuario selectedUsuario) {
+        this.selectedUsuario = selectedUsuario;
     }
 
     public Usuario getUsuario() {
@@ -122,6 +140,18 @@ public class ManagedBeanUsuario {
             }
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue ingresado", "El usuario: " + nombre + " ya había sido ingresado al sistema."));
+        }
+    }
+
+    public void modificarUsuario() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Usuario usuario;
+        usuario = new Usuario(selectedUsuario.getCodigoUsuario(), nombre, tipo, selectedUsuario.getContrasenaUsuario());
+        try {
+            usuarioFacade.edit(usuario);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario modificado con éxito", "El usuario: " + nombre + " fue modificado con éxito."));
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue modificado", "El usuario: " + nombre + " no pudo ser modificado."));
         }
     }
 
