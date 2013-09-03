@@ -103,7 +103,12 @@ root {
 
 .legend .ui-fieldset-legend {
 
-    background: transparent !important;  
+    background: transparent !important;     
+}
+.legend .ui-fieldset-content{
+    font-size: 1.3em !important;
+    font-family:Book Antiqua;
+    color: teal;
 }
 
 .periodo .ui-fieldset-legend{
