@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package managedbeans;
-
+ 
 import entities.Usuario;
 import java.util.List;
 import java.util.Properties;
