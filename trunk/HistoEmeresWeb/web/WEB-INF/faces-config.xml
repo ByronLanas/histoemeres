@@ -10,13 +10,26 @@
     <lifecycle>
         <phase-listener>security.AuthorizationListener</phase-listener>
     </lifecycle>
-        <navigation-rule> 
+    <navigation-rule> 
         <from-view-id>/*</from-view-id> 
         <navigation-case> 
             <from-outcome>loginPage</from-outcome> 
-            <to-view-id>/login.xhtml</to-view-id> 
+            <to-view-id>/index.xhtml</to-view-id>
             
         </navigation-case>
     </navigation-rule>
-
+    <navigation-rule> 
+        <from-view-id>/*</from-view-id> 
+        <navigation-case> 
+            <from-outcome>error404</from-outcome> 
+            <to-view-id>/error404.xhtml</to-view-id> 
+        </navigation-case>
+    </navigation-rule>
+        <navigation-rule> 
+        <from-view-id>/*</from-view-id> 
+        <navigation-case> 
+            <from-outcome>loged</from-outcome> 
+            <to-view-id>/histoemeres.xhtml</to-view-id> 
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

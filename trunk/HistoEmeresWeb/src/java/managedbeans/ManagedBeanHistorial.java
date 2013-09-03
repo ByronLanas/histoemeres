@@ -22,6 +22,8 @@ import java.util.TreeSet;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.model.chart.CartesianChartModel;
@@ -62,8 +64,15 @@ public class ManagedBeanHistorial implements Serializable {
     private Map<String, String> listaGraficos;
     private boolean disableGrafico = true;
     private boolean disablePeriodo = true;
+    private Integer seleccionHistorial = 1;
+    private boolean error =false;
 
     public ManagedBeanHistorial() {
+        disablePeriodo = false;
+        tipoGrafico=1;
+        listaGraficos = new LinkedHashMap<String, String>();
+        listaGraficos.put("1", "Barras");
+        listaGraficos.put("2", "Linea");
     }
 
     public boolean isDisableGrafico() {
@@ -190,7 +199,16 @@ public class ManagedBeanHistorial implements Serializable {
         this.productos = productos;
     }
 
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
+
     public void generarGrafico(ActionEvent actionEvent) {
+        error=false;
         switch (tipoGrafico) {
             case 1:
                 setGrafico("barra");
@@ -202,18 +220,20 @@ public class ManagedBeanHistorial implements Serializable {
         switch (tipoHistorial) {
             case 1:
                 obtenerVentas(inicio, fin);
-                obtenerAportes(inicio,fin);
+                obtenerAportes(inicio, fin);
+
                 productos = productoFacade.findAll();
                 //obtenerAportes(inicio,fin);
                 setTitulo("Aportes V/S Ventas");
                 setxLabel("Mes");
                 setyLabel("Valor ($)");
+
                 createCategoryModelAV();
 
                 break;
             case 2:
-                
-                obtenerAportes(inicio,fin);
+
+                obtenerAportes(inicio, fin);
 
                 setTitulo("Aportes Totales");
                 setxLabel("Mes");
@@ -221,8 +241,8 @@ public class ManagedBeanHistorial implements Serializable {
                 createCategoryModelAT();
                 break;
             case 3:
-                
-                obtenerAportes(inicio,fin);
+
+                obtenerAportes(inicio, fin);
                 setTitulo("Aportes por Municipio");
                 setxLabel("Municipio");
                 setyLabel("Valor ($)");
@@ -241,7 +261,7 @@ public class ManagedBeanHistorial implements Serializable {
     }
 
     public void cargaTipoPeriodo(AjaxBehaviorEvent event) {
-        Integer seleccionHistorial = (Integer) event.getComponent().getAttributes().get("value");
+        seleccionHistorial = (Integer) event.getComponent().getAttributes().get("value");
         disableGrafico = false;
         if (seleccionHistorial == 3) {
             disablePeriodo = true;
@@ -261,104 +281,88 @@ public class ManagedBeanHistorial implements Serializable {
     private void createCategoryModelAV() {
 
         categoryModel = new CartesianChartModel();
-
-        Aporte aporte;
-        Venta venta;
-        Producto producto;
-        Date fecha;
-
-        float valor = 0;
-        float cero = 0;
-
         ChartSeries contributions = new ChartSeries();
         contributions.setLabel("Aportes");
         ChartSeries sales = new ChartSeries();
         sales.setLabel("Ventas");
+        if (aportes.isEmpty() || ventas.isEmpty()) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes o ventas para el periodo seleccionado"));
+            error=true;
+        } else {
+            Aporte aporte;
+            Venta venta;
+            Producto producto;
+            Date fecha;
 
-        SortedSet<Date> fechas = new TreeSet<Date>();
+            float valor = 0;
+            float cero = 0;
+
+            SortedSet<Date> fechas = new TreeSet<Date>();
 
 
 
 
-        Collections.sort(aportes, new Comparator<Aporte>() {
-            @Override
-            public int compare(Aporte a1, Aporte a2) {
-                return a1.getAportePK().getFechaMunicipalidad().compareTo(a2.getAportePK().getFechaMunicipalidad());
-            }
-        });
-        Collections.sort(ventas, new Comparator<Venta>() {
-            @Override
-            public int compare(Venta v1, Venta v2) {
-                return v1.getFechaVenta().compareTo(v2.getFechaVenta());
-            }
-        });
-
-        Iterator<Aporte> it = aportes.listIterator();
-        Iterator<Venta> it2 = ventas.listIterator();
-        Iterator<Producto> it3 = productos.iterator();
-
-        while (it.hasNext()) {
-            aporte = it.next();
-            fechas.add(aporte.getAportePK().getFechaMunicipalidad());
-        }
-        while (it2.hasNext()) {
-            venta = it2.next();
-            fechas.add(venta.getFechaVenta());
-        }
-        Iterator<Date> itss = fechas.iterator();
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
-
-        it = aportes.listIterator();
-        aporte = it.next();
-        it2 = ventas.listIterator();
-        venta = it2.next();
-
-        while (itss.hasNext()) {
-            fecha = itss.next();
-
-            if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0) {
-
-                if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
-                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
-                } else {
-                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
+            Collections.sort(aportes, new Comparator<Aporte>() {
+                @Override
+                public int compare(Aporte a1, Aporte a2) {
+                    return a1.getAportePK().getFechaMunicipalidad().compareTo(a2.getAportePK().getFechaMunicipalidad());
                 }
-                while (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0 && it.hasNext()) {
+            });
+            Collections.sort(ventas, new Comparator<Venta>() {
+                @Override
+                public int compare(Venta v1, Venta v2) {
+                    return v1.getFechaVenta().compareTo(v2.getFechaVenta());
+                }
+            });
 
-                    aporte = it.next();
-                    if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) != 0) {
-                        break;
-                    }
+            Iterator<Aporte> it = aportes.listIterator();
+            Iterator<Venta> it2 = ventas.listIterator();
+            Iterator<Producto> it3 = productos.iterator();
+
+            while (it.hasNext()) {
+                aporte = it.next();
+                fechas.add(aporte.getAportePK().getFechaMunicipalidad());
+            }
+            while (it2.hasNext()) {
+                venta = it2.next();
+                fechas.add(venta.getFechaVenta());
+            }
+            Iterator<Date> itss = fechas.iterator();
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+
+            it = aportes.listIterator();
+            aporte = it.next();
+            it2 = ventas.listIterator();
+            venta = it2.next();
+
+            while (itss.hasNext()) {
+                fecha = itss.next();
+
+                if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0) {
+
                     if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
                         contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
                     } else {
                         contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
                     }
-                }
-            } else if (!contributions.getData().containsKey(format.format(fecha))) {
-                contributions.set(format.format(fecha), cero);
-            }
-            if (fecha.compareTo(venta.getFechaVenta()) == 0) {
-                it3 = productos.iterator();
-                while (it3.hasNext()) {
-                    producto = it3.next();
-                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
-                        valor = producto.getValorProducto() * venta.getCantidadVenta();
-                    }
-                }
-                if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+                    while (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0 && it.hasNext()) {
 
-                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
-                } else {
-
-                    sales.set(format.format(venta.getFechaVenta()), valor);
-                }
-                while (it2.hasNext() && fecha.compareTo(venta.getFechaVenta()) == 0) {
-                    venta = it2.next();
-                    if (fecha.compareTo(venta.getFechaVenta()) != 0) {
-                        break;
+                        aporte = it.next();
+                        if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) != 0) {
+                            break;
+                        }
+                        if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
+                            contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                        } else {
+                            contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
+                        }
                     }
+                } else if (!contributions.getData().containsKey(format.format(fecha))) {
+                    contributions.set(format.format(fecha), cero);
+                }
+                if (fecha.compareTo(venta.getFechaVenta()) == 0) {
                     it3 = productos.iterator();
                     while (it3.hasNext()) {
                         producto = it3.next();
@@ -373,11 +377,33 @@ public class ManagedBeanHistorial implements Serializable {
 
                         sales.set(format.format(venta.getFechaVenta()), valor);
                     }
+                    while (it2.hasNext() && fecha.compareTo(venta.getFechaVenta()) == 0) {
+                        venta = it2.next();
+                        if (fecha.compareTo(venta.getFechaVenta()) != 0) {
+                            break;
+                        }
+                        it3 = productos.iterator();
+                        while (it3.hasNext()) {
+                            producto = it3.next();
+                            if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                                valor = producto.getValorProducto() * venta.getCantidadVenta();
+                            }
+                        }
+                        if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+
+                            sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                        } else {
+
+                            sales.set(format.format(venta.getFechaVenta()), valor);
+                        }
+                    }
+                } else if (!sales.getData().containsKey(format.format(fecha))) {
+                    sales.set(format.format(fecha), cero);
                 }
-            } else if(!sales.getData().containsKey(format.format(fecha))){
-                sales.set(format.format(fecha), cero);
             }
         }
+
+
 
         categoryModel.addSeries(contributions);
         categoryModel.addSeries(sales);
@@ -442,6 +468,6 @@ public class ManagedBeanHistorial implements Serializable {
     }
 
     public void obtenerAportes(Date start, Date end) {
-        aportes=aporteFacade.BuscarPorPeriodo(inicio, fin);
+        aportes = aporteFacade.BuscarPorPeriodo(inicio, fin);
     }
 }

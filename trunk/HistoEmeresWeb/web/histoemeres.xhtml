@@ -10,7 +10,7 @@
             <f:facet name="first">
                 <h:outputStylesheet library="css" name="default.css"  />
                 <h:outputStylesheet library="css" name="estilos.css"  />
-                <link rel="shortcut icon" type="image/x-icon" href="resources/imagenes/favicon.ico"/>
+                <link rel="shortcut icon" type="image/x-icon" href="/resources/imagenes/favicon.ico"/>
 
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>#{managedBeanMenu.pagina.split("(?=\\p{Upper})")[0].substring(0,1).toUpperCase()}#{managedBeanMenu.pagina.split("(?=\\p{Upper})")[0].substring(1)} #{managedBeanMenu.pagina.split("(?=\\p{Upper})")[1]}</title>
@@ -46,24 +46,24 @@
         </script> 
         <h:body>
 
-            <p:layout style="min-width:1220px;min-height:720px;" id="layout">
+            <p:layout style="min-width:1240px;min-height:720px;" id="layout">
 
                 <p:layoutUnit position="north" size="100" styleClass=" header"  > 
                     <p:commandLink action="#{managedBeanMenu.irMenu('historiales')}">
-                        <p:graphicImage value="resources/imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
+                        <p:graphicImage value="/resources/imagenes/Logo.png" width="13%"  style="margin-left: 10px; padding: 0px;float: left;"/>  
                     </p:commandLink>
                     <div style="float:right; padding-top: 50px; padding-right: 100px; border-bottom: #D20005" >
                         <h:form id="menuUsuario" style="default">
-                            <p:splitButton value="#{username}"  >
-                                <p:menuitem value="Cambiar contraseña" actionListener="#{managedBeanMenu.irMenu('cambiarContraseña')}"/>
-                                <p:menuitem value="Cerrar sesión" actionListener="#{managedBeanLogin.deslogear()}"/>
+                            <p:splitButton styleClass="user" value="#{username}"  >
+                                <p:menuitem styleClass="user" value="Cambiar contraseña" actionListener="#{managedBeanMenu.irMenu('cambiarContraseña')}"/>
+                                <p:menuitem styleClass="user" value="Cerrar sesión" actionListener="#{managedBeanLogin.deslogear()}"/>
                             </p:splitButton>      
-                            <p:commandButton icon="eliminar-user-icon" action="#{managedBeanLogin.deslogear()}"/>
+                            <p:commandButton icon="logout-icon" action="#{managedBeanLogin.deslogear()}"/>
                         </h:form>
                     </div>
                 </p:layoutUnit>
 
-                <p:layoutUnit styleClass="layout south" position="south" size="50" >
+                <p:layoutUnit styleClass="layout south" position="south" minSize="52" >
                     <div style="text-align: center;font-size: 10px">
                         <h:outputText value="EMERES: Bombero Encalada #14 La Cisterna, Teléfono (56-2) 558 8960, Santiago."/><br/>
                         <h:outputText value="HistoEmeres fue desarrollado por: "/><a href="https://www.facebook.com/groups/HistoEmeres/">https://www.facebook.com/groups/HistoEmeres </a> <br/>
@@ -81,10 +81,10 @@
 
                 </p:layoutUnit>
 
-                <p:layoutUnit id="center" styleClass="layout " position="center" resizable="true" style=" min-height: 450px;"  >
-                    <h:form style="width:976px"> 
+                <p:layoutUnit id="center" styleClass="layout " position="center"  style=" min-height: 450px;"  >
+                    <h:form style="width:950px"> 
                         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
-                        <p:menubar styleClass="menu" autoDisplay="false" style="width: 975px">  
+                        <p:menubar styleClass="menu" autoDisplay="false" style="width: 100%">  
                             <p:menuitem value="Historiales" action="#{managedBeanMenu.irMenu('historiales')}"  icon="historiales-icon" />
                             <p:submenu label="Aportes" icon="aportes-icon" rendered="#{managedBeanLogin.tipo}">  
 
