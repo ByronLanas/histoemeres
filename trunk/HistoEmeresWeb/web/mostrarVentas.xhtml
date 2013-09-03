@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:form id="form">  
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:dataTable id="tablaCliente"
+                     rowKey="#{venta.codigoProducto}"
+                     paginator="true"  
+                     paginatorTemplate="{CurrentPageReport} 
+                     {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rows="20" 
+                     rowsPerPageTemplate="10,20,50,100"
+                     style="width: 70%"
+                     var="venta" 
+                     value="#{managedBeanVenta.ventas}"
+                     selection="#{managedBeanVenta.selectedVenta}" 
+                     selectionMode="single" 
+                     emptyMessage="No se encontraron resultados."
+                     filteredValue="#{managedBeanVenta.ventasFiltradas}">  
+
+            <p:ajax event="rowSelect" update=":form:display"/>
+
+            <p:column  headerText="Nombre cliente" sortBy="#{venta.rutCliente.nombreCliente}" filterBy="#{venta.rutCliente.nombreCliente}">
+           <h:outputText value="#{venta.rutCliente.nombreCliente}"/>
+            </p:column>       
+
+            <p:column headerText="Producto" sortBy="#{venta.codigoProducto.nombreProducto}" filterBy="#{venta.codigoProducto.nombreProducto}">  
+                <h:outputText value="#{venta.codigoProducto.nombreProducto}"/>
+            </p:column> 
+            <p:column headerText="Cantidad(fardos)" sortBy="#{venta.cantidadVenta}" filterBy="#{venta.cantidadVenta}">  
+                <h:outputText value="#{venta.cantidadVenta}"/>
+            </p:column> 
+            <p:column headerText="Fecha" sortBy="#{venta.fechaVenta}" filterBy="#{venta.fechaVenta}">  
+               <h:outputText value="#{Herramientas.fechaConPalabras(venta.fechaVenta)}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+            </p:column> 
+            <f:facet name="footer">
+                <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" update=":form:display"  oncomplete="dialogoModificar.show();" />
+            </f:facet>
+        </p:dataTable>  
+        <p:dialog id="dialogoModal"  header="Modificar cliente" widgetVar="dialogoModificar" resizable="false"
+                  width="300" showEffect="clip" hideEffect="fold">
+            <h:panelGrid id="display" columns="2">
+                <h:outputText  value="Rut cliente: "/>
+                <p:inputText label="Rut Cliente" id="modificarRut" required="true" value="#{managedBeanVenta.selectedVenta.codigoProducto}">
+                    <f:validator validatorId="RutValidator"/>
+                </p:inputText>
+                <h:outputText value="Nombre cliente: "/>
+                <p:inputText value="#{managedBeanCliente.selectedCliente.nombreCliente}" />
+                <h:inputHidden id="rutSeleccionado" value="#{managedBeanCliente.selectedCliente.rutCliente}"/>
+                <f:facet name="footer" >
+                    <p:commandButton value="Aceptar" type="button" icon="ui-icon-check" style="float: right"  onclick="cd.show()" />
+
+
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
+        
+                                <p:confirmDialog message="¿Está seguro que desea modificar el cliente" widgetVar="cd" showEffect="fade" hideEffect="explode">  
+                        <p:commandButton value="Si"  actionListener="#{managedBeanCliente.modificarCliente()}" icon="ui-icon-check" update="tablaCliente" oncomplete="cd.hide();dialogoModificar.hide()"/>  
+                        <p:commandButton value="No" type="button" onclick="cd.hide()" icon="ui-icon-close"/>       
+                    </p:confirmDialog>  
+    </h:form> 
+
+</html>
+
