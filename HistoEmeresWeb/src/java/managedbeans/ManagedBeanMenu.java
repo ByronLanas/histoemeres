@@ -20,19 +20,18 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class ManagedBeanMenu {
 
-    private static String pagina;
+    private static String pagina="";
 
     public ManagedBeanMenu() {
     }
 
     public void irMenu(String pagina) {
+        if (this.pagina.compareTo("")==0){
+            pagina="historiales";
+        }
         try {
             setPagina(pagina);
-            boolean tieneFaces =FacesContext.getCurrentInstance().getViewRoot().getViewId().lastIndexOf("histoemeres")>-1;
-            if(tieneFaces)
                 FacesContext.getCurrentInstance().getExternalContext().redirect("histoemeres.xhtml");
-            else
-                FacesContext.getCurrentInstance().getExternalContext().redirect("faces/histoemeres.xhtml");
             
             if (pagina.compareTo("mostrarUsuario") == 0) {
                 ManagedBeanUsuario mngbn = new ManagedBeanUsuario();

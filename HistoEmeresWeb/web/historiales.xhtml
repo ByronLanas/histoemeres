@@ -8,19 +8,18 @@
 
     <h:form>
         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
-        <p:messages   showDetail="false" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:messages id="message"  showDetail="true" severity="fatal, error" autoUpdate="false" closable="true" />
         <p:panelGrid id="panel" styleClass="grid" columns="8">
 
-            <p:selectOneMenu label="tipo de historial" required="true" value="#{managedBeanHistorial.tipoHistorial}">  
-                <f:selectItem itemLabel="Tipo de historial" itemValue="" />  
+            <p:selectOneMenu id="tipoHistorial" label="tipo de historial"  value="#{managedBeanHistorial.tipoHistorial}">  
                 <f:selectItem itemLabel="Aportes v/s Ventas" itemValue="1" />
                 <f:selectItem itemLabel="Aportes totales" itemValue="2" />
                 <f:selectItem itemLabel="Aportes por municipio" itemValue="3" />
-                <p:ajax update="tipoGrafico,tipoPeriodo" listener="#{managedBeanHistorial.cargaTipoPeriodo}" />
+                <p:ajax update="tipoGrafico,tipoPeriodo,boton" listener="#{managedBeanHistorial.cargaTipoPeriodo}" />
             </p:selectOneMenu>
+            
 
-            <p:selectOneMenu id="tipoGrafico" disabled="#{managedBeanHistorial.disableGrafico}"  label="tipo de grafico" required="true" value="#{managedBeanHistorial.tipoGrafico}">  
-                <f:selectItem itemLabel="Tipo de gráfico" itemValue="" />  
+            <p:selectOneMenu id="tipoGrafico"  label="tipo de grafico" required="true" value="#{managedBeanHistorial.tipoGrafico}">  
                 <f:selectItems value="#{managedBeanHistorial.listaGraficos.entrySet()}" var="entrada" 
                                itemValue="#{entrada.key}" itemLabel="#{entrada.value}"/>
                 <p:ajax update="boton"/>
@@ -28,8 +27,7 @@
 
             </p:selectOneMenu>
 
-            <p:selectOneMenu id="tipoPeriodo" disabled="#{managedBeanHistorial.disablePeriodo}" label="tipo de periodo" required="true" value="#{managedBeanHistorial.tipoPeriodo}">  
-                <f:selectItem itemLabel="Tipo de periodo" itemValue="" />  
+            <p:selectOneMenu id="tipoPeriodo" disabled="#{managedBeanHistorial.disablePeriodo}" label="tipo de periodo" required="true" value="#{managedBeanHistorial.tipoPeriodo}">   
                 <f:selectItem itemLabel="Mensual" itemValue="1" />  
             </p:selectOneMenu> 
             <p:fieldset styleClass="periodo"  legend="periodo">
@@ -42,23 +40,26 @@
             </p:fieldset>
 
             <f:facet name="footer" >
-                <p:commandButton id='boton' oncomplete="lazyload#{managedBeanHistorial.tipoGrafico}();" update="growl,grafico2,grafico1,grafico3"  value="Generar gráfico" actionListener="#{managedBeanHistorial.generarGrafico}" style="margin-left: 45% "/>
+                <p:commandButton id='boton' oncomplete="lazyload#{managedBeanHistorial.tipoGrafico}();" update="message,grafico2,grafico1,grafico3"  value="Generar gráfico" actionListener="#{managedBeanHistorial.generarGrafico}" style="margin-left: 45% "/>
             </f:facet>
 
         </p:panelGrid>
 
-
-        <p:outputPanel style="margin-top: 20px;" id="grafico1" layout="block">  
+        <p:tooltip value="Tipo de historial" for="tipoHistorial"  /> 
+        <p:tooltip value="Tipo de gráfico" for="tipoGrafico"  />
+        <p:tooltip value="Tipo de periodo" for="tipoPeriodo"  />
+        
+        <p:outputPanel rendered="#{!managedBeanHistorial.error}" style="margin-top: 20px;" id="grafico1" layout="block">  
             <p:barChart   id="graficoBarra" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
                           title="#{managedBeanHistorial.titulo}" min="0" shadow="true"  style="height:300px; width: 500px; margin-left: 25%" 
                           xaxisLabel="#{managedBeanHistorial.xLabel}" datatipFormat="%c $%i"  yaxisLabel="#{managedBeanHistorial.yLabel}" rendered="#{requestScope.shouldRender}"/>
         </p:outputPanel> 
-        <p:outputPanel style="margin-top: 20px;" id="grafico2" layout="block">  
+        <p:outputPanel rendered="#{!managedBeanHistorial.error}" style="margin-top: 20px;" id="grafico2" layout="block">  
             <p:lineChart widgetVar="graficoLinea" id="graficoLinea" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
                          title="#{managedBeanHistorial.titulo}" minY="0" shadow="true"  style="height:300px; width: 500px; margin-left: 25%" 
                          xaxisLabel="#{managedBeanHistorial.xLabel}" datatipFormat="%c $%i"  yaxisLabel="#{managedBeanHistorial.yLabel}" rendered="#{requestScope.shouldRender}"/>
         </p:outputPanel>
-        <p:outputPanel style="margin-top: 20px;" id="grafico3" layout="block">  
+        <p:outputPanel rendered="#{!managedBeanHistorial.error}" style="margin-top: 20px;" id="grafico3" layout="block">  
             <p:pieChart widgetVar="graficoTorta" id="graficoTorta" value="#{managedBeanHistorial.pieModel}" legendPosition="ne"
                 title="#{managedBeanHistorial.titulo}" style="height:300px; width: 500px; margin-left: 25%"
                 showDataLabels="true" sliceMargin="7" shadow="true" dataFormat="percent" rendered="#{requestScope.shouldRender}" />
@@ -75,7 +76,7 @@
                 <p:remoteCommand name="lazyload3" update="grafico3">  
             <f:setPropertyActionListener value="#{true}"   
                                          target="#{requestScope.shouldRender}" />  
-        </p:remoteCommand> 
+        </p:remoteCommand>
     </h:form>
 
 
