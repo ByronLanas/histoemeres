@@ -4,7 +4,24 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
-aqui eliminan un usuario
+    <h:form>
+        <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:panelGrid id="panelUsuario" styleClass="panel" columns="2">
+
+            <f:facet name="header">
+                Eliminar Usuario
+            </f:facet>
+            <h:outputText value="Nombre: " />
+            <p:selectOneMenu style="width: 150px" label="Usuario" filterMatchMode="startsWith" filter="true" id="usuario" required="true" value="#{managedBeanUsuario.nombre}">
+                <f:selectItem  itemLabel=""/>
+                <f:selectItems value="#{managedBeanUsuario.usuarios}" var="usuario" itemLabel="#{usuario.nombreUsuario}" itemValue="#{usuario.nombreUsuario}"/>
+            </p:selectOneMenu>
+            
+            <f:facet name="footer">
+                <p:commandButton id="botonEliminar" icon="eliminar-icon" style="float: right" value="Eliminar"  action="#{managedBeanUsuario.eliminarUsuario()}"/> 
+            </f:facet>
+        </p:panelGrid>
+    </h:form>
 </html>
 

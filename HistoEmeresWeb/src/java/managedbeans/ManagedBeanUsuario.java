@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 package managedbeans;
- 
+
 import entities.Usuario;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -142,6 +143,24 @@ public class ManagedBeanUsuario {
         }
     }
 
+    public void eliminarUsuario() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (nombre.compareTo("admin") != 0) {
+            List<Usuario> usuarioAux = new LinkedList<>();
+            usuarioAux = usuarioFacade.buscarPorNombreUsuario(nombre);
+            if (!usuarios.isEmpty()) {
+                usuarioFacade.remove(usuarioAux.get(0));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario eliminado con éxito", "El usuario: " + nombre + " fue eliminado con éxito."));
+            } else {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no Existe", "El usuario: " + nombre + " no se encuentra en el sistema, verifique el nombre de usuario"));
+            }
+        }
+        else{
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no Eliminable", "El usuario: " + nombre + " no se puede eliminar del sistema porque posee privilegios especiales."));
+        }
+    }
+
+
     public void modificarUsuario() {
         FacesContext context = FacesContext.getCurrentInstance();
         
@@ -152,6 +171,7 @@ public class ManagedBeanUsuario {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue modificado", "El usuario: " + nombre + " no pudo ser modificado."));
         }
     }
+
 
     public void enviaMail() throws Exception {
         FacesContext context = FacesContext.getCurrentInstance();
