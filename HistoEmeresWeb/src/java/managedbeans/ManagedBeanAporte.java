@@ -147,6 +147,7 @@ public class ManagedBeanAporte implements Serializable{
     public void modificarAporte() {
         Herramientas herramienta=new Herramientas();
         FacesContext context = FacesContext.getCurrentInstance();
+        
         pk = new AportePK(selectedAporte.getAportePK().getMunicipioAporte(), selectedAporte.getAportePK().getFechaMunicipalidad());
         aporte = new Aporte(pk, selectedAporte.getValorAporte());
         if (sessionBeanFinanaciero.modificarAporte(aporte,aporteAnterior)) {

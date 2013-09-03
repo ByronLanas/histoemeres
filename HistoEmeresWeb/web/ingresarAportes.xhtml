@@ -13,7 +13,7 @@
                 Ingresar nuevo aporte
             </f:facet>
             <h:outputText value="Municipalidad: "/>
-            <p:selectOneMenu style="width: 100%" filterMatchMode="startsWith" filter="true" id="rut" required="true" value="#{managedBeanCliente}">
+            <p:selectOneMenu style="width: 100%" filterMatchMode="startsWith" filter="true" id="rut" required="true" value="#{managedBeanAporte.municipio}">
                 <f:selectItem itemLabel="Municipio" itemValue=""/>
                 <f:selectItem itemValue="Cerrillos" itemLabel="Cerrillos" />
                 <f:selectItem itemValue="El Bosque" itemLabel="El Bosque" />

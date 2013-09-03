@@ -1,4 +1,4 @@
-s
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -14,9 +14,9 @@ s
             <h:outputText value="Nombre: "/>
             <p:inputText required="true" requiredMessage="Campo 'Nombre' no completado"  value="#{managedBeanProducto.nombre_producto}"/>
             <h:outputText value="Valor: " />
-            <p:inputText validatorMessage="malo" required="true" requiredMessage="Campo 'Valor' no completado"  label="Valor producto" value="#{managedBeanProducto.valor_producto}"/>         
+            <p:inputText  required="true" requiredMessage="Campo 'Valor' no completado"  label="Valor producto" value="#{managedBeanProducto.valor_producto}"/>         
             <f:facet name="footer">
-                <p:commandButton icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanProducto.insertarProducto()}" />
+                <p:commandButton icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanProducto.insertarProducto}" />
             </f:facet>
         </p:panelGrid>
     </h:form>
