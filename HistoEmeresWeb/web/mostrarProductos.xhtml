@@ -18,7 +18,7 @@
                      selection="#{managedBeanProducto.selectedProducto}"
                      selectionMode="single">
 
-
+<p:ajax event="rowSelect" update=":form:display"/>
             <p:column sortBy="#{producto.codigoProducto}" filterBy="#{producto.codigoProducto}" headerText="Código">
                 <h:outputText value="#{producto.codigoProducto}" />
             </p:column>
@@ -31,8 +31,20 @@
                 <h:outputText value="#{producto.valorProducto}" />  
             </p:column> 
             <f:facet name="footer">
-                <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" />
+                <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" update=":form:display"  oncomplete="dialogoModificar.show()" />
             </f:facet>
         </p:dataTable>  
+        <p:dialog id="dialogoModal"  header="Modificar usuario" widgetVar="dialogoModificar" resizable="false"
+                  width="300" showEffect="clip" hideEffect="fold">
+            <h:panelGrid id="display" columns="2">
+                <h:outputText  value="Nombre producto: "/>
+                <p:inputText  id="modificarProducto" required="true"  value="#{managedBeanProducto.selectedProducto.nombreProducto}"/>
+                <h:outputText value="Valor producto: "/>
+                <p:inputText  id="modificarValor" required="true"  value="#{managedBeanProducto.selectedProducto.valorProducto}"/>
+                <f:facet name="footer" >
+                    <p:commandButton value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanProducto.modificarProducto()}" oncomplete="dialogoModificar.hide()" update="tablaProducto" />
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
     </h:form>
 </html>
