@@ -11,11 +11,12 @@
         <p:messages id="message"  showDetail="true" severity="fatal, error" autoUpdate="false" closable="true" />
         <p:panelGrid id="panel" styleClass="grid" columns="8">
 
-            <p:selectOneMenu id="tipoHistorial" label="tipo de historial"  value="#{managedBeanHistorial.tipoHistorial}">  
+            <p:selectOneMenu filterMatchMode="contains" filter="true" id="tipoHistorial" label="tipo de historial"  value="#{managedBeanHistorial.tipoHistorial}">  
                 <f:selectItem itemLabel="Aportes v/s Ventas" itemValue="1" />
                 <f:selectItem itemLabel="Aportes totales" itemValue="2" />
                 <f:selectItem itemLabel="Aportes por municipio" itemValue="3" />
                 <f:selectItem itemLabel="Ventas totales" itemValue="4" />
+                <f:selectItem itemLabel="Ventas por cliente" itemValue="5" />
                 <p:ajax update="tipoGrafico,tipoPeriodo,boton" listener="#{managedBeanHistorial.cargaTipoPeriodo}" />
             </p:selectOneMenu>
             

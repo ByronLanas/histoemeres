@@ -5,6 +5,7 @@
 package managedbeans;
 
 import entities.Aporte;
+import entities.Cliente;
 import entities.Producto;
 import entities.Venta;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,6 +32,8 @@ import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 import sessionbeans.AporteFacadeLocal;
+import sessionbeans.ClienteFacade;
+import sessionbeans.ClienteFacadeLocal;
 import sessionbeans.ProductoFacadeLocal;
 import sessionbeans.VentaFacadeLocal;
 
@@ -41,6 +45,8 @@ import sessionbeans.VentaFacadeLocal;
 @SessionScoped
 public class ManagedBeanHistorial implements Serializable {
 
+    @EJB
+    private ClienteFacadeLocal clienteFacade;
     @EJB
     private ProductoFacadeLocal productoFacade;
     @EJB
@@ -57,6 +63,7 @@ public class ManagedBeanHistorial implements Serializable {
     private List<Venta> ventas;
     private List<Aporte> aportes;
     private List<Producto> productos;
+    private List<Cliente> clientes;
     private String xLabel;
     private String yLabel;
     private String titulo;
@@ -307,6 +314,24 @@ public class ManagedBeanHistorial implements Serializable {
                     }
                 }
                 break;
+            case 5:
+
+                obtenerVentas(inicio, fin);
+                productos = productoFacade.findAll();
+                clientes = clienteFacade.findAll();
+                if (ventas.isEmpty()) {
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran ventas para el periodo seleccionado"));
+                    error = true;
+                } else {
+                    setTitulo("Ventas por cliente");
+
+                    setyLabel("Valor ($)");
+                    setxLabel("Cliente");
+                    createCategoryModelVPC();
+
+                }
+                break;
         }
 
     }
@@ -322,7 +347,7 @@ public class ManagedBeanHistorial implements Serializable {
     public void cargaTipoPeriodo(AjaxBehaviorEvent event) {
         seleccionHistorial = (Integer) event.getComponent().getAttributes().get("value");
         disableGrafico = false;
-        if (seleccionHistorial == 3) {
+        if (seleccionHistorial == 3 || seleccionHistorial == 5) {
             disablePeriodo = true;
             listaGraficos = new LinkedHashMap<String, String>();
             listaGraficos.put("1", "Barras");
@@ -648,9 +673,9 @@ public class ManagedBeanHistorial implements Serializable {
 
         Venta venta;
         Producto producto;
-        
+
         float valor = 0;
-        
+
         ChartSeries sales = new ChartSeries();
         sales.setLabel("Ventas");
         Collections.sort(ventas, new Comparator<Venta>() {
@@ -665,21 +690,21 @@ public class ManagedBeanHistorial implements Serializable {
 
 
         while (it2.hasNext()) {
-            venta=it2.next();
+            venta = it2.next();
             it3 = productos.iterator();
-                while (it3.hasNext()) {
-                    producto = it3.next();
-                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
-                        valor = producto.getValorProducto() * venta.getCantidadVenta();
-                    }
+            while (it3.hasNext()) {
+                producto = it3.next();
+                if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                    valor = producto.getValorProducto() * venta.getCantidadVenta();
                 }
-                if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+            }
+            if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
 
-                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
-                } else {
+                sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+            } else {
 
-                    sales.set(format.format(venta.getFechaVenta()), valor);
-                }
+                sales.set(format.format(venta.getFechaVenta()), valor);
+            }
         }
         categoryModel.addSeries(sales);
     }
@@ -690,9 +715,9 @@ public class ManagedBeanHistorial implements Serializable {
 
         Venta venta;
         Producto producto;
-        
+
         float valor = 0;
-        
+
         ChartSeries sales = new ChartSeries();
         sales.setLabel("Ventas");
         Collections.sort(ventas, new Comparator<Venta>() {
@@ -707,21 +732,21 @@ public class ManagedBeanHistorial implements Serializable {
 
 
         while (it2.hasNext()) {
-            venta=it2.next();
+            venta = it2.next();
             it3 = productos.iterator();
-                while (it3.hasNext()) {
-                    producto = it3.next();
-                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
-                        valor = producto.getValorProducto() * venta.getCantidadVenta();
-                    }
+            while (it3.hasNext()) {
+                producto = it3.next();
+                if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                    valor = producto.getValorProducto() * venta.getCantidadVenta();
                 }
-                if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+            }
+            if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
 
-                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
-                } else {
+                sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+            } else {
 
-                    sales.set(format.format(venta.getFechaVenta()), valor);
-                }
+                sales.set(format.format(venta.getFechaVenta()), valor);
+            }
         }
         categoryModel.addSeries(sales);
     }
@@ -750,6 +775,52 @@ public class ManagedBeanHistorial implements Serializable {
             }
         }
         categoryModel.addSeries(contributions);
+    }
+
+    private void createCategoryModelVPC() {
+
+        categoryModel = new CartesianChartModel();
+        pieModel = new PieChartModel();
+
+        Venta venta;
+        Cliente cliente;
+        Producto producto;
+        Map<Integer, String> clients = new HashMap<>();
+
+        float valor = 0;
+
+        ChartSeries sales = new ChartSeries();
+        sales.setLabel("Ventas");
+
+        Iterator<Venta> it2 = ventas.iterator();
+        Iterator<Producto> it3 = productos.iterator();
+        Iterator<Cliente> it4 = clientes.iterator();
+
+        while (it4.hasNext()) {
+            cliente = it4.next();
+            clients.put(cliente.getRutCliente(), cliente.getNombreCliente());
+        }
+
+
+        while (it2.hasNext()) {
+            venta = it2.next();
+            it3 = productos.iterator();
+            while (it3.hasNext()) {
+                producto = it3.next();
+                if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                    valor = producto.getValorProducto() * venta.getCantidadVenta();
+                }
+            }
+            if (sales.getData().containsKey(clients.get(venta.getRutCliente().getRutCliente()))) {
+                pieModel.set(clients.get(venta.getRutCliente().getRutCliente()), valor + (Float) sales.getData().get(clients.get(venta.getRutCliente().getRutCliente())));
+                sales.set(clients.get(venta.getRutCliente().getRutCliente()), valor + (Float) sales.getData().get(clients.get(venta.getRutCliente().getRutCliente())));
+            } else {
+                pieModel.set(clients.get(venta.getRutCliente().getRutCliente()), valor);
+                sales.set(clients.get(venta.getRutCliente().getRutCliente()), valor);
+            }
+        }
+        categoryModel.addSeries(sales);
+
     }
 
     public void obtenerVentas(Date start, Date end) {
