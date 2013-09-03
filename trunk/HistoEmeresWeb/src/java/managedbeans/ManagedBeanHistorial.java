@@ -65,11 +65,11 @@ public class ManagedBeanHistorial implements Serializable {
     private boolean disableGrafico = true;
     private boolean disablePeriodo = true;
     private Integer seleccionHistorial = 1;
-    private boolean error =false;
+    private boolean error = false;
 
     public ManagedBeanHistorial() {
         disablePeriodo = false;
-        tipoGrafico=1;
+        tipoGrafico = 1;
         listaGraficos = new LinkedHashMap<String, String>();
         listaGraficos.put("1", "Barras");
         listaGraficos.put("2", "Linea");
@@ -208,7 +208,7 @@ public class ManagedBeanHistorial implements Serializable {
     }
 
     public void generarGrafico(ActionEvent actionEvent) {
-        error=false;
+        error = false;
         switch (tipoGrafico) {
             case 1:
                 setGrafico("barra");
@@ -221,32 +221,91 @@ public class ManagedBeanHistorial implements Serializable {
             case 1:
                 obtenerVentas(inicio, fin);
                 obtenerAportes(inicio, fin);
+                if (aportes.isEmpty() || ventas.isEmpty()) {
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes o ventas para el periodo seleccionado"));
+                    error = true;
+                } else {
+                    productos = productoFacade.findAll();
+                    //obtenerAportes(inicio,fin);
+                    setTitulo("Aportes V/S Ventas");
 
-                productos = productoFacade.findAll();
-                //obtenerAportes(inicio,fin);
-                setTitulo("Aportes V/S Ventas");
-                setxLabel("Mes");
-                setyLabel("Valor ($)");
-
-                createCategoryModelAV();
+                    setyLabel("Valor ($)");
+                    switch (tipoPeriodo) {
+                        case 1:
+                            setxLabel("Mes");
+                            createCategoryModelAV();
+                            break;
+                        case 2:
+                            setxLabel("Año");
+                            createCategoryModelAVA();
+                            break;
+                    }
+                }
 
                 break;
             case 2:
 
                 obtenerAportes(inicio, fin);
+                if (aportes.isEmpty()) {
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes para el periodo seleccionado"));
+                    error = true;
+                } else {
+                    setTitulo("Aportes Totales");
 
-                setTitulo("Aportes Totales");
-                setxLabel("Mes");
-                setyLabel("Valor ($)");
-                createCategoryModelAT();
+                    setyLabel("Valor ($)");
+                    switch (tipoPeriodo) {
+                        case 1:
+                            setxLabel("Mes");
+                            createCategoryModelAT();
+                            break;
+                        case 2:
+                            setxLabel("Año");
+                            createCategoryModelATA();
+                            break;
+                    }
+                }
                 break;
+
+
             case 3:
 
                 obtenerAportes(inicio, fin);
-                setTitulo("Aportes por Municipio");
-                setxLabel("Municipio");
-                setyLabel("Valor ($)");
-                createCategoryModelAPM();
+                if (aportes.isEmpty()) {
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes para el periodo seleccionado"));
+                    error = true;
+                } else {
+                    setTitulo("Aportes por Municipio");
+                    setxLabel("Municipio");
+                    setyLabel("Valor ($)");
+                    createCategoryModelAPM();
+                }
+                break;
+            case 4:
+
+                obtenerVentas(inicio, fin);
+                productos = productoFacade.findAll();
+                if (ventas.isEmpty()) {
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran ventas para el periodo seleccionado"));
+                    error = true;
+                } else {
+                    setTitulo("Ventas Totales");
+
+                    setyLabel("Valor ($)");
+                    switch (tipoPeriodo) {
+                        case 1:
+                            setxLabel("Mes");
+                            createCategoryModelVT();
+                            break;
+                        case 2:
+                            setxLabel("Año");
+                            createCategoryModelVTA();
+                            break;
+                    }
+                }
                 break;
         }
 
@@ -285,84 +344,99 @@ public class ManagedBeanHistorial implements Serializable {
         contributions.setLabel("Aportes");
         ChartSeries sales = new ChartSeries();
         sales.setLabel("Ventas");
-        if (aportes.isEmpty() || ventas.isEmpty()) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes o ventas para el periodo seleccionado"));
-            error=true;
-        } else {
-            Aporte aporte;
-            Venta venta;
-            Producto producto;
-            Date fecha;
 
-            float valor = 0;
-            float cero = 0;
+        Aporte aporte;
+        Venta venta;
+        Producto producto;
+        Date fecha;
 
-            SortedSet<Date> fechas = new TreeSet<Date>();
+        float valor = 0;
+        float cero = 0;
+
+        SortedSet<Date> fechas = new TreeSet<Date>();
 
 
 
 
-            Collections.sort(aportes, new Comparator<Aporte>() {
-                @Override
-                public int compare(Aporte a1, Aporte a2) {
-                    return a1.getAportePK().getFechaMunicipalidad().compareTo(a2.getAportePK().getFechaMunicipalidad());
-                }
-            });
-            Collections.sort(ventas, new Comparator<Venta>() {
-                @Override
-                public int compare(Venta v1, Venta v2) {
-                    return v1.getFechaVenta().compareTo(v2.getFechaVenta());
-                }
-            });
-
-            Iterator<Aporte> it = aportes.listIterator();
-            Iterator<Venta> it2 = ventas.listIterator();
-            Iterator<Producto> it3 = productos.iterator();
-
-            while (it.hasNext()) {
-                aporte = it.next();
-                fechas.add(aporte.getAportePK().getFechaMunicipalidad());
+        Collections.sort(aportes, new Comparator<Aporte>() {
+            @Override
+            public int compare(Aporte a1, Aporte a2) {
+                return a1.getAportePK().getFechaMunicipalidad().compareTo(a2.getAportePK().getFechaMunicipalidad());
             }
-            while (it2.hasNext()) {
-                venta = it2.next();
-                fechas.add(venta.getFechaVenta());
+        });
+        Collections.sort(ventas, new Comparator<Venta>() {
+            @Override
+            public int compare(Venta v1, Venta v2) {
+                return v1.getFechaVenta().compareTo(v2.getFechaVenta());
             }
-            Iterator<Date> itss = fechas.iterator();
+        });
 
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+        Iterator<Aporte> it = aportes.listIterator();
+        Iterator<Venta> it2 = ventas.listIterator();
+        Iterator<Producto> it3 = productos.iterator();
 
-            it = aportes.listIterator();
+        while (it.hasNext()) {
             aporte = it.next();
-            it2 = ventas.listIterator();
+            fechas.add(aporte.getAportePK().getFechaMunicipalidad());
+        }
+        while (it2.hasNext()) {
             venta = it2.next();
+            fechas.add(venta.getFechaVenta());
+        }
+        Iterator<Date> itss = fechas.iterator();
 
-            while (itss.hasNext()) {
-                fecha = itss.next();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
 
-                if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0) {
+        it = aportes.listIterator();
+        aporte = it.next();
+        it2 = ventas.listIterator();
+        venta = it2.next();
 
+        while (itss.hasNext()) {
+            fecha = itss.next();
+
+            if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0) {
+
+                if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
+                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                } else {
+                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
+                }
+                while (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0 && it.hasNext()) {
+
+                    aporte = it.next();
+                    if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) != 0) {
+                        break;
+                    }
                     if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
                         contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
                     } else {
                         contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
                     }
-                    while (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0 && it.hasNext()) {
-
-                        aporte = it.next();
-                        if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) != 0) {
-                            break;
-                        }
-                        if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
-                            contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
-                        } else {
-                            contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
-                        }
-                    }
-                } else if (!contributions.getData().containsKey(format.format(fecha))) {
-                    contributions.set(format.format(fecha), cero);
                 }
-                if (fecha.compareTo(venta.getFechaVenta()) == 0) {
+            } else if (!contributions.getData().containsKey(format.format(fecha))) {
+                contributions.set(format.format(fecha), cero);
+            }
+            if (fecha.compareTo(venta.getFechaVenta()) == 0) {
+                it3 = productos.iterator();
+                while (it3.hasNext()) {
+                    producto = it3.next();
+                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                        valor = producto.getValorProducto() * venta.getCantidadVenta();
+                    }
+                }
+                if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+
+                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                } else {
+
+                    sales.set(format.format(venta.getFechaVenta()), valor);
+                }
+                while (it2.hasNext() && fecha.compareTo(venta.getFechaVenta()) == 0) {
+                    venta = it2.next();
+                    if (fecha.compareTo(venta.getFechaVenta()) != 0) {
+                        break;
+                    }
                     it3 = productos.iterator();
                     while (it3.hasNext()) {
                         producto = it3.next();
@@ -377,33 +451,136 @@ public class ManagedBeanHistorial implements Serializable {
 
                         sales.set(format.format(venta.getFechaVenta()), valor);
                     }
-                    while (it2.hasNext() && fecha.compareTo(venta.getFechaVenta()) == 0) {
-                        venta = it2.next();
-                        if (fecha.compareTo(venta.getFechaVenta()) != 0) {
-                            break;
-                        }
-                        it3 = productos.iterator();
-                        while (it3.hasNext()) {
-                            producto = it3.next();
-                            if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
-                                valor = producto.getValorProducto() * venta.getCantidadVenta();
-                            }
-                        }
-                        if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
-
-                            sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
-                        } else {
-
-                            sales.set(format.format(venta.getFechaVenta()), valor);
-                        }
-                    }
-                } else if (!sales.getData().containsKey(format.format(fecha))) {
-                    sales.set(format.format(fecha), cero);
                 }
+            } else if (!sales.getData().containsKey(format.format(fecha))) {
+                sales.set(format.format(fecha), cero);
             }
+
         }
 
 
+
+        categoryModel.addSeries(contributions);
+        categoryModel.addSeries(sales);
+    }
+
+    private void createCategoryModelAVA() {
+
+        categoryModel = new CartesianChartModel();
+        ChartSeries contributions = new ChartSeries();
+        contributions.setLabel("Aportes");
+        ChartSeries sales = new ChartSeries();
+        sales.setLabel("Ventas");
+
+        Aporte aporte;
+        Venta venta;
+        Producto producto;
+        String fecha;
+
+        float valor = 0;
+        float cero = 0;
+
+        SortedSet<String> fechas = new TreeSet<String>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy");
+        Collections.sort(aportes, new Comparator<Aporte>() {
+            @Override
+            public int compare(Aporte a1, Aporte a2) {
+                return a1.getAportePK().getFechaMunicipalidad().compareTo(a2.getAportePK().getFechaMunicipalidad());
+            }
+        });
+        Collections.sort(ventas, new Comparator<Venta>() {
+            @Override
+            public int compare(Venta v1, Venta v2) {
+                return v1.getFechaVenta().compareTo(v2.getFechaVenta());
+            }
+        });
+
+        Iterator<Aporte> it = aportes.listIterator();
+        Iterator<Venta> it2 = ventas.listIterator();
+        Iterator<Producto> it3 = productos.iterator();
+
+        while (it.hasNext()) {
+            aporte = it.next();
+            fechas.add(format.format(aporte.getAportePK().getFechaMunicipalidad()));
+        }
+        while (it2.hasNext()) {
+            venta = it2.next();
+            fechas.add(format.format(venta.getFechaVenta()));
+        }
+        Iterator<String> itss = fechas.iterator();
+
+
+
+        it = aportes.listIterator();
+        aporte = it.next();
+        it2 = ventas.listIterator();
+        venta = it2.next();
+
+        while (itss.hasNext()) {
+            fecha = itss.next();
+
+            if (fecha.compareTo(format.format(aporte.getAportePK().getFechaMunicipalidad())) == 0) {
+
+                if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
+                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                } else {
+                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
+                }
+                while (fecha.compareTo(format.format(aporte.getAportePK().getFechaMunicipalidad())) == 0 && it.hasNext()) {
+
+                    aporte = it.next();
+                    if (fecha.compareTo(format.format(aporte.getAportePK().getFechaMunicipalidad())) != 0) {
+                        break;
+                    }
+                    if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
+                        contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                    } else {
+                        contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
+                    }
+                }
+            } else if (!contributions.getData().containsKey(format.format(fecha))) {
+                contributions.set(format.format(fecha), cero);
+            }
+            if (fecha.compareTo(format.format(venta.getFechaVenta())) == 0) {
+                it3 = productos.iterator();
+                while (it3.hasNext()) {
+                    producto = it3.next();
+                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                        valor = producto.getValorProducto() * venta.getCantidadVenta();
+                    }
+                }
+                if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+
+                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                } else {
+
+                    sales.set(format.format(venta.getFechaVenta()), valor);
+                }
+                while (it2.hasNext() && fecha.compareTo(format.format(venta.getFechaVenta())) == 0) {
+                    venta = it2.next();
+                    if (fecha.compareTo(format.format(venta.getFechaVenta())) != 0) {
+                        break;
+                    }
+                    it3 = productos.iterator();
+                    while (it3.hasNext()) {
+                        producto = it3.next();
+                        if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                            valor = producto.getValorProducto() * venta.getCantidadVenta();
+                        }
+                    }
+                    if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+
+                        sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                    } else {
+
+                        sales.set(format.format(venta.getFechaVenta()), valor);
+                    }
+                }
+            } else if (!sales.getData().containsKey(format.format(fecha))) {
+                sales.set(format.format(fecha), cero);
+            }
+
+        }
 
         categoryModel.addSeries(contributions);
         categoryModel.addSeries(sales);
@@ -435,6 +612,118 @@ public class ManagedBeanHistorial implements Serializable {
             }
         }
         categoryModel.addSeries(contributions);
+    }
+
+    private void createCategoryModelATA() {
+
+        categoryModel = new CartesianChartModel();
+
+        Aporte aporte;
+        ChartSeries contributions = new ChartSeries();
+        contributions.setLabel("Aportes");
+        Collections.sort(aportes, new Comparator<Aporte>() {
+            @Override
+            public int compare(Aporte a1, Aporte a2) {
+                return a1.getAportePK().getFechaMunicipalidad().compareTo(a2.getAportePK().getFechaMunicipalidad());
+            }
+        });
+        Iterator<Aporte> it = aportes.iterator();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy");
+
+
+        while (it.hasNext()) {
+            aporte = it.next();
+            if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
+                contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+            } else {
+                contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
+            }
+        }
+        categoryModel.addSeries(contributions);
+    }
+
+    private void createCategoryModelVT() {
+
+        categoryModel = new CartesianChartModel();
+
+        Venta venta;
+        Producto producto;
+        
+        float valor = 0;
+        
+        ChartSeries sales = new ChartSeries();
+        sales.setLabel("Ventas");
+        Collections.sort(ventas, new Comparator<Venta>() {
+            @Override
+            public int compare(Venta v1, Venta v2) {
+                return v1.getFechaVenta().compareTo(v2.getFechaVenta());
+            }
+        });
+        Iterator<Venta> it2 = ventas.iterator();
+        Iterator<Producto> it3 = productos.iterator();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+
+
+        while (it2.hasNext()) {
+            venta=it2.next();
+            it3 = productos.iterator();
+                while (it3.hasNext()) {
+                    producto = it3.next();
+                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                        valor = producto.getValorProducto() * venta.getCantidadVenta();
+                    }
+                }
+                if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+
+                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                } else {
+
+                    sales.set(format.format(venta.getFechaVenta()), valor);
+                }
+        }
+        categoryModel.addSeries(sales);
+    }
+
+    private void createCategoryModelVTA() {
+
+        categoryModel = new CartesianChartModel();
+
+        Venta venta;
+        Producto producto;
+        
+        float valor = 0;
+        
+        ChartSeries sales = new ChartSeries();
+        sales.setLabel("Ventas");
+        Collections.sort(ventas, new Comparator<Venta>() {
+            @Override
+            public int compare(Venta v1, Venta v2) {
+                return v1.getFechaVenta().compareTo(v2.getFechaVenta());
+            }
+        });
+        Iterator<Venta> it2 = ventas.iterator();
+        Iterator<Producto> it3 = productos.iterator();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy");
+
+
+        while (it2.hasNext()) {
+            venta=it2.next();
+            it3 = productos.iterator();
+                while (it3.hasNext()) {
+                    producto = it3.next();
+                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                        valor = producto.getValorProducto() * venta.getCantidadVenta();
+                    }
+                }
+                if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
+
+                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                } else {
+
+                    sales.set(format.format(venta.getFechaVenta()), valor);
+                }
+        }
+        categoryModel.addSeries(sales);
     }
 
     private void createCategoryModelAPM() {

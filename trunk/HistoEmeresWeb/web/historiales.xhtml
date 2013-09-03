@@ -15,6 +15,7 @@
                 <f:selectItem itemLabel="Aportes v/s Ventas" itemValue="1" />
                 <f:selectItem itemLabel="Aportes totales" itemValue="2" />
                 <f:selectItem itemLabel="Aportes por municipio" itemValue="3" />
+                <f:selectItem itemLabel="Ventas totales" itemValue="4" />
                 <p:ajax update="tipoGrafico,tipoPeriodo,boton" listener="#{managedBeanHistorial.cargaTipoPeriodo}" />
             </p:selectOneMenu>
             
@@ -28,7 +29,8 @@
             </p:selectOneMenu>
 
             <p:selectOneMenu id="tipoPeriodo" disabled="#{managedBeanHistorial.disablePeriodo}" label="tipo de periodo" required="true" value="#{managedBeanHistorial.tipoPeriodo}">   
-                <f:selectItem itemLabel="Mensual" itemValue="1" />  
+                <f:selectItem itemLabel="Mensual" itemValue="1" />
+                <f:selectItem itemLabel="Anual" itemValue="2" />
             </p:selectOneMenu> 
             <p:fieldset styleClass="periodo"  legend="periodo">
                 <p:panelGrid styleClass="periodo" columns="4">
