@@ -16,6 +16,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
+import sessionbeans.ClienteFacadeLocal;
+import sessionbeans.ProductoFacadeLocal;
 import sessionbeans.SessionBeanComercial;
 import sessionbeans.VentaFacade;
 import sessionbeans.VentaFacadeLocal;
@@ -29,14 +31,20 @@ import sessionbeans.VentaFacadeLocal;
 public class ManagedBeanVenta {
 
     @EJB
+    private ProductoFacadeLocal productoFacade;
+    @EJB
+    private ClienteFacadeLocal clienteFacade;
+    @EJB
     private SessionBeanComercial sessionBeanComercial;
     @EJB
     private VentaFacadeLocal ventaFacade;
     /**
      * Creates a new instance of ManagedBeanVenta
      */
-    private Cliente rutCliente;
-    private Producto codigoProducto;
+    private Cliente cliente;
+    private Producto producto;
+    private int rutCliente;
+    private int codigoProducto;
     private Integer cantidadVenta;
     private Date fechaVenta;
     private List<Venta> ventasFiltradas;
@@ -44,19 +52,35 @@ public class ManagedBeanVenta {
     private Venta venta;
     private List<Venta> ventas;
 
-    public Cliente getRutCliente() {
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public int getRutCliente() {
         return rutCliente;
     }
 
-    public void setRutCliente(Cliente rutCliente) {
+    public void setRutCliente(int rutCliente) {
         this.rutCliente = rutCliente;
     }
 
-    public Producto getCodigoProducto() {
+    public int getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(Producto codigoProducto) {
+    public void setCodigoProducto(int codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
 
@@ -109,8 +133,6 @@ public class ManagedBeanVenta {
     }
 
     public ManagedBeanVenta() {
-        rutCliente = null;
-        codigoProducto = null;
         cantidadVenta = null;
     }
 
@@ -121,9 +143,11 @@ public class ManagedBeanVenta {
 
     public void ingresarVenta() {
         FacesContext context = FacesContext.getCurrentInstance();
-        venta = new Venta(null, cantidadVenta, fechaVenta, rutCliente, codigoProducto);
+        cliente = clienteFacade.buscarPorRut(rutCliente).get(0);
+        producto = productoFacade.buscarPorCodigoProducto(codigoProducto).get(0);
+                venta = new Venta(null, cantidadVenta, fechaVenta, cliente, producto);
         if (sessionBeanComercial.ingresarVenta(venta)) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Venta ingresada con éxito", "La venta : " + venta.getCodigoProducto().getNombreProducto()+ ": " + venta.getCantidadVenta() + " fue ingresada con éxito"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Venta ingresada con éxito", "La venta : " + venta.getCodigoProducto().getNombreProducto() + ": " + venta.getCantidadVenta() + " fue ingresada con éxito"));
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Venta no ingresada", "El cliente: " + venta.getRutCliente().getRutCliente() + " no existe."));
         }

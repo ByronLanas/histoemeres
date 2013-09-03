@@ -14,27 +14,26 @@
                 Ingresar nueva venta
             </f:facet>
             <h:outputText value="Rut cliente "/>
-            <p:selectOneMenu filterMatchMode="startsWith" filter="true" id="rut" required="true" value="#{managedBeanCliente}">
-                <f:selectItem itemLabel="rut" itemValue=""/>
-                <f:selectItems value="#{managedBeanCliente.clientes}" var="cliente" itemLabel="#{cliente.rutCliente}" itemValue="cliente"/>
+            <p:selectOneMenu style="width: 100%" label="Rut cliente" filterMatchMode="startsWith" filter="true" id="rut" required="true" value="#{managedBeanVenta.rutCliente}">
+                <f:selectItem  itemLabel=""/>
+                <f:selectItems value="#{managedBeanCliente.clientes}" var="cliente" itemLabel="#{cliente.rutCliente}" itemValue="#{cliente.rutCliente}"/>
             </p:selectOneMenu>
             <h:outputText value="Código de producto "/>
-            <p:selectOneMenu id="codigoProducto" label="Código producto" required="true" value="#{managedBeanVenta.codigoProducto}">  
-                <f:selectItem itemLabel="codigo producto" itemValue="" />  
-                <f:selectItems value="#{managedBeanProducto.productos}" var="producto" 
-                               itemValue="#{producto.codigoProducto}" itemLabel="#{producto.nombreProducto}"/>
+            <p:selectOneMenu style="width: 100%" id="codigoProducto" label="Código producto" required="true" value="#{managedBeanVenta.codigoProducto}">  
+                <f:selectItem itemLabel=""/>  
+                <f:selectItems value="#{managedBeanProducto.productos}" var="producto" itemValue="#{producto.codigoProducto}" itemLabel="#{producto.nombreProducto}"/>
             </p:selectOneMenu>
             <h:outputText value="Cantidad de fardos "/>
             <p:inputText label="Cantidad fardos" id="cantidad" required="true" value="#{managedBeanVenta.cantidadVenta}"/>
             <h:outputText value="Fecha de Venta"/>
-            <p:calendar value="#{managedBeanVenta.fechaVenta}" required="true" label="Fecha" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
+            <p:calendar value="#{managedBeanVenta.fechaVenta}" id="fecha"  required="true" label="Fecha" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
             <f:facet name="footer">
                 <p:commandButton update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanVenta.ingresarVenta}" icon="ingresar-icon" />
             </f:facet>
         </p:panelGrid>    
-        <p:watermark for="rut" value="Rut sin puntos ni guión" />
         <p:watermark for="cantidad" value="Ingrese la cantidad de fardos" />
-        <p:blockUI block="panelCliente" trigger="botonIngresar" />
+        <p:watermark for="fecha" value="Ingrese fecha de venta"/>
+                     <p:blockUI block="panelCliente" trigger="botonIngresar" />
     </h:form>
 </html>
 

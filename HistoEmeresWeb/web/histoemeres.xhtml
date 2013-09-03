@@ -99,7 +99,7 @@
                             </p:submenu> 
                             <p:submenu label="Ventas" icon="ventas-icon" rendered="#{managedBeanLogin.tipo}">  
 
-                                <p:menuitem value="Ver ventas"  icon="ver-icon" />  
+                                <p:menuitem value="Ver ventas"  icon="ver-icon" action="#{managedBeanMenu.irMenu('mostrarVentas')}" />  
                                 <p:menuitem value="Ingresar ventas"  icon="ingresar-icon" action="#{managedBeanMenu.irMenu('ingresarVentas')}"/>  
                             </p:submenu>
                             <p:submenu label="Productos" icon="productos-icon" rendered="#{managedBeanLogin.tipo}">  
