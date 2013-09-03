@@ -33,7 +33,7 @@ public class ManagedBeanProducto {
     private String nombre_producto;
     private Float valor_producto;
     private Producto producto;
-    private Producto selectedProducto;
+    private static Producto selectedProducto;
     private List<Producto> productos;
 
     public ManagedBeanProducto() {
@@ -103,6 +103,17 @@ public class ManagedBeanProducto {
             } else {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto ingresado con éxito", "El Producto: " + producto.getNombreProducto() + " cuyo Valor es: $" + producto.getValorProducto() + " fue ingresado con éxito"));
             }
+        }
+    }
+    
+    public void modificarProducto(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        try {
+            productoFacade.edit(selectedProducto);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto modificado con éxito", "El producto: " + selectedProducto.getNombreProducto() + " fue modificado con éxito."));
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Producto no fue modificado", "El producto: " + selectedProducto.getNombreProducto() + " no pudo ser modificado."));
         }
     }
 }
