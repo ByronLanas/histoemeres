@@ -37,6 +37,7 @@ public class ManagedBeanAporte implements Serializable{
     private Date fecha;
     private Float valor;
     private Aporte aporte;
+    private static Aporte aporteAnterior;
     private List<Aporte> aportes;
     private AportePK pk;
     private static Aporte selectedAporte;
@@ -48,6 +49,14 @@ public class ManagedBeanAporte implements Serializable{
 
     public void setSelectedAporte(Aporte selectedAporte) {
         this.selectedAporte = selectedAporte;
+    }
+
+    public Aporte getAporteAnterior() {
+        return aporteAnterior;
+    }
+
+    public void setAporteAnterior(Aporte aporteAnterior) {
+        this.aporteAnterior = aporteAnterior;
     }
 
     public List<Aporte> getAportesFiltrados() {
@@ -136,14 +145,18 @@ public class ManagedBeanAporte implements Serializable{
     }
     
     public void modificarAporte() {
+        Herramientas herramienta=new Herramientas();
         FacesContext context = FacesContext.getCurrentInstance();
         pk = new AportePK(selectedAporte.getAportePK().getMunicipioAporte(), selectedAporte.getAportePK().getFechaMunicipalidad());
         aporte = new Aporte(pk, selectedAporte.getValorAporte());
-        if (sessionBeanFinanaciero.insertarAporte(aporte)) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aporte modificado con éxito", "El aporte : " + aporte.getAportePK().getMunicipioAporte() + "; " + aporte.getAportePK().getFechaMunicipalidad() + ": " + aporte.getValorAporte() + " fue modificado con éxito"));
+        if (sessionBeanFinanaciero.modificarAporte(aporte,aporteAnterior)) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aporte modificado con éxito", "El aporte : " + aporte.getAportePK().getMunicipioAporte() + "; " + herramienta.fechaConPalabras( aporte.getAportePK().getFechaMunicipalidad()) + ": " + aporte.getValorAporte() + " fue modificado con éxito"));
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El aporte no fue modificado", "El aporte: " + aporte.getAportePK().getMunicipioAporte() + ": " + aporte.getValorAporte() + "no pudo ser modificado."));
         }
+    }
+    public void guardarAnterior(){
+        aporteAnterior=selectedAporte;
     }
 
     public ManagedBeanAporte() {
