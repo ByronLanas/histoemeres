@@ -4,22 +4,48 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
-    <h:form>  
-        <p:dataTable var="usuario" 
-                     value="#{managedBeanUsuario.usuarios}"
-                     paginator="true"  
+
+    <h:form id="form">  
+        <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:dataTable id="tablaUsuario"
+                     rowKey="#{usuario.codigoUsuario}"
+                     paginator="true"    
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rows="20" rowsPerPageTemplate="10,20,50,100"
-                     style="width: 70%">  
+                     var="usuario" 
+                     value="#{managedBeanUsuario.usuarios}"
+                     style="width: 70%"
+                     selection="#{managedBeanUsuario.selectedUsuario}" 
+                     selectionMode="single" 
+                     emptyMessage="No se encontraron resultados."
+                     filteredValue="#{managedBeanUsuario.usuariosFiltrados}"> 
+            <p:ajax event="rowSelect" update=":form:display"/>
             <p:column sortBy="#{usuario.nombreUsuario}" filterBy="#{usuario.nombreUsuario}" headerText="Nombre" >  
-                <h:outputText value="#{usuario.getNombreUsuario()}" />  
+                <h:outputText value="#{usuario.nombreUsuario}" />  
             </p:column>       
 
             <p:column sortBy="#{usuario.tipoUsuario}" filterBy="#{usuario.tipoUsuario}" headerText="Tipo">  
-                <h:outputText value="#{usuario.getTipoUsuario()}" />  
+                <h:outputText value="#{usuario.tipoUsuario}" />  
             </p:column> 
+            <f:facet name="footer">
+                <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" update=":form:display"  oncomplete="dialogoModificar.show();" />
+            </f:facet>
         </p:dataTable>  
+        <p:dialog id="dialogoModal"  header="Modificar usuario" widgetVar="dialogoModificar" resizable="false"
+                  width="300" showEffect="clip" hideEffect="fold">
+            <h:panelGrid id="display" columns="2">
+                <h:outputText  value="Nombre usuario: "/>
+                <p:inputText  id="modificarUsuario" required="true"  value="#{managedBeanUsuario.selectedUsuario.nombreUsuario}"/>
+                <h:outputText value="Tipo usuario: "/>
+                <p:selectOneMenu style="width: 100%" label="Tipo Usuario" value="#{managedBeanUsuario.selectedUsuario.tipoUsuario}">
+                    <f:selectItem  itemLabel="Administrador" itemValue="admin"/>
+                    <f:selectItem itemLabel="Empleado" itemValue="empleado"/>
+                </p:selectOneMenu>
+                <f:facet name="footer" >
+                    <p:commandButton value="Aceptar" type="button" icon="ui-icon-check" style="float: right" action="#{managedBeanUsuario.modificarUsuario}" oncomplete="dialogoModificar.hide()" update="tablaUsuario" />
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
     </h:form>
 </html>
 
