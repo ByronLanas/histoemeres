@@ -53,14 +53,12 @@ public class SessionBeanComercial {
         }
     }
 
-    public boolean modificarCliente(Cliente cliente) {
-        try {
-            if (true) {
-                return false;
-            }
-            clienteFacade.edit(cliente);
+    public boolean modificarCliente(Cliente cliente,Cliente clienteAnterior) {
+        if(clienteFacade.buscarPorRut(cliente.getRutCliente()).isEmpty() || cliente.getRutCliente().compareTo(clienteAnterior.getRutCliente())==0){
+            clienteFacade.remove(clienteAnterior);
+            clienteFacade.create(cliente);
             return true;
-        } catch (Exception e) {
+        }else{
             return false;
         }
     }
