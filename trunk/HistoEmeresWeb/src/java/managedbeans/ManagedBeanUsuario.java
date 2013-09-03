@@ -166,9 +166,9 @@ public class ManagedBeanUsuario {
         
         try {
             usuarioFacade.edit(selectedUsuario);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario modificado con éxito", "El usuario: " + nombre + " fue modificado con éxito."));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario modificado con éxito", "El usuario: " + selectedUsuario.getNombreUsuario() + " fue modificado con éxito."));
         } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue modificado", "El usuario: " + nombre + " no pudo ser modificado."));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no fue modificado", "El usuario: " + selectedUsuario.getNombreUsuario() + " no pudo ser modificado."));
         }
     }
 
