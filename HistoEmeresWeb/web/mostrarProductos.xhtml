@@ -28,7 +28,7 @@
             </p:column>       
 
             <p:column sortBy="#{producto.valorProducto}" filterBy="#{producto.valorProducto}" headerText="Valor">  
-                <h:outputText value="#{producto.valorProducto}" />  
+                <h:outputText value="\$ #{producto.valorProducto.intValue()}" />  
             </p:column> 
             <f:facet name="footer">
                 <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" update=":form:display"  oncomplete="dialogoModificar.show()" />

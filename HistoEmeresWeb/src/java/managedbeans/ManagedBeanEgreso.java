@@ -31,10 +31,27 @@ public class ManagedBeanEgreso {
     private String tipoEgreso;
     private Integer valorEgreso;
     private Date fechaEgreso;
+    private Integer codigoEgreso;
     private static Egreso selectedEgreso;
     private List<Egreso> egresosFiltrados;
     private List<Egreso> egresos;
     private Egreso egreso;
+
+    public Integer getCodigoEgreso() {
+        return codigoEgreso;
+    }
+
+    public void setCodigoEgreso(Integer codigoEgreso) {
+        this.codigoEgreso = codigoEgreso;
+    }
+
+    public List<Egreso> getEgresosFiltrados() {
+        return egresosFiltrados;
+    }
+
+    public void setEgresosFiltrados(List<Egreso> egresosFiltrados) {
+        this.egresosFiltrados = egresosFiltrados;
+    }
 
     public String getTipoEgreso() {
         return tipoEgreso;
@@ -60,13 +77,16 @@ public class ManagedBeanEgreso {
         this.fechaEgreso = fechaEgreso;
     }
 
-    public static Egreso getSelectedEgreso() {
+    public Egreso getSelectedEgreso() {
         return selectedEgreso;
     }
 
-    public static void setSelectedEgreso(Egreso selectedEgreso) {
-        ManagedBeanEgreso.selectedEgreso = selectedEgreso;
+    public void setSelectedEgreso(Egreso selectedEgreso) {
+        this.selectedEgreso = selectedEgreso;
     }
+
+
+  
 
     public List<Egreso> getEgresos() {
         return egresos;
@@ -96,10 +116,21 @@ public class ManagedBeanEgreso {
         FacesContext context = FacesContext.getCurrentInstance();
         egreso = new Egreso(null, tipoEgreso, valorEgreso, fechaEgreso);
         if (sessionBeanFinanaciero.ingresarEgreso(egreso)) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Egreso ingresado con éxito", "El egreso : " + egreso.getTipoEgreso()+ ": " + egreso.getValorEgreso() + " fue ingresado con éxito."));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Egreso ingresado con éxito", "El egreso : " + egreso.getTipoEgreso() + ": " + egreso.getValorEgreso() + " fue ingresado con éxito."));
 
         } else {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "El egreso no fue ingresado", "El egreso : " + egreso.getTipoEgreso()+ ": " + egreso.getValorEgreso() +  " no pudo ser ingresado."));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "El egreso no fue ingresado", "El egreso : " + egreso.getTipoEgreso() + ": " + egreso.getValorEgreso() + " no pudo ser ingresado."));
+        }
+    }
+    
+    public void modificarEgreso(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        try {
+            egresoFacade.edit(selectedEgreso);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Egreso modificado con éxito", "El egreso: " + selectedEgreso.getTipoEgreso()+ " fue modificado con éxito."));
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Egreso no fue modificado", "El egreso: " + selectedEgreso.getTipoEgreso()+ " no pudo ser modificado."));
         }
     }
 
