@@ -26,7 +26,7 @@ public class ManagedBeanMenu {
     }
 
     public void irMenu(String pagina) {
-        if (this.pagina.compareTo("")==0){
+        if (getPagina().isEmpty()||getPagina()==null){
             pagina="historiales";
         }
         try {
