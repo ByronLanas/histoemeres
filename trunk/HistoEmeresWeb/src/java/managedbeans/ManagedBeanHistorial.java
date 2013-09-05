@@ -4,11 +4,27 @@
  */
 package managedbeans;
 
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
 import entities.Aporte;
 import entities.Cliente;
 import entities.Producto;
 import entities.Venta;
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
+import java.awt.image.RenderedImage;
+import java.awt.image.renderable.ParameterBlock;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -28,11 +46,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 import sessionbeans.AporteFacadeLocal;
-import sessionbeans.ClienteFacade;
 import sessionbeans.ClienteFacadeLocal;
 import sessionbeans.ProductoFacadeLocal;
 import sessionbeans.VentaFacadeLocal;
@@ -73,17 +92,37 @@ public class ManagedBeanHistorial implements Serializable {
     private boolean disablePeriodo = true;
     private Integer seleccionHistorial = 1;
     private boolean error = false;
+    private static String base64Str;
+    private RenderedImage renderedImage;
+    private boolean mostrarBoton;
 
     public ManagedBeanHistorial() {
         disablePeriodo = false;
+        mostrarBoton=true;
         tipoGrafico = 1;
         listaGraficos = new LinkedHashMap<String, String>();
         listaGraficos.put("1", "Barras");
         listaGraficos.put("2", "Linea");
     }
 
+    public boolean isMostrarBoton() {
+        return mostrarBoton;
+    }
+
+    public void setMostrarBoton(boolean mostrarBoton) {
+        this.mostrarBoton = mostrarBoton;
+    }
+
     public boolean isDisableGrafico() {
         return disableGrafico;
+    }
+
+    public String getBase64Str() {
+        return base64Str;
+    }
+
+    public void setBase64Str(String base64Str) {
+        this.base64Str = base64Str;
     }
 
     public void setDisableGrafico(boolean disableGrafico) {
@@ -233,6 +272,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes o ventas para el periodo seleccionado"));
                     error = true;
                 } else {
+                    mostrarBoton=false;
                     productos = productoFacade.findAll();
                     //obtenerAportes(inicio,fin);
                     setTitulo("Aportes V/S Ventas");
@@ -259,6 +299,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes para el periodo seleccionado"));
                     error = true;
                 } else {
+                    mostrarBoton=false;
                     setTitulo("Aportes Totales");
 
                     setyLabel("Valor ($)");
@@ -284,6 +325,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes para el periodo seleccionado"));
                     error = true;
                 } else {
+                    mostrarBoton=false;
                     setTitulo("Aportes por Municipio");
                     setxLabel("Municipio");
                     setyLabel("Valor ($)");
@@ -299,6 +341,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran ventas para el periodo seleccionado"));
                     error = true;
                 } else {
+                    mostrarBoton=false;
                     setTitulo("Ventas Totales");
 
                     setyLabel("Valor ($)");
@@ -324,6 +367,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran ventas para el periodo seleccionado"));
                     error = true;
                 } else {
+                    mostrarBoton=false;
                     setTitulo("Ventas por cliente");
 
                     setyLabel("Valor ($)");
@@ -347,6 +391,7 @@ public class ManagedBeanHistorial implements Serializable {
     public void cargaTipoPeriodo(AjaxBehaviorEvent event) {
         seleccionHistorial = (Integer) event.getComponent().getAttributes().get("value");
         disableGrafico = false;
+
         if (seleccionHistorial == 3 || seleccionHistorial == 5) {
             disablePeriodo = true;
             listaGraficos = new LinkedHashMap<String, String>();
@@ -829,5 +874,40 @@ public class ManagedBeanHistorial implements Serializable {
 
     public void obtenerAportes(Date start, Date end) {
         aportes = aporteFacade.BuscarPorPeriodo(inicio, fin);
+    }
+
+    public byte[] pasarAImagen() {
+        // You probably want to have a more comprehensive check here. 
+        // In this example I only use a simple check
+        if (base64Str.split(",").length > 1) {
+            String encoded = base64Str.split(",")[1];
+            byte[] decoded = Herramientas.decode(encoded);
+            // Write to a .png file
+            try {
+                renderedImage = ImageIO.read(new ByteArrayInputStream(decoded));
+                ImageIO.write(renderedImage, "png", new File("C:\\out.png")); // use a proper path & file name here.
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return decoded;
+        }
+        return null;
+    }
+
+    public void crearPDF() throws DocumentException, FileNotFoundException, BadElementException, MalformedURLException, IOException {
+        Document documento = new Document();
+        String realPath = "";
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        realPath = (String) servletContext.getRealPath("/");
+        FacesContext context = FacesContext.getCurrentInstance();
+        FileOutputStream ficheroPdf = new FileOutputStream(realPath+"grafico.pdf");
+        PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
+        documento.open();
+        Image foto = Image.getInstance(pasarAImagen(), error);
+        // foto.setAlignment(Chunk.ALIGN_MIDDLE);
+        documento.add(foto);
+        documento.close();
+
+
     }
 }
