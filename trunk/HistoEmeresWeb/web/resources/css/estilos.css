@@ -168,6 +168,13 @@ body{
     font-size: 21px !important;
 
 }
+.ui-blockui-content{
+    background: transparent !important;
+    border: 0px transparent !important;
+}
+.grid{
+    margin-bottom: 20px !important;
+}
 .menu{
     background: yellowgreen !important;
 }
