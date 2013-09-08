@@ -8,7 +8,7 @@
 
     <h:form id="hform">
         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
-        <p:messages id="message"  showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
+        <p:messages id="message"  showDetail="true" severity="fatal, error"  closable="true" />
         <p:panelGrid id="panel" styleClass="grid" columns="8">
 
             <p:selectOneMenu filterMatchMode="contains" filter="true" id="tipoHistorial" label="tipo de historial"  value="#{managedBeanHistorial.tipoHistorial}">  
@@ -44,7 +44,7 @@
 
             <f:facet name="footer" >
                 <p:commandButton id='boton'  oncomplete="lazyload#{managedBeanHistorial.tipoGrafico}();" update="generarPDF,message,grafico2,grafico1,grafico3"  value="Generar gráfico" actionListener="#{managedBeanHistorial.generarGrafico}" style="margin-left: 45% "/>
-                <p:commandButton id="generarPDF" disabled="#{managedBeanHistorial.mostrarBoton}" action="#{managedBeanHistorial.crearPDF()}" onclick="exportChart()" value="Generar PDF" icon="ui-icon-extlink" /> 
+                <p:commandButton id="generarPDF" disabled="#{managedBeanHistorial.mostrarBoton}" action="#{managedBeanHistorial.crearPDF()}" onclick="exportChart#{managedBeanHistorial.tipoGrafico}()" value="Generar PDF" icon="ui-icon-extlink" /> 
             </f:facet>
 
         </p:panelGrid>
@@ -53,29 +53,44 @@
         <p:tooltip value="Tipo de historial" for="tipoHistorial"  />  
         <p:tooltip value="Tipo de gráfico" for="tipoGrafico"  />
         <p:tooltip value="Tipo de periodo" for="tipoPeriodo"  />
-        <script type="text/javascript">
-            function exportChart() {
-                // exportAsImage() will return a base64 png encoded string
-                img = graficoBarra.exportAsImage();
-                document.getElementById('hform:b64').value = img.src;
-            }
-        </script>
         
+        <p:blockUI block="hform" trigger="generarPDF,boton" >
+            <p:graphicImage style="background: transparent" value="/resources/imagenes/loading.png"/>
+        </p:blockUI>
+        
+        <script type="text/javascript">
+                    function exportChart1() {
+                        // exportAsImage() will return a base64 png encoded string
+                        img = grafico1.exportAsImage();
+                        document.getElementById('hform:b64').value = img.src;
+                    }
+                    function exportChart2() {
+                        // exportAsImage() will return a base64 png encoded string
+                        img = grafico2.exportAsImage();
+                        document.getElementById('hform:b64').value = img.src;
+                    }
+                    function exportChart3() {
+                        // exportAsImage() will return a base64 png encoded string
+                        img = grafico3.exportAsImage();
+                        document.getElementById('hform:b64').value = img.src;
+                    }
+        </script>
+
         <h:inputHidden id="b64" value="#{managedBeanHistorial.base64Str}" />
 
-        <p:outputPanel rendered="#{!managedBeanHistorial.error}" style="margin-top: 20px;" id="grafico1" layout="block">  
-            <p:barChart widgetVar="graficoBarra"   id="graficoBarra" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
-                        title="#{managedBeanHistorial.titulo}" min="0" shadow="true"  style="height:300px; width: 500px; margin-left: 25%" 
+        <p:outputPanel rendered="#{!managedBeanHistorial.error}"  id="grafico1" layout="block">  
+            <p:barChart widgetVar="grafico#{managedBeanHistorial.tipoGrafico}"   id="graficoBarra" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
+                        title="#{managedBeanHistorial.titulo}" min="0" shadow="true"  style="min-height:380px; min-width: 580px; " 
                         xaxisLabel="#{managedBeanHistorial.xLabel}" datatipFormat="%c $%i"  yaxisLabel="#{managedBeanHistorial.yLabel}" rendered="#{requestScope.shouldRender}"/>
         </p:outputPanel> 
-        <p:outputPanel rendered="#{!managedBeanHistorial.error}" style="margin-top: 20px;" id="grafico2" layout="block">  
-            <p:lineChart widgetVar="graficoLinea" id="graficoLinea" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
-                         title="#{managedBeanHistorial.titulo}" minY="0" shadow="true"  style="height:300px; width: 500px; margin-left: 25%" 
+        <p:outputPanel rendered="#{!managedBeanHistorial.error}"  id="grafico2" layout="block">  
+            <p:lineChart widgetVar="grafico#{managedBeanHistorial.tipoGrafico}" id="graficoLinea" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
+                         title="#{managedBeanHistorial.titulo}" minY="0" shadow="true"  style="min-height:380px; min-width: 580px; " 
                          xaxisLabel="#{managedBeanHistorial.xLabel}" datatipFormat="%c $%i"  yaxisLabel="#{managedBeanHistorial.yLabel}" rendered="#{requestScope.shouldRender}"/>
         </p:outputPanel>
-        <p:outputPanel rendered="#{!managedBeanHistorial.error}" style="margin-top: 20px;" id="grafico3" layout="block">  
-            <p:pieChart widgetVar="graficoTorta" id="graficoTorta" value="#{managedBeanHistorial.pieModel}" legendPosition="ne"
-                        title="#{managedBeanHistorial.titulo}" style="height:300px; width: 500px; margin-left: 25%"
+        <p:outputPanel rendered="#{!managedBeanHistorial.error}"  id="grafico3" layout="block">  
+            <p:pieChart widgetVar="grafico#{managedBeanHistorial.tipoGrafico}" id="graficoTorta" value="#{managedBeanHistorial.pieModel}" legendPosition="ne"
+                        title="#{managedBeanHistorial.titulo}" style="min-height:380px; min-width: 580px; " 
                         showDataLabels="true" sliceMargin="7" shadow="true" dataFormat="percent" rendered="#{requestScope.shouldRender}" />
         </p:outputPanel>  
 

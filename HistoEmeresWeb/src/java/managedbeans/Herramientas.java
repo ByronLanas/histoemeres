@@ -19,7 +19,7 @@ import java.util.Date;
 @RequestScoped
 public class Herramientas {
 
-    SimpleDateFormat format;
+    private static SimpleDateFormat format;
     private final static char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
     private static int[] toInt = new int[128];
 
@@ -32,18 +32,17 @@ public class Herramientas {
     public Herramientas() {
     }
 
-    public String fechaConDia() {
-        Date fecha = new Date();
+    public static String fechaConDia(Date fecha) {
         format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(fecha);
     }
 
-    public String fechaSinDia(Date fecha) {
+    public static String fechaSinDia(Date fecha) {
         format = new SimpleDateFormat("yyyy-MM");
         return format.format(fecha);
     }
 
-    public String fechaConPalabras(Date fecha) {
+    public static String fechaConPalabras(Date fecha) {
         format = new SimpleDateFormat("MMMMM 'de' yyyy");
         return format.format(fecha);
     }

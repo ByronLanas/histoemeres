@@ -5,10 +5,15 @@
 package managedbeans;
 
 import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import entities.Aporte;
 import entities.Cliente;
@@ -48,6 +53,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
@@ -98,7 +104,7 @@ public class ManagedBeanHistorial implements Serializable {
 
     public ManagedBeanHistorial() {
         disablePeriodo = false;
-        mostrarBoton=true;
+        mostrarBoton = true;
         tipoGrafico = 1;
         listaGraficos = new LinkedHashMap<String, String>();
         listaGraficos.put("1", "Barras");
@@ -272,7 +278,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes o ventas para el periodo seleccionado"));
                     error = true;
                 } else {
-                    mostrarBoton=false;
+                    mostrarBoton = false;
                     productos = productoFacade.findAll();
                     //obtenerAportes(inicio,fin);
                     setTitulo("Aportes V/S Ventas");
@@ -299,7 +305,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes para el periodo seleccionado"));
                     error = true;
                 } else {
-                    mostrarBoton=false;
+                    mostrarBoton = false;
                     setTitulo("Aportes Totales");
 
                     setyLabel("Valor ($)");
@@ -325,7 +331,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran aportes para el periodo seleccionado"));
                     error = true;
                 } else {
-                    mostrarBoton=false;
+                    mostrarBoton = false;
                     setTitulo("Aportes por Municipio");
                     setxLabel("Municipio");
                     setyLabel("Valor ($)");
@@ -341,7 +347,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran ventas para el periodo seleccionado"));
                     error = true;
                 } else {
-                    mostrarBoton=false;
+                    mostrarBoton = false;
                     setTitulo("Ventas Totales");
 
                     setyLabel("Valor ($)");
@@ -367,7 +373,7 @@ public class ManagedBeanHistorial implements Serializable {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periodo no valido", "No se registran ventas para el periodo seleccionado"));
                     error = true;
                 } else {
-                    mostrarBoton=false;
+                    mostrarBoton = false;
                     setTitulo("Ventas por cliente");
 
                     setyLabel("Valor ($)");
@@ -608,8 +614,8 @@ public class ManagedBeanHistorial implements Serializable {
                         contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
                     }
                 }
-            } else if (!contributions.getData().containsKey(format.format(fecha))) {
-                contributions.set(format.format(fecha), cero);
+            } else if (!contributions.getData().containsKey(fecha)) {
+                contributions.set(fecha, cero);
             }
             if (fecha.compareTo(format.format(venta.getFechaVenta())) == 0) {
                 it3 = productos.iterator();
@@ -646,8 +652,8 @@ public class ManagedBeanHistorial implements Serializable {
                         sales.set(format.format(venta.getFechaVenta()), valor);
                     }
                 }
-            } else if (!sales.getData().containsKey(format.format(fecha))) {
-                sales.set(format.format(fecha), cero);
+            } else if (!sales.getData().containsKey(fecha)) {
+                sales.set(fecha, cero);
             }
 
         }
@@ -882,13 +888,6 @@ public class ManagedBeanHistorial implements Serializable {
         if (base64Str.split(",").length > 1) {
             String encoded = base64Str.split(",")[1];
             byte[] decoded = Herramientas.decode(encoded);
-            // Write to a .png file
-            try {
-                renderedImage = ImageIO.read(new ByteArrayInputStream(decoded));
-                ImageIO.write(renderedImage, "png", new File("C:\\out.png")); // use a proper path & file name here.
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             return decoded;
         }
         return null;
@@ -896,16 +895,45 @@ public class ManagedBeanHistorial implements Serializable {
 
     public void crearPDF() throws DocumentException, FileNotFoundException, BadElementException, MalformedURLException, IOException {
         Document documento = new Document();
+        String tituloPDF = "Gráfico "+titulo+" ";
         String realPath = "";
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         realPath = (String) servletContext.getRealPath("/");
         FacesContext context = FacesContext.getCurrentInstance();
-        FileOutputStream ficheroPdf = new FileOutputStream(realPath+"grafico.pdf");
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+        Object currentUser = session.getAttribute("username");
+        FileOutputStream ficheroPdf = new FileOutputStream(realPath + "resources/Temp/grafico" + currentUser + ".pdf");
         PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
+        documento.setPageSize(PageSize.A4.rotate());
         documento.open();
+        documento.addAuthor("HistoEmeres");
+        documento.addCreator("HistoEmeres Web");
+        documento.addTitle(titulo);
+        if (tipoPeriodo == 1) {
+            tituloPDF += "Mensual (";
+        } else if (tipoPeriodo == 2) {
+            tituloPDF += "Anual (";
+        }
+
+        tituloPDF += Herramientas.fechaConDia(inicio) + " - " + Herramientas.fechaConDia(fin) + ")\r\n\r\n\r\n";
+
+        documento.add(new Paragraph(tituloPDF,
+                FontFactory.getFont("arial", // fuente
+                18, // tamaño
+                Font.ITALIC, // estilo
+                BaseColor.LIGHT_GRAY)));             // color
         Image foto = Image.getInstance(pasarAImagen(), error);
-        // foto.setAlignment(Chunk.ALIGN_MIDDLE);
+        foto.scaleToFit(830, 730);
+        foto.setAlignment(Chunk.ALIGN_CENTER);
         documento.add(foto);
+        documento.setPageSize(PageSize.A4);
+        documento.newPage();
+
+        documento.add(new Paragraph(tituloPDF,
+                FontFactory.getFont("arial", // fuente
+                18, // tamaño
+                Font.ITALIC, // estilo
+                BaseColor.LIGHT_GRAY)));             // color
         documento.close();
 
 
