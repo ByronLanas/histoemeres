@@ -5,26 +5,20 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Battousai
+ * @author Miguel-Jara
  */
 @Entity
 @Table(name = "producto")
@@ -37,10 +31,11 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Producto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
     @Column(name = "CODIGO_PRODUCTO")
-    private Integer codigoProducto;
+    private String codigoProducto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
@@ -49,28 +44,26 @@ public class Producto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "VALOR_PRODUCTO")
-    private float valorProducto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoProducto")
-    private Collection<Venta> ventaCollection;
+    private int valorProducto;
 
     public Producto() {
     }
 
-    public Producto(Integer codigoProducto) {
+    public Producto(String codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
 
-    public Producto(Integer codigoProducto, String nombreProducto, float valorProducto) {
+    public Producto(String codigoProducto, String nombreProducto, int valorProducto) {
         this.codigoProducto = codigoProducto;
         this.nombreProducto = nombreProducto;
         this.valorProducto = valorProducto;
     }
 
-    public Integer getCodigoProducto() {
+    public String getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(Integer codigoProducto) {
+    public void setCodigoProducto(String codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
 
@@ -82,21 +75,12 @@ public class Producto implements Serializable {
         this.nombreProducto = nombreProducto;
     }
 
-    public float getValorProducto() {
+    public int getValorProducto() {
         return valorProducto;
     }
 
-    public void setValorProducto(float valorProducto) {
+    public void setValorProducto(int valorProducto) {
         this.valorProducto = valorProducto;
-    }
-
-    @XmlTransient
-    public Collection<Venta> getVentaCollection() {
-        return ventaCollection;
-    }
-
-    public void setVentaCollection(Collection<Venta> ventaCollection) {
-        this.ventaCollection = ventaCollection;
     }
 
     @Override

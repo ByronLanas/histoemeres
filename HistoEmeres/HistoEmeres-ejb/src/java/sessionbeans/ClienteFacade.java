@@ -30,7 +30,7 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
     }
     
     @Override
-    public List<Cliente> buscarPorRut(Integer rut){
+    public List<Cliente> buscarPorRut(String rut){
         Query query;
         query = em.createNamedQuery("Cliente.findByRutCliente").setParameter("rutCliente", rut);
         return query.getResultList();

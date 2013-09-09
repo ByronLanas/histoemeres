@@ -36,8 +36,9 @@ public class Cliente implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 13)
     @Column(name = "RUT_CLIENTE")
-    private Integer rutCliente;
+    private String rutCliente;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
@@ -49,20 +50,20 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Integer rutCliente) {
+    public Cliente(String rutCliente) {
         this.rutCliente = rutCliente;
     }
 
-    public Cliente(Integer rutCliente, String nombreCliente) {
+    public Cliente(String rutCliente, String nombreCliente) {
         this.rutCliente = rutCliente;
         this.nombreCliente = nombreCliente;
     }
 
-    public Integer getRutCliente() {
+    public String getRutCliente() {
         return rutCliente;
     }
 
-    public void setRutCliente(Integer rutCliente) {
+    public void setRutCliente(String rutCliente) {
         this.rutCliente = rutCliente;
     }
 

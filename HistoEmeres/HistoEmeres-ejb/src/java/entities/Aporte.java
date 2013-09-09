@@ -32,13 +32,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Aporte.findByPeriodo", query = "SELECT a FROM Aporte a WHERE a.aportePK.fechaMunicipalidad >= :fechaInicio AND a.aportePK.fechaMunicipalidad <= :fechaFin")})
     
 public class Aporte implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AportePK aportePK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "VALOR_APORTE")
-    private float valorAporte;
+    private int valorAporte;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected AportePK aportePK;
 
     public Aporte() {
     }
@@ -47,7 +47,7 @@ public class Aporte implements Serializable {
         this.aportePK = aportePK;
     }
 
-    public Aporte(AportePK aportePK, float valorAporte) {
+    public Aporte(AportePK aportePK, int valorAporte) {
         this.aportePK = aportePK;
         this.valorAporte = valorAporte;
     }
@@ -64,13 +64,6 @@ public class Aporte implements Serializable {
         this.aportePK = aportePK;
     }
 
-    public float getValorAporte() {
-        return valorAporte;
-    }
-
-    public void setValorAporte(float valorAporte) {
-        this.valorAporte = valorAporte;
-    }
 
     @Override
     public int hashCode() {
@@ -95,6 +88,14 @@ public class Aporte implements Serializable {
     @Override
     public String toString() {
         return "entities.Aporte[ aportePK=" + aportePK + " ]";
+    }
+
+    public int getValorAporte() {
+        return valorAporte;
+    }
+
+    public void setValorAporte(int valorAporte) {
+        this.valorAporte = valorAporte;
     }
     
 }
