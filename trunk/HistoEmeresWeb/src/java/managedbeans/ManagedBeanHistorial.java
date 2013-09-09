@@ -513,7 +513,7 @@ public class ManagedBeanHistorial implements Serializable {
                 it3 = productos.iterator();
                 while (it3.hasNext()) {
                     producto = it3.next();
-                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                    if (venta.getCodigoProducto().getCodigoProducto().compareTo(producto.getCodigoProducto()) == 0) {
                         valor = producto.getValorProducto() * venta.getCantidadVenta();
                     }
                 }
@@ -532,7 +532,7 @@ public class ManagedBeanHistorial implements Serializable {
                     it3 = productos.iterator();
                     while (it3.hasNext()) {
                         producto = it3.next();
-                        if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                        if (venta.getCodigoProducto().getCodigoProducto().compareTo( producto.getCodigoProducto()) == 0) {
                             valor = producto.getValorProducto() * venta.getCantidadVenta();
                         }
                     }
@@ -637,7 +637,7 @@ public class ManagedBeanHistorial implements Serializable {
                 it3 = productos.iterator();
                 while (it3.hasNext()) {
                     producto = it3.next();
-                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                    if (venta.getCodigoProducto().getCodigoProducto().compareTo(producto.getCodigoProducto()) == 0) {
                         valor = producto.getValorProducto() * venta.getCantidadVenta();
                     }
                 }
@@ -656,7 +656,7 @@ public class ManagedBeanHistorial implements Serializable {
                     it3 = productos.iterator();
                     while (it3.hasNext()) {
                         producto = it3.next();
-                        if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                        if (venta.getCodigoProducto().getCodigoProducto().compareTo(producto.getCodigoProducto()) == 0) {
                             valor = producto.getValorProducto() * venta.getCantidadVenta();
                         }
                     }
@@ -761,7 +761,7 @@ public class ManagedBeanHistorial implements Serializable {
             it3 = productos.iterator();
             while (it3.hasNext()) {
                 producto = it3.next();
-                if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                if (venta.getCodigoProducto().getCodigoProducto().compareTo(producto.getCodigoProducto()) == 0) {
                     valor = producto.getValorProducto() * venta.getCantidadVenta();
                 }
             }
@@ -803,7 +803,7 @@ public class ManagedBeanHistorial implements Serializable {
             it3 = productos.iterator();
             while (it3.hasNext()) {
                 producto = it3.next();
-                if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                if (venta.getCodigoProducto().getCodigoProducto().compareTo(producto.getCodigoProducto()) == 0) {
                     valor = producto.getValorProducto() * venta.getCantidadVenta();
                 }
             }
@@ -852,7 +852,7 @@ public class ManagedBeanHistorial implements Serializable {
         Venta venta;
         Cliente cliente;
         Producto producto;
-        Map<Integer, String> clients = new HashMap<>();
+        Map<String, String> clients = new HashMap<>();
 
         float valor = 0;
 
@@ -874,7 +874,7 @@ public class ManagedBeanHistorial implements Serializable {
             it3 = productos.iterator();
             while (it3.hasNext()) {
                 producto = it3.next();
-                if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                if (venta.getCodigoProducto().getCodigoProducto().compareTo(producto.getCodigoProducto()) == 0) {
                     valor = producto.getValorProducto() * venta.getCantidadVenta();
                 }
             }
@@ -1092,7 +1092,7 @@ public class ManagedBeanHistorial implements Serializable {
             Producto producto;
             float valor = 0;
 
-            Map<Integer, String> clients = new HashMap<>();
+            Map<String, String> clients = new HashMap<>();
             Iterator<Cliente> it4 = clientes.listIterator();
             Iterator<Producto> it3 = productos.listIterator();
             while (it4.hasNext()) {
@@ -1129,7 +1129,7 @@ public class ManagedBeanHistorial implements Serializable {
                 it3 = productos.iterator();
                 while (it3.hasNext()) {
                     producto = it3.next();
-                    if (venta.getCodigoProducto().getCodigoProducto() == producto.getCodigoProducto()) {
+                    if (venta.getCodigoProducto().getCodigoProducto().compareTo(producto.getCodigoProducto()) == 0) {
                         valor = producto.getValorProducto() * venta.getCantidadVenta();
                     }
                 }

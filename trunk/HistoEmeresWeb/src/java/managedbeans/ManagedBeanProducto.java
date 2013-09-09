@@ -29,9 +29,9 @@ public class ManagedBeanProducto {
     private SessionBeanComercial sessionBeanComercial;
     @EJB
     private ProductoFacadeLocal productoFacade;
-    private Integer codigo_producto;
+    private String codigo_producto;
     private String nombre_producto;
-    private Float valor_producto;
+    private Integer valor_producto;
     private Producto producto;
     private static Producto selectedProducto;
     private List<Producto> productos;
@@ -39,11 +39,11 @@ public class ManagedBeanProducto {
     public ManagedBeanProducto() {
     }
 
-    public Integer getCodigo_producto() {
+    public String getCodigo_producto() {
         return codigo_producto;
     }
 
-    public void setCodigo_producto(Integer codigo_producto) {
+    public void setCodigo_producto(String codigo_producto) {
         this.codigo_producto = codigo_producto;
     }
 
@@ -55,11 +55,11 @@ public class ManagedBeanProducto {
         this.nombre_producto = nombre_producto;
     }
 
-    public Float getValor_producto() {
+    public Integer getValor_producto() {
         return valor_producto;
     }
 
-    public void setValor_producto(Float valor_producto) {
+    public void setValor_producto(Integer valor_producto) {
         this.valor_producto = valor_producto;
     }
 
@@ -94,14 +94,15 @@ public class ManagedBeanProducto {
 
     public void insertarProducto() {
         FacesContext context = FacesContext.getCurrentInstance();
-        producto = new Producto(null, nombre_producto, valor_producto);
+        producto = new Producto(codigo_producto, nombre_producto, valor_producto);
+        
         if (!productoFacade.buscarPorNombreProducto(nombre_producto).isEmpty()) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El producto no fue ingresado", "El producto '" + nombre_producto + "' ya existe"));
         } else {
             if (!sessionBeanComercial.insertarProducto(producto)) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El producto no fue ingresado", "El producto no pudo ser ingresado correctamente, intentelo nuevamente"));
             } else {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto ingresado con éxito", "El Producto: " + producto.getNombreProducto() + " cuyo Valor es: $" + producto.getValorProducto() + " fue ingresado con éxito"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto ingresado con éxito", "El Producto cuyo código es " +producto.getCodigoProducto()+", nombre es " + producto.getNombreProducto() + " cuyo Valor es: $" + producto.getValorProducto() + " fue ingresado con éxito"));
             }
         }
     }

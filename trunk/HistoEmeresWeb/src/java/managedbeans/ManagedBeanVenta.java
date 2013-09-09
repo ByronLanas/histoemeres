@@ -43,8 +43,8 @@ public class ManagedBeanVenta {
      */
     private Cliente cliente;
     private Producto producto;
-    private int rutCliente;
-    private int codigoProducto;
+    private String rutCliente;
+    private String codigoProducto;
     private Integer cantidadVenta;
     private Date fechaVenta;
     private List<Venta> ventasFiltradas;
@@ -68,19 +68,19 @@ public class ManagedBeanVenta {
         this.producto = producto;
     }
 
-    public int getRutCliente() {
+    public String getRutCliente() {
         return rutCliente;
     }
 
-    public void setRutCliente(int rutCliente) {
+    public void setRutCliente(String rutCliente) {
         this.rutCliente = rutCliente;
     }
 
-    public int getCodigoProducto() {
+    public String getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(int codigoProducto) {
+    public void setCodigoProducto(String codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
 

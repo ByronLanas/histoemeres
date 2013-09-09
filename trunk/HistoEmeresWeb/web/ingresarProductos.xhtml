@@ -11,6 +11,8 @@
             <f:facet name="header">
                 Ingresar nuevo Producto
             </f:facet>
+            <h:outputText value="Código: "/>
+            <p:inputText required="true" requiredMessage="Campo 'Código' no completado"  value="#{managedBeanProducto.codigo_producto}"/>
             <h:outputText value="Nombre: "/>
             <p:inputText required="true" requiredMessage="Campo 'Nombre' no completado"  value="#{managedBeanProducto.nombre_producto}"/>
             <h:outputText value="Valor: " />
