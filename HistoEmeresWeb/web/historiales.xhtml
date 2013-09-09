@@ -44,7 +44,9 @@
 
             <f:facet name="footer" >
                 <p:commandButton id='boton'  oncomplete="lazyload#{managedBeanHistorial.tipoGrafico}();" update="generarPDF,message,grafico2,grafico1,grafico3"  value="Generar gráfico" actionListener="#{managedBeanHistorial.generarGrafico}" style="margin-left: 45% "/>
-                <p:commandButton id="generarPDF" disabled="#{managedBeanHistorial.mostrarBoton}" action="#{managedBeanHistorial.crearPDF()}" onclick="exportChart#{managedBeanHistorial.tipoGrafico}()" value="Generar PDF" icon="ui-icon-extlink" /> 
+                <p:commandButton ajax="false"   id="generarPDF" disabled="#{managedBeanHistorial.mostrarBoton}" actionListener="#{managedBeanHistorial.crearPDF(event)}"  onclick="exportChart#{managedBeanHistorial.tipoGrafico}();PrimeFaces.monitorDownload(showStatus, hideStatus) " value="Generar PDF" icon="ui-icon-extlink" >
+                    <p:fileDownload value="#{managedBeanHistorial.file}" />
+                </p:commandButton>
             </f:facet>
 
         </p:panelGrid>
@@ -55,7 +57,7 @@
         <p:tooltip value="Tipo de periodo" for="tipoPeriodo"  />
         
         <p:blockUI block="hform" trigger="generarPDF,boton" >
-            <p:graphicImage style="background: transparent" value="/resources/imagenes/loading.png"/>
+            <p:graphicImage style="background: transparent" value="/resources/imagenes/loading.gif"/>
         </p:blockUI>
         
         <script type="text/javascript">
@@ -75,7 +77,14 @@
                         document.getElementById('hform:b64').value = img.src;
                     }
         </script>
-
+<script type="text/javascript">
+function showStatus() {
+statusDialog.show();
+}
+function hideStatus() {
+statusDialog.hide();
+}
+</script> 
         <h:inputHidden id="b64" value="#{managedBeanHistorial.base64Str}" />
 
         <p:outputPanel rendered="#{!managedBeanHistorial.error}"  id="grafico1" layout="block">  
