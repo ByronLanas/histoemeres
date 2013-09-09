@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Battousai
+ * @author Miguel-Jara
  */
 @Local
 public interface ProductoFacadeLocal {
@@ -28,8 +28,8 @@ public interface ProductoFacadeLocal {
     List<Producto> findRange(int[] range);
 
     int count();
-
-    List<Producto> buscarPorNombreProducto(String nombre_producto);
-
-    List<Producto> buscarPorCodigoProducto(int codigoProducto);
+    
+    public List<Producto> buscarPorNombreProducto(String nombre_producto);
+    
+    public List<Producto> buscarPorCodigoProducto(String codigoProducto);
 }

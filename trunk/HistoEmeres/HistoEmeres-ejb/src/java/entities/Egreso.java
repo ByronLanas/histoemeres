@@ -35,6 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Egreso.findByValorEgreso", query = "SELECT e FROM Egreso e WHERE e.valorEgreso = :valorEgreso"),
     @NamedQuery(name = "Egreso.findByFechaEgreso", query = "SELECT e FROM Egreso e WHERE e.fechaEgreso = :fechaEgreso")})
 public class Egreso implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "VALOR_EGRESO")
+    private int valorEgreso;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,10 +50,6 @@ public class Egreso implements Serializable {
     @Size(min = 1, max = 40)
     @Column(name = "TIPO_EGRESO")
     private String tipoEgreso;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "VALOR_EGRESO")
-    private float valorEgreso;
     @Column(name = "FECHA_EGRESO")
     @Temporal(TemporalType.DATE)
     private Date fechaEgreso;
@@ -61,13 +61,13 @@ public class Egreso implements Serializable {
         this.codigoEgreso = codigoEgreso;
     }
 
-    public Egreso(Integer codigoEgreso, String tipoEgreso, float valorEgreso) {
+    public Egreso(Integer codigoEgreso, String tipoEgreso, int valorEgreso) {
         this.codigoEgreso = codigoEgreso;
         this.tipoEgreso = tipoEgreso;
         this.valorEgreso = valorEgreso;
     }
 
-    public Egreso(Integer codigoEgreso, String tipoEgreso, float valorEgreso, Date fechaEgreso) {
+    public Egreso(Integer codigoEgreso, String tipoEgreso, int valorEgreso, Date fechaEgreso) {
         this.codigoEgreso = codigoEgreso;
         this.tipoEgreso = tipoEgreso;
         this.valorEgreso = valorEgreso;
@@ -89,14 +89,6 @@ public class Egreso implements Serializable {
 
     public void setTipoEgreso(String tipoEgreso) {
         this.tipoEgreso = tipoEgreso;
-    }
-
-    public float getValorEgreso() {
-        return valorEgreso;
-    }
-
-    public void setValorEgreso(float valorEgreso) {
-        this.valorEgreso = valorEgreso;
     }
 
     public Date getFechaEgreso() {
@@ -130,6 +122,14 @@ public class Egreso implements Serializable {
     @Override
     public String toString() {
         return "entities.Egreso[ codigoEgreso=" + codigoEgreso + " ]";
+    }
+
+    public int getValorEgreso() {
+        return valorEgreso;
+    }
+
+    public void setValorEgreso(int valorEgreso) {
+        this.valorEgreso = valorEgreso;
     }
     
 }

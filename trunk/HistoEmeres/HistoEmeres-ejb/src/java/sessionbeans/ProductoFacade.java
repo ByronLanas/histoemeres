@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Battousai
+ * @author Miguel-Jara
  */
 @Stateless
 public class ProductoFacade extends AbstractFacade<Producto> implements ProductoFacadeLocal {
@@ -28,7 +28,7 @@ public class ProductoFacade extends AbstractFacade<Producto> implements Producto
     public ProductoFacade() {
         super(Producto.class);
     }
-
+    
     @Override
     public List<Producto> buscarPorNombreProducto(String nombre_producto) {
         Query query;
@@ -37,12 +37,9 @@ public class ProductoFacade extends AbstractFacade<Producto> implements Producto
     } 
 
     @Override
-    public List<Producto> buscarPorCodigoProducto(int codigoProducto) {
+    public List<Producto> buscarPorCodigoProducto(String codigoProducto) {
         Query query;
         query = em.createNamedQuery("Producto.findByCodigoProducto").setParameter("codigoProducto", codigoProducto);
         return query.getResultList();
     }
-
-
-    
 }
