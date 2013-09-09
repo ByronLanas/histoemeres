@@ -35,14 +35,14 @@ public class ManagedBeanCliente {
     /**
      * Creates a new instance of ManagedBeanCliente
      */
-    private Integer rut_cliente;
+    private String rut_cliente;
     private String nombre_cliente;
     private List<Cliente> clientes;
     private Cliente cliente;
     private static Cliente clienteAnterior;
     private static Cliente selectedCliente;
     private List<Cliente> clientesFiltrados;
-    private static Integer rutSeleccionado;
+    private static String rutSeleccionado;
 
     public static Cliente getClienteAnterior() {
         return clienteAnterior;
@@ -52,11 +52,11 @@ public class ManagedBeanCliente {
         ManagedBeanCliente.clienteAnterior = clienteAnterior;
     }
 
-    public Integer getRutSeleccionado() {
+    public String getRutSeleccionado() {
         return rutSeleccionado;
     }
 
-    public void setRutSeleccionado(Integer rutSeleccionado) {
+    public void setRutSeleccionado(String rutSeleccionado) {
         this.rutSeleccionado = rutSeleccionado;
     }
 
@@ -85,11 +85,11 @@ public class ManagedBeanCliente {
         this.cliente = cliente;
     }
 
-    public Integer getRut_cliente() {
+    public String getRut_cliente() {
         return rut_cliente;
     }
 
-    public void setRut_cliente(Integer rut_cliente) {
+    public void setRut_cliente(String rut_cliente) {
         this.rut_cliente = rut_cliente;
     }
 

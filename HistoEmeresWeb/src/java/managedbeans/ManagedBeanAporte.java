@@ -35,7 +35,7 @@ public class ManagedBeanAporte implements Serializable{
 
     private String municipio;
     private Date fecha;
-    private Float valor;
+    private Integer valor;
     private Aporte aporte;
     private static Aporte aporteAnterior;
     private List<Aporte> aportes;
@@ -91,11 +91,11 @@ public class ManagedBeanAporte implements Serializable{
         this.fecha = fecha;
     }
 
-    public Float getValor() {
+    public Integer getValor() {
         return valor;
     }
 
-    public void setValor(Float valor) {
+    public void setValor(Integer valor) {
         this.valor = valor;
     }
 
@@ -109,7 +109,7 @@ public class ManagedBeanAporte implements Serializable{
 
 
 
-    public boolean verificarValor(float valor) {
+    public boolean verificarValor(Integer valor) {
         if (valor >= 0) {
             return true;
         } else {
