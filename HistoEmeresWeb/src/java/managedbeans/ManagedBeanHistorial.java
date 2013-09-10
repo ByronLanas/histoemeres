@@ -1048,7 +1048,7 @@ public class ManagedBeanHistorial implements Serializable {
             table.setWidthPercentage(100f);
             table.getDefaultCell().setUseAscender(true);
             table.getDefaultCell().setUseDescender(true);
-            // Add the first header row
+
             Font f = new Font();
             f.setColor(BaseColor.WHITE);
             PdfPCell cell = new PdfPCell(new Phrase("Aportes", f));
@@ -1056,19 +1056,19 @@ public class ManagedBeanHistorial implements Serializable {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setColspan(3);
             table.addCell(cell);
-            // Add the second header row twice
+
             table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);
 
             table.addCell("Municipalidad");
             table.addCell("Valor");
             table.addCell("Fecha");
             table.getDefaultCell().setBackgroundColor(null);
-            // There are three special rows
+
             table.setHeaderRows(2);
             while (it.hasNext()) {
                 aporte = it.next();
                 table.addCell(aporte.getAportePK().getMunicipioAporte());
-                table.addCell(String.valueOf(aporte.getValorAporte()));
+                table.addCell("$ "+String.valueOf(aporte.getValorAporte()));
                 table.addCell(Herramientas.fechaConPalabras(aporte.getAportePK().getFechaMunicipalidad()));
 
 
@@ -1105,7 +1105,7 @@ public class ManagedBeanHistorial implements Serializable {
             table.setWidthPercentage(100f);
             table.getDefaultCell().setUseAscender(true);
             table.getDefaultCell().setUseDescender(true);
-            // Add the first header row
+
             Font f = new Font();
             f.setColor(BaseColor.WHITE);
             PdfPCell cell = new PdfPCell(new Phrase("Ventas", f));
@@ -1113,7 +1113,7 @@ public class ManagedBeanHistorial implements Serializable {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setColspan(5);
             table.addCell(cell);
-            // Add the second header row twice
+
             table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);
 
             table.addCell("Nombre cliente");
@@ -1133,10 +1133,11 @@ public class ManagedBeanHistorial implements Serializable {
                         valor = producto.getValorProducto() * venta.getCantidadVenta();
                     }
                 }
-                table.addCell(clients.get(venta.getRutCliente().getRutCliente()));
-                table.addCell(clients.get(venta.getRutCliente().getRutCliente()));
+                producto = productoFacade.buscarPorCodigoProducto(venta.getCodigoProducto().getCodigoProducto()).get(0);
+                table.addCell(clients.get(venta.getRutCliente().getRutCliente())+ " ("+venta.getRutCliente().getRutCliente()+")");
+                table.addCell(producto.getNombreProducto()+" ("+producto.getCodigoProducto()+")");
                 table.addCell(String.valueOf(venta.getCantidadVenta()));
-                table.addCell("$ "+String.valueOf((int)valor));
+                table.addCell("$ "+String.valueOf(valor));
                 table.addCell(Herramientas.fechaConPalabras(venta.getFechaVenta()));
 
 
