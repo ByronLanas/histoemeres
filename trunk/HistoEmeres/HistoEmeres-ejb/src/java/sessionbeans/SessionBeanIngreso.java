@@ -39,12 +39,15 @@ public class SessionBeanIngreso {
     }
 
     public boolean verificarModificarAporte(Aporte aporte,Aporte aporteAnterior) {
-        if(aporteFacade.buscarAporte(aporte) || aporte.getAportePK().getFechaMunicipalidad().compareTo(aporteAnterior.getAportePK().getFechaMunicipalidad())==0){
+        if(aporteFacade.buscarAporte(aporte) ){
             aporteFacade.remove(aporteAnterior);
             aporteFacade.create(aporte);
             return true;
         }
-        else
+        else if(!aporteFacade.buscarAporte(aporte) && aporte.getAportePK().getFechaMunicipalidad().compareTo(aporteAnterior.getAportePK().getFechaMunicipalidad())==0){
+            aporteFacade.edit(aporte);
+            return true;
+        }else 
             return false;
     }
 
