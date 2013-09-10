@@ -33,7 +33,7 @@
                 <h:outputText value="#{cliente.nombreCliente}"/>
             </p:column>  
             <f:facet name="footer">
-                <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" update=":form:display"  oncomplete="dialogoModificar.show();" action="#{managedBeanCliente.guardarAnterior()}" />
+                <p:commandButton id="botonModificar" value="Modificar" icon="modificar-icon" update=":form:display" action="#{managedBeanCliente.guardarAnterior()}" oncomplete="dialogoModificar.show();"  />
             </f:facet>
         </p:dataTable>  
         <p:dialog id="dialogoModal"  header="Modificar cliente" widgetVar="dialogoModificar" resizable="false"
@@ -45,9 +45,8 @@
                 </p:inputText>
                 <h:outputText value="Nombre cliente: "/>
                 <p:inputText value="#{managedBeanCliente.selectedCliente.nombreCliente}" />
-                <h:inputHidden id="rutSeleccionado" value="#{managedBeanCliente.selectedCliente.rutCliente}"/>
                 <f:facet name="footer" >
-                    <p:commandButton value="Aceptar" type="button" icon="ui-icon-check" style="float: right" action="#{managedBeanCliente.modificarCliente}" oncomplete="dialogoModificar.hide()" update="tablaCliente" />
+                    <p:commandButton ajax="false" value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanCliente.modificarCliente}" oncomplete="dialogoModificar.hide()" update="tablaCliente" />
                 </f:facet>
             </h:panelGrid>
         </p:dialog>

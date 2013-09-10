@@ -13,6 +13,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.Min;
 import sessionbeans.EgresoFacadeLocal;
 import sessionbeans.SessionBeanFinanaciero;
 
@@ -29,6 +30,7 @@ public class ManagedBeanEgreso {
     @EJB
     private SessionBeanFinanaciero sessionBeanFinanaciero;
     private String tipoEgreso;
+    @Min(value = 0,message = "El valor del egreso debe ser mayor a 0")
     private Integer valorEgreso;
     private Date fechaEgreso;
     private Integer codigoEgreso;

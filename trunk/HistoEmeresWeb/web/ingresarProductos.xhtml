@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <h:form>
+    <h:form id="hform">
         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
         <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
         <p:panelGrid styleClass="panel" columns="2">
@@ -12,14 +12,15 @@
                 Ingresar nuevo Producto
             </f:facet>
             <h:outputText value="Código: "/>
-            <p:inputText required="true" requiredMessage="Campo 'Código' no completado"  value="#{managedBeanProducto.codigo_producto}"/>
+            <p:inputText required="true" maxlength="6" requiredMessage="Campo 'Código' no completado"  value="#{managedBeanProducto.codigo_producto}"/>
             <h:outputText value="Nombre: "/>
             <p:inputText required="true" requiredMessage="Campo 'Nombre' no completado"  value="#{managedBeanProducto.nombre_producto}"/>
             <h:outputText value="Valor: " />
             <p:inputText  required="true" requiredMessage="Campo 'Valor' no completado"  label="Valor producto" value="#{managedBeanProducto.valor_producto}"/>         
             <f:facet name="footer">
-                <p:commandButton icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanProducto.insertarProducto}" />
+                <p:commandButton ajax="false" icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanProducto.insertarProducto}" />
             </f:facet>
         </p:panelGrid>
+
     </h:form>
 </html>

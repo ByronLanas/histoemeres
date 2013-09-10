@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <h:form>
+    <h:form id="hform">
         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
         <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
         <p:panelGrid styleClass="panel" columns="2">
@@ -13,7 +13,7 @@
                 Ingresar nuevo aporte
             </f:facet>
             <h:outputText value="Municipalidad: "/>
-            <p:selectOneMenu style="width: 100%" filterMatchMode="startsWith" filter="true" id="rut" required="true" value="#{managedBeanAporte.municipio}">
+            <p:selectOneMenu style="width: 100%" filterMatchMode="startsWith" filter="true" id="Municipio" label="Municipio" required="true" value="#{managedBeanAporte.municipio}">
                 <f:selectItem itemLabel="Municipio" itemValue=""/>
                 <f:selectItem itemValue="Cerrillos" itemLabel="Cerrillos" />
                 <f:selectItem itemValue="El Bosque" itemLabel="El Bosque" />
@@ -41,17 +41,15 @@
             <h:outputText value="Aporte: "/>
             <p:inputText required="true" value ="#{managedBeanAporte.valor}"/>
             <h:outputText value="Fecha"/>
-            <p:calendar navigator="true" locale="es" value="#{managedBeanAporte.fecha}"/>
+            <p:calendar maxdate="#{managedBeanHistorial.fechaActual()}" navigator="true" locale="es" value="#{managedBeanAporte.fecha}"/>
             <f:facet name="footer">
-                <p:commandButton icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanAporte.insertarAporte}">
-                    <p:confirmDialog  showEffect="fade" hideEffect="fade">
-                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-                    </p:confirmDialog>
+                <p:commandButton id="botonIngresar" ajax="false" icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanAporte.insertarAporte}">
+
                 </p:commandButton>
 
             </f:facet>
         </p:panelGrid>
+
     </h:form>
 </html>
 

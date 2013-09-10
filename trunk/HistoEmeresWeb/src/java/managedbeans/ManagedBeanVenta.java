@@ -15,6 +15,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.Min;
 import org.primefaces.context.RequestContext;
 import sessionbeans.ClienteFacadeLocal;
 import sessionbeans.ProductoFacadeLocal;
@@ -45,13 +46,35 @@ public class ManagedBeanVenta {
     private Producto producto;
     private String rutCliente;
     private String codigoProducto;
+    @Min(value = 0,message = "La cantidad debe ser mayor a 0")
     private Integer cantidadVenta;
     private Date fechaVenta;
     private List<Venta> ventasFiltradas;
-    private Venta selectedVenta;
+    private static Venta selectedVenta;
     private Venta venta;
     private List<Venta> ventas;
+    private static Venta ventaAnterior;
+    private String rutSelected;
+    private String codigoSelected;
 
+    public String getRutSelected() {
+        return rutSelected;
+    }
+
+    public void setRutSelected(String rutSelected) {
+        this.rutSelected = rutSelected;
+    }
+
+    public String getCodigoSelected() {
+        return codigoSelected;
+    }
+
+    public void setCodigoSelected(String codigoSelected) {
+        this.codigoSelected = codigoSelected;
+    }
+
+    
+    
     public Cliente getCliente() {
         return cliente;
     }
@@ -153,4 +176,19 @@ public class ManagedBeanVenta {
         }
 
     }
+    
+     public void modificarVenta() {
+        Herramientas herramienta=new Herramientas();
+        FacesContext context = FacesContext.getCurrentInstance();
+        venta = new Venta(selectedVenta.getCodigoVenta(),selectedVenta.getCantidadVenta(),selectedVenta.getFechaVenta(),selectedVenta.getRutCliente(),selectedVenta.getCodigoProducto());
+        
+        
+        if (sessionBeanComercial.modificarVenta(venta)) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Venta modificada con éxito", "La venta : " + venta.getCodigoProducto().getCodigoProducto() + "; " + venta.getRutCliente().getNombreCliente()+ " fue modificada con éxito"));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La venta no fue modificada", "La venta: " + venta.getCodigoProducto().getCodigoProducto()+ ": " + venta.getRutCliente().getNombreCliente()+ "no pudo ser modificada."));
+        }
+    }
+
+    
 }

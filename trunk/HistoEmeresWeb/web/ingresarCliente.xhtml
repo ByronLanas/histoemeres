@@ -19,12 +19,11 @@
             <h:outputText value="Nombre de Cliente "/>
             <p:inputText label="Nombre cliente" id="nombre" required="true"  value ="#{managedBeanCliente.nombre_cliente}"/>
             <f:facet name="footer">
-                <p:commandButton  update="panelCliente" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar" action="#{managedBeanCliente.insertarCliente}" icon="ingresar-icon" />
+                <p:commandButton ajax="false"  update="panelCliente" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar" action="#{managedBeanCliente.insertarCliente}" icon="ingresar-icon" />
             </f:facet>
         </p:panelGrid>    
         <p:watermark for="rut" value="Rut sin puntos ni guión" />
         <p:watermark for="nombre" value="Ingrese nombre del cliente" />
-        <p:blockUI block="panelCliente" trigger="botonIngresar" />
     </h:form>
 
 </html>

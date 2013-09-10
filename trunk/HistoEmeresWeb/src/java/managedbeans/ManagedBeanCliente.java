@@ -116,7 +116,7 @@ public class ManagedBeanCliente {
 
     public void insertarCliente() {
         FacesContext context = FacesContext.getCurrentInstance();
-        cliente = new Cliente(rut_cliente, nombre_cliente);
+        cliente = new Cliente(rut_cliente.toUpperCase(), nombre_cliente);
         if (sessionBeanComercial.insertarCliente(cliente)) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente ingresado con éxito", "El cliente : " + cliente.getNombreCliente() + ": " + cliente.getRutCliente() + " fue ingresado con éxito."));
             RequestContext.getCurrentInstance().reset("form:panelCliente");

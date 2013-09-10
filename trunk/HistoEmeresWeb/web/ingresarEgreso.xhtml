@@ -19,10 +19,10 @@
             <h:outputText value="Fecha de egreso"/>
             <p:calendar pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" label="Fecha egreso" id="fecha" required="true" value="#{managedBeanEgreso.fechaEgreso}"/>
             <f:facet name="footer">
-                <p:commandButton  update="panelEgreso" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar" action="#{managedBeanEgreso.ingresarEgreso()}" icon="ingresar-icon" />
+                <p:commandButton ajax="false" update="panelEgreso" id="botonIngresar" oncomplete="resetCliente" style="float: right" value="Ingresar" action="#{managedBeanEgreso.ingresarEgreso()}" icon="ingresar-icon" />
             </f:facet>
         </p:panelGrid>    
-        <p:blockUI block="panelEgreso" trigger="botonIngresar" />
+
     </h:form>
 
 </html>

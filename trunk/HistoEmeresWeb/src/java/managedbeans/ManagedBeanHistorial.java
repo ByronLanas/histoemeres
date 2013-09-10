@@ -442,8 +442,8 @@ public class ManagedBeanHistorial implements Serializable {
         Producto producto;
         Date fecha;
 
-        float valor = 0;
-        float cero = 0;
+        int valor = 0;
+        int cero = 0;
 
         SortedSet<Date> fechas = new TreeSet<Date>();
 
@@ -490,7 +490,7 @@ public class ManagedBeanHistorial implements Serializable {
             if (fecha.compareTo(aporte.getAportePK().getFechaMunicipalidad()) == 0) {
 
                 if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
-                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Integer) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
                 } else {
                     contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
                 }
@@ -501,7 +501,7 @@ public class ManagedBeanHistorial implements Serializable {
                         break;
                     }
                     if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
-                        contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                        contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Integer) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
                     } else {
                         contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
                     }
@@ -519,7 +519,7 @@ public class ManagedBeanHistorial implements Serializable {
                 }
                 if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
 
-                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                    sales.set(format.format(venta.getFechaVenta()), valor + (Integer) sales.getData().get(format.format(venta.getFechaVenta())));
                 } else {
 
                     sales.set(format.format(venta.getFechaVenta()), valor);
@@ -538,7 +538,7 @@ public class ManagedBeanHistorial implements Serializable {
                     }
                     if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
 
-                        sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                        sales.set(format.format(venta.getFechaVenta()), valor + (Integer) sales.getData().get(format.format(venta.getFechaVenta())));
                     } else {
 
                         sales.set(format.format(venta.getFechaVenta()), valor);
@@ -569,8 +569,8 @@ public class ManagedBeanHistorial implements Serializable {
         Producto producto;
         String fecha;
 
-        float valor = 0;
-        float cero = 0;
+        int valor = 0;
+        int cero = 0;
 
         SortedSet<String> fechas = new TreeSet<String>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy");
@@ -614,7 +614,7 @@ public class ManagedBeanHistorial implements Serializable {
             if (fecha.compareTo(format.format(aporte.getAportePK().getFechaMunicipalidad())) == 0) {
 
                 if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
-                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                    contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Integer) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
                 } else {
                     contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
                 }
@@ -625,7 +625,7 @@ public class ManagedBeanHistorial implements Serializable {
                         break;
                     }
                     if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
-                        contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                        contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Integer) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
                     } else {
                         contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
                     }
@@ -643,7 +643,7 @@ public class ManagedBeanHistorial implements Serializable {
                 }
                 if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
 
-                    sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                    sales.set(format.format(venta.getFechaVenta()), valor + (Integer) sales.getData().get(format.format(venta.getFechaVenta())));
                 } else {
 
                     sales.set(format.format(venta.getFechaVenta()), valor);
@@ -662,7 +662,7 @@ public class ManagedBeanHistorial implements Serializable {
                     }
                     if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
 
-                        sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                        sales.set(format.format(venta.getFechaVenta()), valor + (Integer) sales.getData().get(format.format(venta.getFechaVenta())));
                     } else {
 
                         sales.set(format.format(venta.getFechaVenta()), valor);
@@ -698,7 +698,7 @@ public class ManagedBeanHistorial implements Serializable {
         while (it.hasNext()) {
             aporte = it.next();
             if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
-                contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (int) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
             } else {
                 contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
             }
@@ -726,7 +726,7 @@ public class ManagedBeanHistorial implements Serializable {
         while (it.hasNext()) {
             aporte = it.next();
             if (contributions.getData().containsKey(format.format(aporte.getAportePK().getFechaMunicipalidad()))) {
-                contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (Float) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
+                contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte() + (int) contributions.getData().get(format.format(aporte.getAportePK().getFechaMunicipalidad())));
             } else {
                 contributions.set(format.format(aporte.getAportePK().getFechaMunicipalidad()), aporte.getValorAporte());
             }
@@ -741,7 +741,7 @@ public class ManagedBeanHistorial implements Serializable {
         Venta venta;
         Producto producto;
 
-        float valor = 0;
+        int valor = 0;
 
         ChartSeries sales = new ChartSeries();
         sales.setLabel("Ventas");
@@ -767,7 +767,7 @@ public class ManagedBeanHistorial implements Serializable {
             }
             if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
 
-                sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                sales.set(format.format(venta.getFechaVenta()), valor + (int) sales.getData().get(format.format(venta.getFechaVenta())));
             } else {
 
                 sales.set(format.format(venta.getFechaVenta()), valor);
@@ -783,7 +783,7 @@ public class ManagedBeanHistorial implements Serializable {
         Venta venta;
         Producto producto;
 
-        float valor = 0;
+        int valor = 0;
 
         ChartSeries sales = new ChartSeries();
         sales.setLabel("Ventas");
@@ -809,7 +809,7 @@ public class ManagedBeanHistorial implements Serializable {
             }
             if (sales.getData().containsKey(format.format(venta.getFechaVenta()))) {
 
-                sales.set(format.format(venta.getFechaVenta()), valor + (Float) sales.getData().get(format.format(venta.getFechaVenta())));
+                sales.set(format.format(venta.getFechaVenta()), valor + (Integer) sales.getData().get(format.format(venta.getFechaVenta())));
             } else {
 
                 sales.set(format.format(venta.getFechaVenta()), valor);
@@ -834,8 +834,8 @@ public class ManagedBeanHistorial implements Serializable {
         while (it.hasNext()) {
             aporte = it.next();
             if (contributions.getData().containsKey(aporte.getAportePK().getMunicipioAporte())) {
-                contributions.set(aporte.getAportePK().getMunicipioAporte(), aporte.getValorAporte() + (Float) contributions.getData().get(aporte.getAportePK().getMunicipioAporte()));
-                pieModel.set(aporte.getAportePK().getMunicipioAporte(), aporte.getValorAporte() + (Float) pieModel.getData().get(aporte.getAportePK().getMunicipioAporte()));
+                contributions.set(aporte.getAportePK().getMunicipioAporte(), aporte.getValorAporte() + (Integer) contributions.getData().get(aporte.getAportePK().getMunicipioAporte()));
+                pieModel.set(aporte.getAportePK().getMunicipioAporte(), aporte.getValorAporte() + (Integer) pieModel.getData().get(aporte.getAportePK().getMunicipioAporte()));
             } else {
                 pieModel.set(aporte.getAportePK().getMunicipioAporte(), aporte.getValorAporte());
                 contributions.set(aporte.getAportePK().getMunicipioAporte(), aporte.getValorAporte());
@@ -854,7 +854,7 @@ public class ManagedBeanHistorial implements Serializable {
         Producto producto;
         Map<String, String> clients = new HashMap<>();
 
-        float valor = 0;
+        int valor = 0;
 
         ChartSeries sales = new ChartSeries();
         sales.setLabel("Ventas");
@@ -879,8 +879,8 @@ public class ManagedBeanHistorial implements Serializable {
                 }
             }
             if (sales.getData().containsKey(clients.get(venta.getRutCliente().getRutCliente()))) {
-                pieModel.set(clients.get(venta.getRutCliente().getRutCliente()), valor + (Float) sales.getData().get(clients.get(venta.getRutCliente().getRutCliente())));
-                sales.set(clients.get(venta.getRutCliente().getRutCliente()), valor + (Float) sales.getData().get(clients.get(venta.getRutCliente().getRutCliente())));
+                pieModel.set(clients.get(venta.getRutCliente().getRutCliente()), valor + (Integer) sales.getData().get(clients.get(venta.getRutCliente().getRutCliente())));
+                sales.set(clients.get(venta.getRutCliente().getRutCliente()), valor + (Integer) sales.getData().get(clients.get(venta.getRutCliente().getRutCliente())));
             } else {
                 pieModel.set(clients.get(venta.getRutCliente().getRutCliente()), valor);
                 sales.set(clients.get(venta.getRutCliente().getRutCliente()), valor);
@@ -1090,7 +1090,7 @@ public class ManagedBeanHistorial implements Serializable {
             Venta venta;
             Cliente cliente;
             Producto producto;
-            float valor = 0;
+            int valor = 0;
 
             Map<String, String> clients = new HashMap<>();
             Iterator<Cliente> it4 = clientes.listIterator();
