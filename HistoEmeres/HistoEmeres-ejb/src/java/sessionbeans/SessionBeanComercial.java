@@ -53,10 +53,22 @@ public class SessionBeanComercial {
         }
     }
 
+    public boolean modificarProducto(Producto producto){
+        try{
+            productoFacade.edit(producto);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+    
     public boolean modificarCliente(Cliente cliente,Cliente clienteAnterior) {
-        if(clienteFacade.buscarPorRut(cliente.getRutCliente()).isEmpty() || cliente.getRutCliente().compareTo(clienteAnterior.getRutCliente())==0){
+        if(clienteFacade.buscarPorRut(cliente.getRutCliente()).isEmpty()){
             clienteFacade.remove(clienteAnterior);
             clienteFacade.create(cliente);
+            return true;
+        }else if(!clienteFacade.buscarPorRut(cliente.getRutCliente()).isEmpty() && cliente.getRutCliente().toUpperCase().compareTo(clienteAnterior.getRutCliente())==0){
+            clienteFacade.edit(cliente);
             return true;
         }else{
             return false;
@@ -84,6 +96,17 @@ public class SessionBeanComercial {
                 return false;
             }
         } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public boolean modificarVenta(Venta venta){
+        try{
+            venta.setCodigoProducto(productoFacade.buscarPorCodigoProducto(venta.getCodigoProducto().getCodigoProducto()).get(0));
+            venta.setRutCliente(clienteFacade.buscarPorRut(venta.getRutCliente().getRutCliente()).get(0));
+            ventaFacade.edit(venta);
+            return true;
+        }catch(Exception e){
             return false;
         }
     }

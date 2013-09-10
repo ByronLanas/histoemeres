@@ -39,7 +39,7 @@ public class SessionBeanFinanaciero {
             return false;
         }
     }
-
+    
     public boolean modificarAporte(Aporte aporte, Aporte aporteAnterior) {
         if (sessionBeanIngreso.verificarModificarAporte(aporte, aporteAnterior)) {
             return true;
