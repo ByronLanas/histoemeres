@@ -16,6 +16,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.Min;
 import sessionbeans.AporteFacadeLocal;
 import sessionbeans.SessionBeanFinanaciero;
 
@@ -35,6 +36,7 @@ public class ManagedBeanAporte implements Serializable{
 
     private String municipio;
     private Date fecha;
+    @Min(value = 0,message = "El valor del aporte debe ser mayor a 0")
     private Integer valor;
     private Aporte aporte;
     private static Aporte aporteAnterior;
@@ -135,6 +137,7 @@ public class ManagedBeanAporte implements Serializable{
 
     public void insertarAporte(){
         FacesContext context = FacesContext.getCurrentInstance();
+        fecha.setDate(1);
         pk=new AportePK(municipio, fecha);
         aporte=new Aporte(pk, valor);      
         if(sessionBeanFinanaciero.insertarAporte(aporte)){
@@ -147,9 +150,12 @@ public class ManagedBeanAporte implements Serializable{
     public void modificarAporte() {
         Herramientas herramienta=new Herramientas();
         FacesContext context = FacesContext.getCurrentInstance();
-        
-        pk = new AportePK(selectedAporte.getAportePK().getMunicipioAporte(), selectedAporte.getAportePK().getFechaMunicipalidad());
+        fecha=selectedAporte.getAportePK().getFechaMunicipalidad();
+        fecha.setDate(1);
+        pk = new AportePK(selectedAporte.getAportePK().getMunicipioAporte(), fecha);
         aporte = new Aporte(pk, selectedAporte.getValorAporte());
+        
+        
         if (sessionBeanFinanaciero.modificarAporte(aporte,aporteAnterior)) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aporte modificado con éxito", "El aporte : " + aporte.getAportePK().getMunicipioAporte() + "; " + herramienta.fechaConPalabras( aporte.getAportePK().getFechaMunicipalidad()) + ": " + aporte.getValorAporte() + " fue modificado con éxito"));
         } else {

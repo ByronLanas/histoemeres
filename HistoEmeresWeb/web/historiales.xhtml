@@ -89,18 +89,18 @@ statusDialog.hide();
 
         <p:outputPanel rendered="#{!managedBeanHistorial.error}"  id="grafico1" layout="block">  
             <p:barChart widgetVar="grafico#{managedBeanHistorial.tipoGrafico}"   id="graficoBarra" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
-                        title="#{managedBeanHistorial.titulo}" min="0" shadow="true"  style="min-height:380px; min-width: 580px; " 
+                        title="#{managedBeanHistorial.titulo}" min="0" shadow="true"  style="height:350px; width: 980px; " xaxisAngle="45"
                         xaxisLabel="#{managedBeanHistorial.xLabel}" datatipFormat="%c $%i"  yaxisLabel="#{managedBeanHistorial.yLabel}" rendered="#{requestScope.shouldRender}"/>
         </p:outputPanel> 
         <p:outputPanel rendered="#{!managedBeanHistorial.error}"  id="grafico2" layout="block">  
             <p:lineChart widgetVar="grafico#{managedBeanHistorial.tipoGrafico}" id="graficoLinea" value="#{managedBeanHistorial.categoryModel}" legendPosition="ne"  animate="true" zoom="true"
-                         title="#{managedBeanHistorial.titulo}" minY="0" shadow="true"  style="min-height:380px; min-width: 580px; " 
+                         title="#{managedBeanHistorial.titulo}" minY="0" shadow="true"  style="height:350px; width: 980px; " xaxisAngle="45"
                          xaxisLabel="#{managedBeanHistorial.xLabel}" datatipFormat="%c $%i"  yaxisLabel="#{managedBeanHistorial.yLabel}" rendered="#{requestScope.shouldRender}"/>
         </p:outputPanel>
         <p:outputPanel rendered="#{!managedBeanHistorial.error}"  id="grafico3" layout="block">  
             <p:pieChart widgetVar="grafico#{managedBeanHistorial.tipoGrafico}" id="graficoTorta" value="#{managedBeanHistorial.pieModel}" legendPosition="ne"
-                        title="#{managedBeanHistorial.titulo}" style="min-height:380px; min-width: 580px; " 
-                        showDataLabels="true" sliceMargin="7" shadow="true" dataFormat="percent" rendered="#{requestScope.shouldRender}" />
+                        title="#{managedBeanHistorial.titulo}" style="height:350px; width: 980px; " 
+                        showDataLabels="true" sliceMargin="7" legendCols="2" shadow="true" dataFormat="percent" rendered="#{requestScope.shouldRender}" />
         </p:outputPanel>  
 
         <p:remoteCommand  name="lazyload2" update="grafico2">  

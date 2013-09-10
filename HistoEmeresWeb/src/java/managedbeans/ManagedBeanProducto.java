@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import sessionbeans.ProductoFacadeLocal;
 import sessionbeans.SessionBeanComercial;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.Min;
 import org.jboss.weld.bean.builtin.FacadeInjectionPoint;
 
 /**
@@ -31,6 +32,7 @@ public class ManagedBeanProducto {
     private ProductoFacadeLocal productoFacade;
     private String codigo_producto;
     private String nombre_producto;
+    @Min(value = 0,message = "El valor del producto debe ser mayor a 0")
     private Integer valor_producto;
     private Producto producto;
     private static Producto selectedProducto;
@@ -110,10 +112,9 @@ public class ManagedBeanProducto {
     public void modificarProducto(){
         FacesContext context = FacesContext.getCurrentInstance();
         
-        try {
-            productoFacade.edit(selectedProducto);
+        if(sessionBeanComercial.modificarProducto(selectedProducto)) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto modificado con éxito", "El producto: " + selectedProducto.getNombreProducto() + " fue modificado con éxito."));
-        } catch (Exception e) {
+        } else{
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Producto no fue modificado", "El producto: " + selectedProducto.getNombreProducto() + " no pudo ser modificado."));
         }
     }

@@ -27,7 +27,7 @@ public class RutValidator implements Validator {
             throw new ValidatorException(msg);
         } else {
             int m = 0, s = 1;
-            String rut = value.toString();
+            String rut = value.toString().toUpperCase();
             int rutSinDv = Integer.parseInt(rut.substring(0, rut.length() - 1));
             char dv = rut.charAt(rut.length() - 1);
             for (; rutSinDv != 0; rutSinDv /= 10) {

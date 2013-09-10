@@ -19,7 +19,7 @@
                 <h:outputText value="#{aporte.aportePK.municipioAporte}"/>
             </p:column> 
             <p:column headerText="Valor" sortBy="#{aporte.valorAporte}" filterBy="#{aporte.valorAporte}">  
-                <h:outputText value="\$ #{aporte.valorAporte.intValue()}"/>
+                <h:outputText value="\$ #{aporte.valorAporte}"/>
             </p:column>  
             <p:column headerText="Fecha" sortBy="#{aporte.aportePK.fechaMunicipalidad}" filterBy="#{aporte.aportePK.fechaMunicipalidad}">  
                 <h:outputText value="#{Herramientas.fechaConPalabras(aporte.aportePK.fechaMunicipalidad)}">
@@ -41,7 +41,7 @@
                 
                 </p:calendar>
                 <f:facet name="footer" >
-                    <p:commandButton value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanAporte.modificarAporte}" oncomplete="dialogoModificar.hide()" update="tablaAporte"/>
+                    <p:commandButton ajax="false" value="Aceptar" icon="ui-icon-check" style="float: right" action="#{managedBeanAporte.modificarAporte}" oncomplete="dialogoModificar.hide()" update="tablaAporte"/>
                 </f:facet>
             </h:panelGrid>
         </p:dialog>

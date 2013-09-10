@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <h:form>
+    <h:form id="hform">
         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
         <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
         <p:panelGrid id="panelUsuario" styleClass="panel" columns="2">
@@ -27,12 +27,10 @@
                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
             </p:inputText>
             <f:facet name="footer">
-                <p:commandButton id="botonIngresar" icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanUsuario.nuevoUsuario()}" />
+                <p:commandButton ajax="false" id="botonIngresar" icon="ingresar-icon" style="float: right" value="Ingresar" action="#{managedBeanUsuario.nuevoUsuario()}" />
             </f:facet>
         </p:panelGrid>
-        <p:blockUI block="panelUsuario" trigger="botonIngresar">
-            <p:graphicImage style="background: transparent" value="/resources/imagenes/loading.gif"/>
-        </p:blockUI>
+
     </h:form>
 </html>
 

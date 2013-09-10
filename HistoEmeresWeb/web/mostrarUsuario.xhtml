@@ -35,7 +35,7 @@
                   width="300" showEffect="clip" hideEffect="fold">
             <h:panelGrid id="display" columns="2">
                 <h:outputText  value="Nombre usuario: "/>
-                <p:inputText  id="modificarUsuario" required="true"  value="#{managedBeanUsuario.selectedUsuario.nombreUsuario}"/>
+                <h:outputText  id="modificarUsuario"   value="#{managedBeanUsuario.selectedUsuario.nombreUsuario}"/>
                 <h:outputText value="Tipo usuario: "/>
                 <p:selectOneMenu style="width: 100%" label="Tipo Usuario" value="#{managedBeanUsuario.selectedUsuario.tipoUsuario}">
                     <f:selectItem  itemLabel="Administrador" itemValue="admin"/>

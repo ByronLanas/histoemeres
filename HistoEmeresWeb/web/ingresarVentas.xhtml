@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:form>
+    <h:form id="hform">
         <p:growl life="4000" autoUpdate="true" severity="info, warn" id="growl" showDetail="true"  />
         <p:messages   showDetail="true" severity="fatal, error" autoUpdate="true" closable="true" />
         <p:panelGrid styleClass="panel" id="panelCliente" columns="2">
@@ -18,22 +18,22 @@
                 <f:selectItem  itemLabel=""/>
                 <f:selectItems value="#{managedBeanCliente.clientes}" var="cliente" itemLabel="#{cliente.rutCliente}" itemValue="#{cliente.rutCliente}"/>
             </p:selectOneMenu>
-            <h:outputText value="Código de producto "/>
+            <h:outputText value="Producto "/>
             <p:selectOneMenu style="width: 100%" id="codigoProducto" label="Código producto" required="true" value="#{managedBeanVenta.codigoProducto}">  
                 <f:selectItem itemLabel=""/>  
-                <f:selectItems value="#{managedBeanProducto.productos}" var="producto" itemValue="#{producto.codigoProducto}" itemLabel="#{producto.nombreProducto}"/>
+                <f:selectItems value="#{managedBeanProducto.productos}" var="producto" itemValue="#{producto.codigoProducto}" itemLabel="#{producto.codigoProducto} (#{producto.nombreProducto})"/>
             </p:selectOneMenu>
             <h:outputText value="Cantidad de fardos "/>
             <p:inputText label="Cantidad fardos" id="cantidad" required="true" value="#{managedBeanVenta.cantidadVenta}"/>
             <h:outputText value="Fecha de Venta"/>
             <p:calendar value="#{managedBeanVenta.fechaVenta}" id="fecha"  required="true" label="Fecha" pattern="yyyy-MM-dd" locale="es"  navigator="true" mindate="1995-01-01" maxdate="#{managedBeanHistorial.fechaActual()}" />
             <f:facet name="footer">
-                <p:commandButton update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanVenta.ingresarVenta}" icon="ingresar-icon" />
+                <p:commandButton ajax="false" update="panelCliente" id="botonIngresar" style="float: right" value="Ingresar" action="#{managedBeanVenta.ingresarVenta}" icon="ingresar-icon" />
             </f:facet>
         </p:panelGrid>    
         <p:watermark for="cantidad" value="Ingrese la cantidad de fardos" />
         <p:watermark for="fecha" value="Ingrese fecha de venta"/>
-                     <p:blockUI block="panelCliente" trigger="botonIngresar" />
+        
     </h:form>
 </html>
 
